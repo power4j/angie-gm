@@ -191,3 +191,34 @@
   - `Run build pipeline` 通过
   - `output/work/<package>/` 与 `output/staging/<package>/` 可上传为 artifact
   - 当前告警仅剩 GitHub 官方 JavaScript actions 的 Node 20 弃用提示
+
+## GitHub Actions 真实产包验证
+
+### `package x arch x format` 矩阵
+
+- 执行环境：
+  - runner：`ubuntu-24.04`、`ubuntu-24.04-arm`
+  - container：`almalinux:8`
+  - `glibc`：`2.28`
+- 执行入口：GitHub Actions `Build Packages`
+- workflow run：`27203721406`
+- 结果：通过
+- 输出摘要：
+  - `x86_64` / `aarch64` 的 8 个矩阵任务均完成真实产包
+  - `Install build dependencies` 通过
+  - `Verify shell syntax` 通过
+  - `Run build pipeline` 通过
+  - `Upload package artifacts` 通过
+  - `.deb` 通过 `ar + tar` 手工组包，不再依赖外部 `dpkg`
+  - `.rpm` 通过 `rpmbuild` 产出
+
+### 抽样结果
+
+- `rpm` 样例已下载并核对：
+  - `angie-gm-basic-0.1.0-1.el8.x86_64.rpm`
+- `deb` 样例对应 job 的 `Upload package artifacts` 已成功，说明包文件已生成并上传；当前 Codex 环境下载单个 `deb` artifact 超时，待后续网络条件更稳定时补二次抽样。
+
+### 当前观察
+
+- `rpm` 文件名当前带 `.el8` 后缀，这是 `rpmbuild` 的 `%{?dist}` 默认行为。
+- 如后续正式对外交付希望强调“按架构 + edition”而不是“按构建发行版”命名，需要在下一阶段移除该后缀。
