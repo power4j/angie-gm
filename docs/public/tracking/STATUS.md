@@ -26,6 +26,7 @@
 - WSL Ubuntu 24 已验证 Angie 与 TongSuo 的真实源码下载、checksum、解包与 staging 准备链路通过
 - TongSuo 构建骨架与 Angie configure 参数骨架已接入本地构建脚本
 - WSL Ubuntu 24 已验证 `angie-gm-basic` 与 `angie-gm-all` 可稳定跑通到编译占位阶段，`build/angie` 目录创建问题已修复
+- `glibc 2.28` 已写入正式文档，作为当前暂定的 `Build Baseline`
 
 ## 进行中
 
@@ -33,9 +34,9 @@
 
 ## 下一步
 
-1. 开始接入 TongSuo 真实编译与安装产物输出
-2. 继续推进 Angie 真实 configure / compile / install 流程
-3. 补 `deb` / `rpm` 具体模板文件与维护脚本
+1. 复核麒麟与统信目标机的实际 `glibc` 版本，确认 `2.28` 基线
+2. 收敛 TongSuo 真实编译结果并补日志级验证记录
+3. 继续推进 Angie 真实 configure / compile / install 流程
 
 ## 阻塞项
 

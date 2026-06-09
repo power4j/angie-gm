@@ -2,6 +2,12 @@
 
 本表用于记录安装包在不同架构、发行版和场景下的验证结果。
 
+当前正式口径：
+
+- `Build Baseline` 暂定为 `glibc 2.28`
+- `Verified On` 以目标机器实际执行 `getconf GNU_LIBC_VERSION`、`ldd --version | head -n 1` 为准
+- `Expected Compatible` 不能代替已验证结论
+
 ## 字段说明
 
 - `package`：`angie-gm-basic` 或 `angie-gm-all`

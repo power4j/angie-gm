@@ -153,3 +153,23 @@
 - 总体结果：通过源码准备链路与编译骨架链路验证
 - 是否可进入下一阶段：可以
 - 剩余问题：尚未进入真实编译、打包、安装与服务验证
+
+## TongSuo 真实编译链路验证
+
+### `angie-gm-basic`
+
+- 执行命令：`bash builder/common/build.sh angie-gm-basic`
+- 结果：用户反馈命令已跑完，终端未见明显报错，待日志级复核
+- 输出摘要：
+  - TongSuo 真实编译阶段已接入
+  - 编译耗时较长，人工浏览终端输出未见明确失败信号
+  - 尚未补充 `configure.log`、`make.log`、`install.log` 的逐项复核结果
+
+### `angie-gm-all`
+
+- 执行命令：`bash builder/common/build.sh angie-gm-all`
+- 结果：用户反馈命令已跑完，终端未见明显报错，待日志级复核
+- 输出摘要：
+  - TongSuo 真实编译阶段已接入
+  - 编译耗时较长，人工浏览终端输出未见明确失败信号
+  - 尚未补充 `configure.log`、`make.log`、`install.log` 的逐项复核结果
