@@ -5,23 +5,183 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      package_version:
+        description: Package version without leading v, for example 0.1.0
+        required: false
+      package_release:
+        description: Packaging release number, default 1
+        required: false
+        default: '1'
 
 permissions:
   contents: write
 
 jobs:
-  release:
-    runs-on: ubuntu-24.04
+  build:
+    name: release-build-${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
+    runs-on: ${{ matrix.runner }}
+    container:
+      image: almalinux:8
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - angie-gm-basic
+          - angie-gm-all
+        arch:
+          - x86_64
+          - aarch64
+        format:
+          - deb
+          - rpm
+        include:
+          - arch: x86_64
+            runner: ubuntu-24.04
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Resolve release version
+        run: |
+          if [ -n "${{ github.event.inputs.package_version }}" ]; then
+            package_version="${{ github.event.inputs.package_version }}"
+          else
+            package_version="${GITHUB_REF_NAME#v}"
+          fi
+          if [ -z "${package_version}" ]; then
+            echo "package_version is empty" >&2
+            exit 1
+          fi
+          echo "PACKAGE_VERSION=${package_version}" >> "${GITHUB_ENV}"
+          echo "PACKAGE_RELEASE=${{ github.event.inputs.package_release || '1' }}" >> "${GITHUB_ENV}"
+
+      - name: Show matrix context
+        run: |
+          cat /etc/os-release
+          getconf GNU_LIBC_VERSION
+          echo "package=${{ matrix.package }}"
+          echo "arch=${{ matrix.arch }}"
+          echo "format=${{ matrix.format }}"
+          echo "version=${PACKAGE_VERSION}"
+          echo "release=${PACKAGE_RELEASE}"
+
+      - name: Validate source metadata presence
+        run: |
+          test -f source/manifests/angie.json
+          test -f source/manifests/tongsuo.json
+          test -f source/checksums/upstream.sha256
+
+      - name: Validate profile presence
+        run: |
+          test -f builder/profiles/${{ matrix.package }}/profile.env
+          test -f builder/profiles/${{ matrix.package }}/modules.dynamic
+          test -f builder/profiles/${{ matrix.package }}/install.assets
+
+      - name: Prepare shell runtime
+        run: |
+          chmod +x builder/common/*.sh
+
+      - name: Install build dependencies
+        run: |
+          dnf install -y \
+            bash \
+            ca-certificates \
+            binutils \
+            curl \
+            diffutils \
+            findutils \
+            gcc \
+            gcc-c++ \
+            gawk \
+            git \
+            gzip \
+            make \
+            patch \
+            perl \
+            pcre2-devel \
+            python3 \
+            rpm-build \
+            sed \
+            tar \
+            zlib-devel \
+            xz
+
+      - name: Verify shell syntax
+        run: |
+          bash -n builder/common/diagnostics.sh \
+            builder/common/load-profile.sh \
+            builder/common/read-manifest.sh \
+            builder/common/fetch-sources.sh \
+            builder/common/verify-checksums.sh \
+            builder/common/stage-runtime.sh \
+            builder/common/build-tongsuo.sh \
+            builder/common/configure-angie.sh \
+            builder/common/build-angie.sh \
+            builder/common/assemble-runtime.sh \
+            builder/common/package-rpm.sh \
+            builder/common/package-deb.sh \
+            builder/common/build.sh
+
+      - name: Run release build pipeline
+        run: |
+          export PACKAGE_FORMAT="${{ matrix.format }}"
+          export BUILD_ARCH="${{ matrix.arch }}"
+          export PACKAGE_VERSION="${PACKAGE_VERSION}"
+          export PACKAGE_RELEASE="${PACKAGE_RELEASE}"
+          bash builder/common/build.sh "${{ matrix.package }}"
+
+      - name: Upload release package artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
+          path: output/packages/${{ matrix.package }}/
+          if-no-files-found: error
+
+  assemble-release:
+    runs-on: ubuntu-24.04
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve release version
+        run: |
+          if [ -n "${{ github.event.inputs.package_version }}" ]; then
+            package_version="${{ github.event.inputs.package_version }}"
+          else
+            package_version="${GITHUB_REF_NAME#v}"
+          fi
+          if [ -z "${package_version}" ]; then
+            echo "package_version is empty" >&2
+            exit 1
+          fi
+          echo "PACKAGE_VERSION=${package_version}" >> "${GITHUB_ENV}"
+          echo "PACKAGE_RELEASE=${{ github.event.inputs.package_release || '1' }}" >> "${GITHUB_ENV}"
+
+      - name: Download built package artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: output/artifacts
+          pattern: release-*
+          merge-multiple: true
+
       - name: Prepare release payload
         run: |
           mkdir -p output/release
-          printf 'Release workflow scaffold for power4j/angie-gm\n' > output/release/README.txt
-          printf 'Wire build outputs and checksums here.\n' >> output/release/README.txt
+          find output/artifacts -type f \( -name '*.rpm' -o -name '*.deb' \) -exec cp -a {} output/release/ \;
+          cd output/release
+          sha256sum *.rpm *.deb > sha256sum.txt
+          {
+            printf 'Package-Version: %s\n' "${PACKAGE_VERSION}"
+            printf 'Package-Release: %s\n' "${PACKAGE_RELEASE}"
+            printf 'Build-Baseline: glibc 2.28\n'
+            printf 'Generated-By: GitHub Actions Release Packages\n'
+          } > BUILD-INFO.txt
 
       - name: Upload release payload artifact
         uses: actions/upload-artifact@v4
