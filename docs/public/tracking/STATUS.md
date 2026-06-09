@@ -30,6 +30,7 @@
 - `glibc 2.28` 已收敛为当前正式的 `Build Baseline`
 - GitHub Actions 已切换为固定 runner + `glibc 2.28` 基线容器方案
 - 已确认 GitHub Actions 的 `ubuntu-24.04-arm` 与 `almalinux:8` 容器可启动，当前失败点定位为 `dnf` 依赖冲突
+- 已定位 GitHub Actions 构建脚本的下一处失败点：容器缺少 `python3`，导致 manifest 解析失败
 
 ## 进行中
 

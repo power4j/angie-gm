@@ -80,6 +80,7 @@ jobs:
             make \
             patch \
             perl \
+            python3 \
             sed \
             tar \
             xz
