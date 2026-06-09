@@ -269,3 +269,27 @@
   - 例如 `angie-gm-basic_0.1.0.rc1-1_amd64.deb`
   - 例如 `angie-gm-basic-0.1.0.rc1-1.x86_64.rpm`
 - 当前判断：该差异来自 GitHub Release 资产文件名处理，而不是本项目打包脚本本身
+
+## Release workflow prerelease 解耦验证
+
+### `Release Packages`
+
+- 触发方式：`workflow_dispatch`
+- workflow run：`27211966853`
+- 输入：
+  - `package_version=0.1.0~rc2`
+  - `release_tag=v0.1.0-rc2`
+  - `package_release=1`
+- 结果：通过
+- 输出摘要：
+  - 8 个 `release-build-*` 矩阵任务全部完成
+  - `assemble-release` 成功执行
+  - GitHub Release 已创建为 `draft + prerelease`
+  - Release 名称：`Review 0.1.0~rc2`
+  - Release tag：`v0.1.0-rc2`
+
+### 结论
+
+- `prerelease` 状态继续只由 `workflow_dispatch` 决定
+- `package_version` 不再参与 `release_tag` 推导
+- `release_tag` 已可作为独立输入控制 review release 的 GitHub 标识

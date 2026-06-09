@@ -43,6 +43,8 @@
 - `Release Packages` 已收敛为两条正式发布路径：`workflow_dispatch -> draft prerelease` 与 `push tag -> draft stable`
 - 手工触发的 `package_version` 已改为必填，版本职责与 `package_release` 分工已写入正式文档
 - `Release Packages` 已完成一次真实 `workflow_dispatch prerelease` 验证，确认可创建 `draft + prerelease` release，并正确生成 `Review 0.1.0~rc1` 与 tag `v0.1.0-rc1`
+- `Release Packages` 已完成 `package_version` 与 `release_tag` 解耦，手工 prerelease 的 tag 不再从版本字符串派生
+- `Release Packages` 已完成一次解耦后实测，确认 `package_version=0.1.0~rc2` 与 `release_tag=v0.1.0-rc2` 可独立输入并成功生成 `draft + prerelease`
 
 ## 进行中
 
