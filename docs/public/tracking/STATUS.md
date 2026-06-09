@@ -39,15 +39,16 @@
 - `assemble-runtime` 已在 GitHub Actions 全矩阵通过，当前首个真产包阻塞点已定位为 `almalinux:8` 仓库不提供 `dpkg`
 - 已改为使用 `ar + tar` 手工生成 `.deb`，GitHub Actions 最新一轮已在 `deb` / `rpm` 全矩阵完成真实产包并上传包 artifact
 - 已移除 RPM 文件名中的 `.el8` 后缀，正式外发命名回到 `edition + version + release + arch`
+- `Release Packages` 已完成一次 `workflow_dispatch` dry-run，确认 8 个矩阵重构建与 release payload 汇总链路可用
 
 ## 进行中
 
-- Release workflow 从骨架接入到可用链路中
+- Release workflow dry-run 验证记录补充中
 
 ## 下一步
 
-1. 用 `workflow_dispatch` dry-run 验证 `Release Packages` 的重构建与汇总链路
-2. 增加包内内容与安装后行为的线下验证记录
+1. 增加包内内容与安装后行为的线下验证记录
+2. 评估是否在 release payload 中补充更详细的 Release Notes 模板
 3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
 
 ## 阻塞项

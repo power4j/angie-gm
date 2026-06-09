@@ -222,3 +222,21 @@
 
 - `rpm` 文件名在当前抽样 run 中带 `.el8` 后缀，这是 `rpmbuild` 的 `%{?dist}` 默认行为。
 - 项目当前已决定去掉该后缀，后续正式外发命名统一按 `edition + version + release + arch` 交付。
+
+## Release workflow dry-run 验证
+
+### `Release Packages`
+
+- 触发方式：`workflow_dispatch`
+- workflow run：`27207743902`
+- 输入：
+  - `package_version=0.1.0`
+  - `package_release=1`
+- 结果：通过
+- 输出摘要：
+  - 8 个 `release-build-*` 矩阵任务全部完成
+  - `assemble-release` 成功下载并合并包 artifact
+  - 已生成 `output/release/`
+  - 已生成 `sha256sum.txt`
+  - 已生成 `BUILD-INFO.txt`
+  - 因本次不是 tag 触发，`Create or update release draft` 被正确跳过

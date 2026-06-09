@@ -27,4 +27,5 @@
 - [validation/validation-record-template.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-record-template.md)
 - [validation/validation-record-2026-06-09-wsl-source-prep.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-record-2026-06-09-wsl-source-prep.md)
 - [tracking/2026-06-09-build-implementation-plan.md](/D:/git-repo/power4j/angie-gm/docs/public/tracking/2026-06-09-build-implementation-plan.md)
+- [tracking/2026-06-09-packaging-implementation-plan.md](/D:/git-repo/power4j/angie-gm/docs/public/tracking/2026-06-09-packaging-implementation-plan.md)
 - [tracking/STATUS.md](/D:/git-repo/power4j/angie-gm/docs/public/tracking/STATUS.md)
