@@ -34,6 +34,7 @@
 - 入口：`workflow_dispatch`
 - 必填输入：
   - `package_version`
+  - `release_tag`
 - 可选输入：
   - `package_release`
 - 用途：
@@ -44,13 +45,15 @@
 约束：
 
 - 手工触发时必须显式填写 `package_version`
+- 手工触发时必须显式填写 `release_tag`
 - 不从分支名或目录状态推导版本号
+- 不从 `package_version` 推导 `release_tag`
 - 手工触发生成的 GitHub Release 固定标记为 `draft + prerelease`
 
 建议：
 
 - review 版本使用 `0.1.0~rc1`、`0.1.0~rc2`
-- 如需与 Git tag 对齐，可在后续引入 `v0.1.0-rc1` 形式的 review tag
+- review tag 使用 `v0.1.0-rc1`、`v0.1.0-rc2`
 
 ## 3. 版本来源
 
@@ -58,6 +61,9 @@ Release workflow 使用以下规则：
 
 - `package_version`
   - tag 触发：从 tag 名去掉前缀 `v` 得到
+  - 手工触发：必须使用 `workflow_dispatch` 输入
+- `release_tag`
+  - tag 触发：直接使用触发 tag
   - 手工触发：必须使用 `workflow_dispatch` 输入
 - `package_release`
   - 默认值：`1`
@@ -144,10 +150,11 @@ review 发布建议顺序：
 1. `Build Packages` 持续集成通过
 2. 在 `Release Packages` 中手工触发 `workflow_dispatch`
 3. 填写 `package_version`，例如 `0.1.0~rc1`
-4. 按需调整 `package_release`
-5. 等待 workflow 完成
-6. 人工检查 draft prerelease
-7. 人工发布 prerelease
+4. 填写 `release_tag`，例如 `v0.1.0-rc1`
+5. 按需调整 `package_release`
+6. 等待 workflow 完成
+7. 人工检查 draft prerelease
+8. 人工发布 prerelease
 
 正式发布建议顺序：
 

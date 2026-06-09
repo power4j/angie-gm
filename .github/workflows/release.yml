@@ -9,6 +9,9 @@ on:
       package_version:
         description: Package version, for example 0.1.0~rc1
         required: true
+      release_tag:
+        description: GitHub release tag, for example v0.1.0-rc1
+        required: true
       package_release:
         description: Packaging release number, default 1
         required: false
@@ -58,10 +61,10 @@ jobs:
             exit 1
           fi
           if [ "${event_name}" = "workflow_dispatch" ]; then
-            if [[ "${package_version}" == *"~"* ]]; then
-              release_tag="v${package_version/\~/-}"
-            else
-              release_tag="review-v${package_version}"
+            release_tag="${{ github.event.inputs.release_tag }}"
+            if [ -z "${release_tag}" ]; then
+              echo "release_tag is empty" >&2
+              exit 1
             fi
             release_name="Review ${package_version}"
             is_prerelease="true"
@@ -181,10 +184,10 @@ jobs:
             exit 1
           fi
           if [ "${event_name}" = "workflow_dispatch" ]; then
-            if [[ "${package_version}" == *"~"* ]]; then
-              release_tag="v${package_version/\~/-}"
-            else
-              release_tag="review-v${package_version}"
+            release_tag="${{ github.event.inputs.release_tag }}"
+            if [ -z "${release_tag}" ]; then
+              echo "release_tag is empty" >&2
+              exit 1
             fi
             release_name="Review ${package_version}"
             is_prerelease="true"

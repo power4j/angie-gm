@@ -38,6 +38,7 @@
 - `package_version` 是构建与发布流程中的权威输入字段。
 - 正式发布时，`package_version` 由正式 tag 去掉前缀 `v` 得到。
 - 手工触发 review 发布时，`package_version` 由 `workflow_dispatch` 显式输入，不做隐式推断。
+- `package_version` 只表达包版本，不承担 GitHub Release tag 的推导职责。
 
 建议：
 
@@ -48,6 +49,23 @@
 
 - 不得从分支名猜测 `package_version`
 - 不得在没有明确版本号的情况下手工发布 review 包
+- 不得从 `package_version` 字符串内容推导 `prerelease` 状态
+- 不得从 `package_version` 字符串内容推导 `release_tag`
+
+## 2.1 Release Tag
+
+`release_tag` 用于表达 GitHub Release 与 Git tag 标识。
+
+规则：
+
+- 正式发布使用 `v<package-version>`
+- review 发布使用显式输入的 tag，例如 `v0.1.0-rc1`
+- `release_tag` 与 `package_version` 必须各自明确，不得相互猜测
+
+示例：
+
+- `package_version=0.1.0` -> `release_tag=v0.1.0`
+- `package_version=0.1.0~rc1` -> `release_tag=v0.1.0-rc1`
 
 ## 3. 打包修订号
 
