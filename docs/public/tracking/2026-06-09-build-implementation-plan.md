@@ -21,15 +21,15 @@
 - Create: `source/patches/tongsuo/.gitkeep`
 - Modify: `docs/public/reference/.gitkeep`
 
-- [ ] **Step 1: 定义 `source/README.md`**
+- [x] **Step 1: 定义 `source/README.md`**
 
 说明源码默认不入库、构建时下载、可本地缓存、必须做 checksum 校验。
 
-- [ ] **Step 2: 定义 Angie 与 TongSuo manifest 格式**
+- [x] **Step 2: 定义 Angie 与 TongSuo manifest 格式**
 
 包含名称、版本、公开来源 URL、文件名、checksum 索引、补丁列表。
 
-- [ ] **Step 3: 定义 checksum 文件**
+- [x] **Step 3: 定义 checksum 文件**
 
 采用标准 `sha256sum` 兼容格式。
 

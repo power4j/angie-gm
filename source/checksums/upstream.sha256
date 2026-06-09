@@ -1,0 +1,7 @@
+# Populate this file with exact SHA256 values after fetching the selected public source archives.
+# Format:
+# <sha256>  <filename>
+#
+# Expected files:
+# angie-1.11.6.tar.gz
+# Tongsuo-8.4.0.tar.gz

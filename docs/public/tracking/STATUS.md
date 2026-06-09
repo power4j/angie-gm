@@ -12,14 +12,15 @@
 - `docs/public` / `docs/local` 文档体系已建立
 - 安装布局、命名基线、发布口径、诊断要求已固化
 - 安装包命名已收敛为 `angie-gm-basic` / `angie-gm-all`
+- `source/README.md`、manifest 模型与 checksum 文件格式已建立
 
 ## 进行中
 
-- 细化实施计划与持续跟踪机制
+- Task 1 提交收尾
 
 ## 下一步
 
-1. 定义 `source/manifests` 与 `source/checksums` 的公开来源模型
+1. 提交源码来源模型
 2. 定义 `builder/profiles/angie-gm-basic` 与 `builder/profiles/angie-gm-all` 的字段模型
 3. 定义 `deb` / `rpm` 的冲突与替换策略骨架
 
