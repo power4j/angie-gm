@@ -79,15 +79,15 @@ git commit -m "docs: define build profile model"
 - Create: `builder/common/stage-runtime.sh`
 - Create: `builder/common/diagnostics.sh`
 
-- [ ] **Step 1: 先定义脚本职责**
+- [x] **Step 1: 先定义脚本职责**
 
 每个脚本只负责一个明确阶段。
 
-- [ ] **Step 2: 写最小命令骨架与阶段日志**
+- [x] **Step 2: 写最小命令骨架与阶段日志**
 
 保证安装与构建诊断能力从骨架开始存在。
 
-- [x] **Step 3: 提交**
+- [ ] **Step 3: 提交**
 
 ```bash
 git add builder/common

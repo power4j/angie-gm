@@ -15,14 +15,15 @@
 - `source/README.md`、manifest 模型与 checksum 文件格式已建立
 - `angie-gm-basic` / `angie-gm-all` 的 profile 字段模型已建立
 - `deb` / `rpm` 的打包模板骨架与冲突策略已建立
+- 共享构建脚本骨架与阶段日志模型已建立
 
 ## 进行中
 
-- Task 3 共享构建脚本骨架设计
+- Task 3 提交收尾
 
 ## 下一步
 
-1. 起草共享构建脚本骨架
+1. 提交共享构建脚本骨架
 2. 建立 GitHub Actions 构建骨架
 3. 建立验证与诊断跟踪骨架
 
