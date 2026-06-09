@@ -50,15 +50,15 @@ git commit -m "docs: define source manifest model"
 - Create: `builder/profiles/angie-gm-all/modules.dynamic`
 - Create: `builder/profiles/angie-gm-all/install.assets`
 
-- [ ] **Step 1: 定义 profile 标量字段**
+- [x] **Step 1: 定义 profile 标量字段**
 
 明确包名、特性开关、目录、目标格式、目标架构、冲突策略。
 
-- [ ] **Step 2: 定义动态模块列表**
+- [x] **Step 2: 定义动态模块列表**
 
 收敛 `basic` 与 `all` 的模块差异。
 
-- [ ] **Step 3: 定义安装资源清单**
+- [x] **Step 3: 定义安装资源清单**
 
 列出配置、systemd、tmpfiles、示例文件。
 

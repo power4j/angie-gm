@@ -22,6 +22,7 @@
 *.local
 *.env
 *.env.local
+!builder/profiles/**/profile.env
 
 # IDE and OS files
 .idea/

@@ -13,14 +13,15 @@
 - 安装布局、命名基线、发布口径、诊断要求已固化
 - 安装包命名已收敛为 `angie-gm-basic` / `angie-gm-all`
 - `source/README.md`、manifest 模型与 checksum 文件格式已建立
+- `angie-gm-basic` / `angie-gm-all` 的 profile 字段模型已建立
 
 ## 进行中
 
-- Task 2 profile 模型设计
+- Task 2 提交收尾
 
 ## 下一步
 
-1. 定义 `builder/profiles/angie-gm-basic` 与 `builder/profiles/angie-gm-all` 的字段模型
+1. 提交 profile 模型
 2. 定义 `deb` / `rpm` 的冲突与替换策略骨架
 3. 起草共享构建脚本骨架
 
