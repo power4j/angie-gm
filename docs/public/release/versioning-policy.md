@@ -33,6 +33,22 @@
 
 同一次发布中的两个包共享同一包版本。
 
+补充说明：
+
+- `package_version` 是构建与发布流程中的权威输入字段。
+- 正式发布时，`package_version` 由正式 tag 去掉前缀 `v` 得到。
+- 手工触发 review 发布时，`package_version` 由 `workflow_dispatch` 显式输入，不做隐式推断。
+
+建议：
+
+- 正式版使用 `0.1.0`、`0.2.0`
+- review 版使用 `0.1.0~rc1`、`0.1.0~rc2`
+
+约束：
+
+- 不得从分支名猜测 `package_version`
+- 不得在没有明确版本号的情况下手工发布 review 包
+
 ## 3. 打包修订号
 
 打包修订号用于表达在同一包版本下的重新打包次数。
@@ -48,6 +64,16 @@
 
 - `angie-gm-basic-0.1.0-1.x86_64.rpm`
 - `angie-gm-basic_0.1.0-1_amd64.deb`
+
+补充说明：
+
+- `package_release` 是构建与发布流程中的打包修订输入字段。
+- `package_release` 不表达功能代际，只表达同一 `package_version` 下的重新打包次数。
+
+判断原则：
+
+- 对外交付语义变化，提升 `package_version`
+- 仅打包实现、安装脚本、诊断输出等修复，提升 `package_release`
 
 ## 4. 上游源码版本
 
@@ -91,6 +117,15 @@
 - `angie-gm-basic_<package-version>-<revision>_<arch>.deb`
 - `angie-gm-all_<package-version>-<revision>_<arch>.deb`
 
+示例：
+
+- 正式版：
+  - `angie-gm-basic-0.1.0-1.x86_64.rpm`
+  - `angie-gm-basic_0.1.0-1_amd64.deb`
+- review 版：
+  - `angie-gm-basic-0.1.0~rc1-1.x86_64.rpm`
+  - `angie-gm-basic_0.1.0~rc1-1_amd64.deb`
+
 上游版本应放入以下位置，而不是文件名：
 
 - `source/manifests/*.json`
@@ -107,6 +142,12 @@
 - 相关验证记录
 
 如上游版本变化导致功能或兼容性变化，应评估是否提升本项目包版本，而不仅仅是打包修订号。
+
+常见场景建议：
+
+- 升级 Angie / TongSuo 且影响交付结果：提升 `package_version`
+- 调整 `basic` / `all` 的能力集合：提升 `package_version`
+- 修复安装脚本、打包模板、systemd 集成、诊断输出：提升 `package_release`
 
 ## 8. 构建 ABI 基线
 

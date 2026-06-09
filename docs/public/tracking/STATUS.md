@@ -40,15 +40,17 @@
 - 已改为使用 `ar + tar` 手工生成 `.deb`，GitHub Actions 最新一轮已在 `deb` / `rpm` 全矩阵完成真实产包并上传包 artifact
 - 已移除 RPM 文件名中的 `.el8` 后缀，正式外发命名回到 `edition + version + release + arch`
 - `Release Packages` 已完成一次 `workflow_dispatch` dry-run，确认 8 个矩阵重构建与 release payload 汇总链路可用
+- `Release Packages` 已收敛为两条正式发布路径：`workflow_dispatch -> draft prerelease` 与 `push tag -> draft stable`
+- 手工触发的 `package_version` 已改为必填，版本职责与 `package_release` 分工已写入正式文档
 
 ## 进行中
 
-- Release workflow dry-run 验证记录补充中
+- review prerelease 触发链路待远端实测
 
 ## 下一步
 
-1. 增加包内内容与安装后行为的线下验证记录
-2. 评估是否在 release payload 中补充更详细的 Release Notes 模板
+1. 触发一次 `workflow_dispatch`，验证 `draft prerelease` 创建行为
+2. 增加包内内容与安装后行为的线下验证记录
 3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
 
 ## 阻塞项

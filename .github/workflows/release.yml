@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
     inputs:
       package_version:
-        description: Package version without leading v, for example 0.1.0
-        required: false
+        description: Package version, for example 0.1.0~rc1
+        required: true
       package_release:
         description: Packaging release number, default 1
         required: false
@@ -47,6 +47,7 @@ jobs:
 
       - name: Resolve release version
         run: |
+          event_name="${{ github.event_name }}"
           if [ -n "${{ github.event.inputs.package_version }}" ]; then
             package_version="${{ github.event.inputs.package_version }}"
           else
@@ -56,8 +57,24 @@ jobs:
             echo "package_version is empty" >&2
             exit 1
           fi
+          if [ "${event_name}" = "workflow_dispatch" ]; then
+            if [[ "${package_version}" == *"~"* ]]; then
+              release_tag="v${package_version/\~/-}"
+            else
+              release_tag="review-v${package_version}"
+            fi
+            release_name="Review ${package_version}"
+            is_prerelease="true"
+          else
+            release_tag="${GITHUB_REF_NAME}"
+            release_name="${GITHUB_REF_NAME}"
+            is_prerelease="false"
+          fi
           echo "PACKAGE_VERSION=${package_version}" >> "${GITHUB_ENV}"
           echo "PACKAGE_RELEASE=${{ github.event.inputs.package_release || '1' }}" >> "${GITHUB_ENV}"
+          echo "RELEASE_TAG=${release_tag}" >> "${GITHUB_ENV}"
+          echo "RELEASE_NAME=${release_name}" >> "${GITHUB_ENV}"
+          echo "IS_PRERELEASE=${is_prerelease}" >> "${GITHUB_ENV}"
 
       - name: Show matrix context
         run: |
@@ -68,6 +85,8 @@ jobs:
           echo "format=${{ matrix.format }}"
           echo "version=${PACKAGE_VERSION}"
           echo "release=${PACKAGE_RELEASE}"
+          echo "release_tag=${RELEASE_TAG}"
+          echo "is_prerelease=${IS_PRERELEASE}"
 
       - name: Validate source metadata presence
         run: |
@@ -151,6 +170,7 @@ jobs:
 
       - name: Resolve release version
         run: |
+          event_name="${{ github.event_name }}"
           if [ -n "${{ github.event.inputs.package_version }}" ]; then
             package_version="${{ github.event.inputs.package_version }}"
           else
@@ -160,8 +180,24 @@ jobs:
             echo "package_version is empty" >&2
             exit 1
           fi
+          if [ "${event_name}" = "workflow_dispatch" ]; then
+            if [[ "${package_version}" == *"~"* ]]; then
+              release_tag="v${package_version/\~/-}"
+            else
+              release_tag="review-v${package_version}"
+            fi
+            release_name="Review ${package_version}"
+            is_prerelease="true"
+          else
+            release_tag="${GITHUB_REF_NAME}"
+            release_name="${GITHUB_REF_NAME}"
+            is_prerelease="false"
+          fi
           echo "PACKAGE_VERSION=${package_version}" >> "${GITHUB_ENV}"
           echo "PACKAGE_RELEASE=${{ github.event.inputs.package_release || '1' }}" >> "${GITHUB_ENV}"
+          echo "RELEASE_TAG=${release_tag}" >> "${GITHUB_ENV}"
+          echo "RELEASE_NAME=${release_name}" >> "${GITHUB_ENV}"
+          echo "IS_PRERELEASE=${is_prerelease}" >> "${GITHUB_ENV}"
 
       - name: Download built package artifacts
         uses: actions/download-artifact@v4
@@ -190,10 +226,14 @@ jobs:
           path: output/release/
 
       - name: Create or update release draft
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           draft: true
+          prerelease: ${{ env.IS_PRERELEASE }}
+          tag_name: ${{ env.RELEASE_TAG }}
+          target_commitish: ${{ github.sha }}
+          name: ${{ env.RELEASE_NAME }}
+          make_latest: false
           generate_release_notes: true
           files: |
             output/release/*
