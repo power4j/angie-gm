@@ -29,6 +29,7 @@
 - 已确认银河麒麟与统信目标机的 `glibc` 为 `2.28`
 - `glibc 2.28` 已收敛为当前正式的 `Build Baseline`
 - GitHub Actions 已切换为固定 runner + `glibc 2.28` 基线容器方案
+- 已确认 GitHub Actions 的 `ubuntu-24.04-arm` 与 `almalinux:8` 容器可启动，当前失败点定位为 `dnf` 依赖冲突
 
 ## 进行中
 
@@ -36,7 +37,7 @@
 
 ## 下一步
 
-1. 在 GitHub Actions 上验证 `glibc 2.28` 基线容器与 `arm64` runner 可用性
+1. 修复 GitHub Actions 中 `almalinux:8` 的依赖冲突并复跑
 2. 收敛 TongSuo 真实编译结果并补日志级验证记录
 3. 继续推进 Angie 真实 configure / compile / install 流程
 
