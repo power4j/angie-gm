@@ -28,6 +28,7 @@
 - WSL Ubuntu 24 已验证 `angie-gm-basic` 与 `angie-gm-all` 可稳定跑通到编译占位阶段，`build/angie` 目录创建问题已修复
 - 已确认银河麒麟与统信目标机的 `glibc` 为 `2.28`
 - `glibc 2.28` 已收敛为当前正式的 `Build Baseline`
+- GitHub Actions 已切换为固定 runner + `glibc 2.28` 基线容器方案
 
 ## 进行中
 
@@ -35,7 +36,7 @@
 
 ## 下一步
 
-1. 按 `glibc 2.28` 基线设计 GitHub Actions 构建环境
+1. 在 GitHub Actions 上验证 `glibc 2.28` 基线容器与 `arm64` runner 可用性
 2. 收敛 TongSuo 真实编译结果并补日志级验证记录
 3. 继续推进 Angie 真实 configure / compile / install 流程
 
