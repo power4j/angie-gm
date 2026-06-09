@@ -70,6 +70,7 @@ jobs:
             bash \
             ca-certificates \
             curl \
+            dpkg \
             diffutils \
             findutils \
             gcc \
@@ -82,6 +83,7 @@ jobs:
             perl \
             pcre2-devel \
             python3 \
+            rpm-build \
             sed \
             tar \
             zlib-devel \
@@ -98,10 +100,17 @@ jobs:
             builder/common/build-tongsuo.sh \
             builder/common/configure-angie.sh \
             builder/common/build-angie.sh \
+            builder/common/assemble-runtime.sh \
+            builder/common/package-rpm.sh \
+            builder/common/package-deb.sh \
             builder/common/build.sh
 
       - name: Run build pipeline
         run: |
+          export PACKAGE_FORMAT="${{ matrix.format }}"
+          export BUILD_ARCH="${{ matrix.arch }}"
+          export PACKAGE_VERSION="0.1.0"
+          export PACKAGE_RELEASE="1"
           bash builder/common/build.sh "${{ matrix.package }}"
 
       - name: Upload work directory
@@ -118,4 +127,12 @@ jobs:
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-staging
           path: output/staging/${{ matrix.package }}/
+          if-no-files-found: ignore
+
+      - name: Upload package artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-packages
+          path: output/packages/${{ matrix.package }}/
           if-no-files-found: ignore

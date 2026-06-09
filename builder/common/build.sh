@@ -24,8 +24,13 @@ source "${SCRIPT_DIR}/configure-angie.sh"
 source "${SCRIPT_DIR}/build-angie.sh"
 # shellcheck source=builder/common/assemble-runtime.sh
 source "${SCRIPT_DIR}/assemble-runtime.sh"
+# shellcheck source=builder/common/package-rpm.sh
+source "${SCRIPT_DIR}/package-rpm.sh"
+# shellcheck source=builder/common/package-deb.sh
+source "${SCRIPT_DIR}/package-deb.sh"
 
 WORK_ROOT="${REPO_ROOT}/output/work"
+PACKAGE_OUTPUT_ROOT="${REPO_ROOT}/output/packages"
 
 extract_source_archive() {
     local archive_path="${1:?archive_path is required}"
@@ -112,6 +117,11 @@ main() {
     local tongsuo_config_args_file="${tongsuo_build_root}/config-args.txt"
     local angie_build_root="${work_profile_root}/build/angie"
     local angie_config_args_file="${angie_build_root}/configure-args.txt"
+    local package_output_dir="${PACKAGE_OUTPUT_ROOT}/${profile_name}"
+    local package_version="${PACKAGE_VERSION:-0.1.0}"
+    local package_release="${PACKAGE_RELEASE:-1}"
+    local build_arch="${BUILD_ARCH:-$(uname -m)}"
+    local package_format="${PACKAGE_FORMAT:-}"
 
     load_profile "${profile_dir}"
     print_key_paths
@@ -132,7 +142,21 @@ main() {
     assemble_runtime "${profile_dir}" "${staging_root}" "${tongsuo_install_root}"
     print_staging_summary "${staging_root}"
 
-    log_warn "package execution is not implemented yet"
+    case "${package_format}" in
+        rpm)
+            package_rpm "${profile_name}" "${staging_root}" "${package_output_dir}/rpm" "${package_version}" "${package_release}" "${build_arch}"
+            ;;
+        deb)
+            package_deb "${profile_name}" "${staging_root}" "${package_output_dir}/deb" "${package_version}" "${package_release}" "${build_arch}"
+            ;;
+        "")
+            log_warn "package format is not set; skip package generation"
+            ;;
+        *)
+            die "unsupported package format: ${package_format}"
+            ;;
+    esac
+
     print_self_check_hints
 }
 
