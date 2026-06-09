@@ -22,6 +22,8 @@ source "${SCRIPT_DIR}/build-tongsuo.sh"
 source "${SCRIPT_DIR}/configure-angie.sh"
 # shellcheck source=builder/common/build-angie.sh
 source "${SCRIPT_DIR}/build-angie.sh"
+# shellcheck source=builder/common/assemble-runtime.sh
+source "${SCRIPT_DIR}/assemble-runtime.sh"
 
 WORK_ROOT="${REPO_ROOT}/output/work"
 
@@ -127,6 +129,7 @@ main() {
     write_angie_configure_args "${angie_config_args_file}" "${tongsuo_source_dir}"
     prepare_angie_build "${angie_source_dir}" "${angie_build_root}" "${angie_config_args_file}"
     build_angie "${angie_source_dir}" "${angie_build_root}" "${angie_config_args_file}" "${staging_root}"
+    assemble_runtime "${profile_dir}" "${staging_root}" "${tongsuo_install_root}"
     print_staging_summary "${staging_root}"
 
     log_warn "package execution is not implemented yet"

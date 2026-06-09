@@ -35,15 +35,16 @@
 - GitHub Actions `Build Packages` 已在 `x86_64` / `aarch64`、`deb` / `rpm` 全矩阵完成，当前剩余 CI 问题仅为 Node 20 actions 弃用告警
 - Angie 真实 `configure` / `make` / `install` 已接入本地构建脚本，等待下一轮 GitHub Actions 验证真实编译结果
 - 已定位 Angie 真实编译的首个错误：`--builddir` 与 `make` 执行目录不一致，导致 `No rule to make target 'src/core/ngx_build.c'`
+- 真实源码编译已在 GitHub Actions 全矩阵跑通，当前进入 `staging` 运行树装配与真产包阶段
 
 ## 进行中
 
-- 真实编译与打包执行接入中
+- `staging` 运行树装配与真产包接入中
 
 ## 下一步
 
-1. 在 GitHub Actions 上验证 Angie 真实编译链路并定位首个真实编译错误
-2. 收敛 TongSuo / Angie 真实编译结果并补日志级验证记录
+1. 在 GitHub Actions 上验证 `assemble-runtime` 阶段，确认 `staging` 内包含私有库、systemd、tmpfiles 与诊断脚本
+2. 接入 `rpm` / `deb` 真正产包逻辑，并把产物上传为 artifact
 3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
 
 ## 阻塞项
