@@ -33,6 +33,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | angie-gm-basic | TBD | TBD | x86_64 | Ubuntu 20 | TBD | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | TBD | 首行模板 |
 | angie-gm-all | TBD | TBD | aarch64 | 银河麒麟服务器版 V10 | TBD | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | TBD | 首行模板 |
+| angie-gm-basic | TBD | TBD | x86_64 | Ubuntu 24 (WSL) | `6.6.87.2-microsoft-standard-WSL2` | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PARTIAL | 2026-06-09 | 已验证 `bash -n` 通过，`build.sh` 能进入真实源码准备链路；发现并修复日志污染问题，待复跑 checksum 与解包链路 |
 
 ## 协议冒烟最低要求
 
