@@ -240,3 +240,32 @@
   - 已生成 `sha256sum.txt`
   - 已生成 `BUILD-INFO.txt`
   - 因本次不是 tag 触发，`Create or update release draft` 被正确跳过
+
+## Release workflow prerelease 验证
+
+### `Release Packages`
+
+- 触发方式：`workflow_dispatch`
+- workflow run：`27210450144`
+- 输入：
+  - `package_version=0.1.0~rc1`
+  - `package_release=1`
+- 结果：通过
+- 输出摘要：
+  - 8 个 `release-build-*` 矩阵任务全部完成
+  - `assemble-release` 成功执行
+  - GitHub Release 已创建为 `draft + prerelease`
+  - Release 名称：`Review 0.1.0~rc1`
+  - Release tag：`v0.1.0-rc1`
+  - Release 资产包含 8 个包文件、`sha256sum.txt` 与 `BUILD-INFO.txt`
+
+### 观察项
+
+- workflow artifact 内的包文件名保持 `~`：
+  - 例如 `angie-gm-basic_0.1.0~rc1-1_amd64.deb`
+  - 例如 `angie-gm-basic-0.1.0~rc1-1.x86_64.rpm`
+- GitHub Release 资产展示名中的 label 保持 `~`
+- GitHub Release 资产实际下载文件名被 GitHub 规范化为 `.`：
+  - 例如 `angie-gm-basic_0.1.0.rc1-1_amd64.deb`
+  - 例如 `angie-gm-basic-0.1.0.rc1-1.x86_64.rpm`
+- 当前判断：该差异来自 GitHub Release 资产文件名处理，而不是本项目打包脚本本身

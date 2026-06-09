@@ -42,14 +42,15 @@
 - `Release Packages` 已完成一次 `workflow_dispatch` dry-run，确认 8 个矩阵重构建与 release payload 汇总链路可用
 - `Release Packages` 已收敛为两条正式发布路径：`workflow_dispatch -> draft prerelease` 与 `push tag -> draft stable`
 - 手工触发的 `package_version` 已改为必填，版本职责与 `package_release` 分工已写入正式文档
+- `Release Packages` 已完成一次真实 `workflow_dispatch prerelease` 验证，确认可创建 `draft + prerelease` release，并正确生成 `Review 0.1.0~rc1` 与 tag `v0.1.0-rc1`
 
 ## 进行中
 
-- review prerelease 触发链路待远端实测
+- GitHub Release 资产文件名中的 `~` 被平台规范化为 `.`，原因与应对策略待评估
 
 ## 下一步
 
-1. 触发一次 `workflow_dispatch`，验证 `draft prerelease` 创建行为
+1. 评估是否接受 GitHub Release 资产文件名对 `~` 的规范化，或调整 review 版本展示策略
 2. 增加包内内容与安装后行为的线下验证记录
 3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
 
