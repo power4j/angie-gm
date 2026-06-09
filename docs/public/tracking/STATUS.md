@@ -23,16 +23,17 @@
 - WSL Ubuntu 24 已验证 `builder/common/*.sh` 可通过 `bash -n`，且两个 profile 可跑到 staging 准备阶段
 - 已定位真实源码准备链路中的日志污染问题，原因是命令替换返回值混入了标准输出日志
 - Angie 与 TongSuo 公开源码包的真实 SHA256 已补齐
+- WSL Ubuntu 24 已验证 Angie 与 TongSuo 的真实源码下载、checksum、解包与 staging 准备链路通过
 
 ## 进行中
 
-- 真实源码准备链路接入中
+- 把 workflow 从占位 artifact 接到真实源码准备与 staging 流程
 
 ## 下一步
 
-1. 在线下 Linux 或 WSL 环境验证源码下载、checksum、解包链路
-2. 把 workflow 从占位 artifact 接到真实源码准备与 staging 流程
-3. 开始补 `deb` / `rpm` 具体模板文件与维护脚本
+1. 让 GitHub Actions 运行真实源码准备与 staging 流程
+2. 开始补 `deb` / `rpm` 具体模板文件与维护脚本
+3. 继续推进到真实编译与私有依赖闭包处理
 
 ## 阻塞项
 

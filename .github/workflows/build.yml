@@ -50,14 +50,32 @@ jobs:
           test -f builder/profiles/${{ matrix.package }}/modules.dynamic
           test -f builder/profiles/${{ matrix.package }}/install.assets
 
-      - name: Prepare output layout
+      - name: Prepare shell runtime
         run: |
-          mkdir -p output/artifacts/${{ matrix.package }}/${{ matrix.arch }}/${{ matrix.format }}
-          printf 'placeholder for %s %s %s\n' "${{ matrix.package }}" "${{ matrix.arch }}" "${{ matrix.format }}" \
-            > output/artifacts/${{ matrix.package }}/${{ matrix.arch }}/${{ matrix.format }}/README.txt
+          chmod +x builder/common/*.sh
 
-      - name: Upload placeholder artifact
+      - name: Verify shell syntax
+        run: |
+          bash -n builder/common/diagnostics.sh \
+            builder/common/load-profile.sh \
+            builder/common/read-manifest.sh \
+            builder/common/fetch-sources.sh \
+            builder/common/verify-checksums.sh \
+            builder/common/stage-runtime.sh \
+            builder/common/build.sh
+
+      - name: Run source preparation flow
+        run: |
+          bash builder/common/build.sh "${{ matrix.package }}"
+
+      - name: Upload work directory
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
-          path: output/artifacts/${{ matrix.package }}/${{ matrix.arch }}/${{ matrix.format }}/
+          name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-work
+          path: output/work/${{ matrix.package }}/
+
+      - name: Upload staging directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-staging
+          path: output/staging/${{ matrix.package }}/
