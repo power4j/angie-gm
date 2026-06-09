@@ -32,7 +32,7 @@
 ## 阻塞项
 
 - 当前 Windows 环境没有可用的 Bash / WSL 运行时，无法在本机完成 `builder/common/*.sh` 的语法检查与执行验证
-- 当前 `gh auth status` 显示默认 GitHub token 无效，且访问 GitHub API 还遇到本机网络权限错误，暂时无法在本机直接验证 GitHub Actions 远端状态
+- Codex 当前 shell 环境下执行 `gh` 校验失败；该现象与用户本机终端结果不一致，应按环境差异处理，不应视为仓库或账号本身异常
 
 ## 最近提交
 
