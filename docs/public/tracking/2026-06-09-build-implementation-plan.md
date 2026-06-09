@@ -87,7 +87,7 @@ git commit -m "docs: define build profile model"
 
 保证安装与构建诊断能力从骨架开始存在。
 
-- [ ] **Step 3: 提交**
+- [x] **Step 3: 提交**
 
 ```bash
 git add builder/common
