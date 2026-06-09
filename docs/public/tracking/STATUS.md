@@ -17,13 +17,13 @@
 
 ## 进行中
 
-- Task 2 提交收尾
+- Task 4 打包模板骨架设计
 
 ## 下一步
 
-1. 提交 profile 模型
-2. 定义 `deb` / `rpm` 的冲突与替换策略骨架
-3. 起草共享构建脚本骨架
+1. 定义 `deb` / `rpm` 的冲突与替换策略骨架
+2. 起草共享构建脚本骨架
+3. 建立 GitHub Actions 构建骨架
 
 ## 阻塞项
 
@@ -31,6 +31,7 @@
 
 ## 最近提交
 
+- `287939b` `docs: define build profile model`
 - `86dab56` `docs: define source manifest model`
 - `908e238` `docs: clarify build environment`
 - `a7121bb` `docs: align package naming baseline`

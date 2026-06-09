@@ -62,7 +62,7 @@ git commit -m "docs: define source manifest model"
 
 列出配置、systemd、tmpfiles、示例文件。
 
-- [ ] **Step 4: 提交**
+- [x] **Step 4: 提交**
 
 ```bash
 git add builder/profiles
