@@ -32,9 +32,36 @@ resolve_source_archive() {
 fetch_source_from_upstream() {
     local upstream_url="${1:?upstream_url is required}"
     local filename="${2:?filename is required}"
+    local archive_path="${SOURCE_CACHE_DIR}/${filename}"
+    local temp_path="${archive_path}.part"
 
     log_stage "fetch source"
     log_info "upstream_url=${upstream_url}"
     log_info "filename=${filename}"
-    die "upstream download is not implemented in the skeleton yet"
+
+    ensure_source_cache_dir
+
+    if command -v curl >/dev/null 2>&1; then
+        curl --fail --location --retry 3 --output "${temp_path}" "${upstream_url}"
+    elif command -v wget >/dev/null 2>&1; then
+        wget --output-document="${temp_path}" "${upstream_url}"
+    else
+        die "curl or wget is required to download source archives"
+    fi
+
+    mv "${temp_path}" "${archive_path}"
+    log_info "downloaded source archive: ${archive_path}"
+    printf '%s\n' "${archive_path}"
+}
+
+resolve_or_fetch_source_archive() {
+    local upstream_url="${1:?upstream_url is required}"
+    local filename="${2:?filename is required}"
+    local archive_path="${SOURCE_CACHE_DIR}/${filename}"
+
+    if [[ -f "${archive_path}" ]]; then
+        resolve_source_archive "${filename}"
+    else
+        fetch_source_from_upstream "${upstream_url}" "${filename}"
+    fi
 }

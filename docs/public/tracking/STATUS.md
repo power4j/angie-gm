@@ -20,21 +20,24 @@
 - 已完成一次 `gh` 只读检查尝试，并确认当前本机 GitHub CLI 环境不可用
 - 包版本、打包修订号、上游源码版本的分层策略已建立
 - 验证矩阵与验证记录模板已建立
+- WSL Ubuntu 24 已验证 `builder/common/*.sh` 可通过 `bash -n`，且两个 profile 可跑到 staging 准备阶段
+- 已定位真实源码准备链路中的日志污染问题，原因是命令替换返回值混入了标准输出日志
 
 ## 进行中
 
-- 首轮工程骨架已完成，等待进入下一批实现任务
+- 真实源码准备链路接入中
 
 ## 下一步
 
-1. 在线下 Linux 或 WSL 环境做 `builder/common/*.sh` 的语法与执行验证
-2. 把 workflow 从占位 artifact 接到真实源码下载、checksum 校验与 staging 流程
-3. 开始补 `deb` / `rpm` 具体模板文件与维护脚本
+1. 补齐 Angie 与 TongSuo 源码包的真实 SHA256
+2. 在线下 Linux 或 WSL 环境验证源码下载、checksum、解包链路
+3. 把 workflow 从占位 artifact 接到真实源码准备与 staging 流程
 
 ## 阻塞项
 
 - 当前 Windows 环境没有可用的 Bash / WSL 运行时，无法在本机完成 `builder/common/*.sh` 的语法检查与执行验证
 - Codex 当前 shell 环境下执行 `gh` 校验失败；该现象与用户本机终端结果不一致，应按环境差异处理，不应视为仓库或账号本身异常
+- `source/checksums/upstream.sha256` 仍未写入真实 SHA256，当前真实源码准备链路还不能在严格校验模式下完成
 
 ## 最近提交
 

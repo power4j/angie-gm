@@ -3,11 +3,11 @@
 set -euo pipefail
 
 log_stage() {
-    printf '[stage] %s\n' "$*"
+    printf '[stage] %s\n' "$*" >&2
 }
 
 log_info() {
-    printf '[info] %s\n' "$*"
+    printf '[info] %s\n' "$*" >&2
 }
 
 log_warn() {
