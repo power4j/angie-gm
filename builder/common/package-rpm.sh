@@ -60,7 +60,7 @@ package_rpm() {
     cat > "${spec_file}" <<EOF
 Name:           ${PACKAGE_NAME}
 Version:        ${package_version}
-Release:        ${package_release}%{?dist}
+Release:        ${package_release}
 Summary:        Angie offline package (${PACKAGE_FLAVOR})
 License:        BSD
 URL:            https://github.com/power4j/angie-gm

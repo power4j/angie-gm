@@ -45,7 +45,7 @@
 
 ## 下一步
 
-1. 评估 `rpm` 文件名中的 `.el8` 后缀是否保留为正式外发命名
+1. 在 GitHub Actions 上验证移除 RPM `.el8` 后缀后的最终产物命名
 2. 增加包内内容与安装后行为的线下验证记录
 3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
 
