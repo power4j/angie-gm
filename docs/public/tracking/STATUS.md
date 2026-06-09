@@ -41,6 +41,8 @@
 
 ## 最近提交
 
+- `336300e` `feat: wire source preparation checks`
+- `96856c3` `feat: prepare real source fetch pipeline`
 - `9d96f31` `docs: add validation tracking skeleton`
 - `d327246` `ci: scaffold build and release workflows`
 - `1bee7ce` `feat: scaffold build helper scripts`
