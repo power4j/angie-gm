@@ -110,7 +110,7 @@ git commit -m "feat: scaffold build helper scripts"
 
 只建骨架，不先写完整 spec/control 细节。
 
-- [ ] **Step 3: 提交**
+- [x] **Step 3: 提交**
 
 ```bash
 git add packaging

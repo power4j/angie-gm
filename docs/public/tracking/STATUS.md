@@ -17,16 +17,17 @@
 - `deb` / `rpm` 的打包模板骨架与冲突策略已建立
 - 共享构建脚本骨架与阶段日志模型已建立
 - GitHub Actions 的构建矩阵与 Release workflow 骨架已建立
+- 已完成一次 `gh` 只读检查尝试，并确认当前本机 GitHub CLI 环境不可用
 
 ## 进行中
 
-- Task 5 提交收尾
+- Task 6 验证与诊断跟踪骨架设计
 
 ## 下一步
 
-1. 提交 GitHub Actions 构建骨架
-2. 建立验证与诊断跟踪骨架
-3. 用 `gh` 做只读认证与仓库访问检查
+1. 建立验证与诊断跟踪骨架
+2. 在线下 Linux 或 WSL 环境做 Shell 语法与执行验证
+3. 修复本机 `gh` 认证或网络访问后再验证 GitHub Actions 远端状态
 
 ## 阻塞项
 
@@ -35,6 +36,7 @@
 
 ## 最近提交
 
+- `d327246` `ci: scaffold build and release workflows`
 - `1bee7ce` `feat: scaffold build helper scripts`
 - `3c9e34e` `docs: define packaging template skeleton`
 - `287939b` `docs: define build profile model`
