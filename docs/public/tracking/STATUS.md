@@ -34,6 +34,7 @@
 - GitHub Actions 最新一轮已通过 `Install build dependencies`、`Verify shell syntax` 与 `Run build pipeline` 阶段，说明当前 CI 构建骨架已在 `x86_64` / `aarch64` 上跑通
 - GitHub Actions `Build Packages` 已在 `x86_64` / `aarch64`、`deb` / `rpm` 全矩阵完成，当前剩余 CI 问题仅为 Node 20 actions 弃用告警
 - Angie 真实 `configure` / `make` / `install` 已接入本地构建脚本，等待下一轮 GitHub Actions 验证真实编译结果
+- 已定位 Angie 真实编译的首个错误：`--builddir` 与 `make` 执行目录不一致，导致 `No rule to make target 'src/core/ngx_build.c'`
 
 ## 进行中
 

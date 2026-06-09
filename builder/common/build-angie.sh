@@ -75,11 +75,11 @@ build_angie() {
             die "angie configure failed; check ${configure_log_file}"
         fi
 
-        if ! make -C "${build_root}" -j "${make_jobs}" 2>&1 | tee "${make_log_file}"; then
+        if ! make -j "${make_jobs}" 2>&1 | tee "${make_log_file}"; then
             die "angie make failed; check ${make_log_file}"
         fi
 
-        if ! make -C "${build_root}" install DESTDIR="${staging_root}" 2>&1 | tee "${install_log_file}"; then
+        if ! make install DESTDIR="${staging_root}" 2>&1 | tee "${install_log_file}"; then
             die "angie install failed; check ${install_log_file}"
         fi
     )
