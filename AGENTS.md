@@ -14,10 +14,10 @@
 - `x86_64`
 - `aarch64`
 
-当前 edition 固定为：
+当前安装包固定为：
 
-- `angie-gm`：基础能力 + 国密 / NTLS
-- `angie-all`：尽量完整，包含 HTTP/3、stream、常用动态模块、国密 / NTLS
+- `angie-gm-basic`：基础能力 + 国密 / NTLS
+- `angie-gm-all`：尽量完整，包含 HTTP/3、stream、常用动态模块、国密 / NTLS
 
 首要工程目标如下：
 
@@ -45,9 +45,10 @@
 
 约束：
 
-- `angie-gm` 与 `angie-all` 不允许同时安装。
+- `angie-gm-basic` 与 `angie-gm-all` 不允许同时安装。
 - 两种包必须允许通过标准包升级路径相互替换。
 - 升级时不得覆盖现场配置与用户数据。
+- 两种包必须与官方 `angie` 包显式冲突，避免与上游仓库安装结果混用。
 
 ## 3. 权威资料
 
@@ -113,24 +114,25 @@ tests/               安装包与构建链路级验证
 
 构建链路固定为：
 
-1. `profile` 定义 edition 差异
+1. `profile` 定义安装包差异
 2. 编译并安装到 `staging`
 3. 从统一的 `staging` 结果生成 `deb` / `rpm`
 
 约束：
 
 - 对外交付为单包。
-- 包名保留 edition，例如 `angie-gm`、`angie-all`。
+- 包名固定为 `angie-gm-basic`、`angie-gm-all`。
 - 运行时命令与服务名统一使用 `angie`。
 - 除 `glibc` 外，能稳定自带的依赖应优先随包进入 `/opt/angie/lib`。
-- `angie-all` 的动态模块、HTTP/3 相关能力与私有库应从同一运行树打包。
+- `angie-gm-all` 的动态模块、HTTP/3 相关能力与私有库应从同一运行树打包。
 - 不得为了追求“全静态”破坏首发稳定性。
+- 首版不默认通过 `Provides: angie` 冒充官方包，仅在明确存在依赖兼容需求时再评估。
 
 降级顺序固定如下：
 
 1. 保留单包交付
 2. 保留厚包目标
-3. 缩减 `angie-all` 的可选模块
+3. 缩减 `angie-gm-all` 的可选模块
 4. 最后才回退到更多系统库依赖
 
 ## 7. 发布与部署术语
@@ -144,7 +146,7 @@ tests/               安装包与构建链路级验证
 
 构建矩阵与验证矩阵必须分离：
 
-- GitHub Actions 负责按 `edition x arch x format` 产包。
+- GitHub Actions 负责按 `package x arch x format` 产包。
 - 线下环境负责目标发行版验证。
 
 正式文档必须明确区分：
@@ -161,8 +163,8 @@ tests/               安装包与构建链路级验证
 - `angie -V` 输出正确
 - `angie -t` 可执行
 - `systemctl start angie` 可启动
-- `angie-gm` 验证基础 HTTP/HTTPS 与 NTLS
-- `angie-all` 验证 HTTP/3、stream 与至少一个动态模块
+- `angie-gm-basic` 验证基础 HTTP/HTTPS 与 NTLS
+- `angie-gm-all` 验证 HTTP/3、stream 与至少一个动态模块
 
 ## 9. 安装诊断与排错约束
 

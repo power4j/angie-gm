@@ -12,21 +12,27 @@
 4. GitHub Actions 产包，GitHub Release 发布
 5. 安装、升级与排错过程具备基础诊断能力
 
-## 2. Edition
+## 2. 安装包
 
-项目固定维护两个 edition：
+项目固定维护两个安装包：
 
-- `angie-gm`
+- `angie-gm-basic`
   - 基础能力 + 国密 / NTLS
-- `angie-all`
-  - 在 `angie-gm` 基础上增加 HTTP/3、stream、常用动态模块
+- `angie-gm-all`
+  - 在 `angie-gm-basic` 基础上增加 HTTP/3、stream、常用动态模块
 
 运行时名称保持中性：
 
 - 命令：`angie`
 - 服务：`angie.service`
 
-edition 只通过包名、Release 名、构建元数据和 `angie -V` 暴露。
+安装包差异只通过包名、Release 名、构建元数据和 `angie -V` 暴露。
+
+冲突策略：
+
+- `angie-gm-basic` 与 `angie-gm-all` 不允许同时安装。
+- 两者都必须与官方 `angie` 包显式冲突。
+- 首版不默认通过 `Provides: angie` 冒充官方包，除非后续出现明确依赖兼容需求。
 
 ## 3. 安装布局
 
@@ -49,7 +55,7 @@ edition 只通过包名、Release 名、构建元数据和 `angie -V` 暴露。
 
 构建链路固定为：
 
-1. `profile`：定义 edition 差异
+1. `profile`：定义安装包差异
 2. `staging`：将运行树组装为统一目录结构
 3. `package`：从 staging 结果生成 `deb` / `rpm`
 
@@ -63,15 +69,15 @@ edition 只通过包名、Release 名、构建元数据和 `angie -V` 暴露。
 
 1. 保留单包交付
 2. 保留厚包目标
-3. 缩减 `angie-all` 的模块范围
+3. 缩减 `angie-gm-all` 的模块范围
 4. 最后才回退到更多系统库依赖
 
 ## 5. 文档与发布口径
 
 构建矩阵与验证矩阵分离：
 
-- GitHub Actions：负责 `edition x arch x format`
-- 线下验证：负责 `edition x arch x distro`
+- GitHub Actions：负责 `package x arch x format`
+- 线下验证：负责 `package x arch x distro`
 
 正式文档与 Release 说明必须区分：
 

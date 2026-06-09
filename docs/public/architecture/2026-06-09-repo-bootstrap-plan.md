@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 初始化 `angie-gm` 打包仓库，建立项目规范、文档骨架与 Git 基础配置。
+**Goal:** 初始化 `angie-gm` 打包仓库，建立项目规范、文档骨架与 Git 基础配置，并固化 `angie-gm-basic` / `angie-gm-all` 命名基线。
 
 **Architecture:** 先固化正式设计文档，再创建仓库目录、文档入口与 Git 规则，最后初始化仓库并做结构级验证。当前阶段只处理文档、目录与配置，不引入构建逻辑。
 
@@ -18,7 +18,7 @@
 
 - [ ] **Step 1: 写入正式设计文档**
 
-输出仓库目标、edition、安装布局、构建策略、发布口径、诊断要求。
+输出仓库目标、安装包命名、安装布局、构建策略、发布口径、诊断要求。
 
 - [ ] **Step 2: 人工检查文档结构**
 
@@ -75,8 +75,8 @@
 - Create: `assets/.gitkeep`
 - Create: `builder/common/.gitkeep`
 - Create: `builder/container/.gitkeep`
-- Create: `builder/profiles/angie-gm/.gitkeep`
-- Create: `builder/profiles/angie-all/.gitkeep`
+- Create: `builder/profiles/angie-gm-basic/.gitkeep`
+- Create: `builder/profiles/angie-gm-all/.gitkeep`
 - Create: `builder/scripts/.gitkeep`
 - Create: `packaging/common/.gitkeep`
 - Create: `packaging/deb/.gitkeep`

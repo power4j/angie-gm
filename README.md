@@ -2,8 +2,8 @@
 
 `angie-gm` 是一个面向离线 Linux 部署场景的打包与发布工程，用于构建 `angie` 的两类安装包：
 
-- `angie-gm`：基础能力 + 国密 / NTLS
-- `angie-all`：尽量完整，包含 HTTP/3、stream、常用动态模块、国密 / NTLS
+- `angie-gm-basic`：基础能力 + 国密 / NTLS
+- `angie-gm-all`：尽量完整，包含 HTTP/3、stream、常用动态模块、国密 / NTLS
 
 项目目标：
 
