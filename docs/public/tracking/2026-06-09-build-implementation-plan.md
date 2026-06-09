@@ -123,11 +123,11 @@ git commit -m "docs: define packaging template skeleton"
 - Create: `.github/workflows/build.yml`
 - Create: `.github/workflows/release.yml`
 
-- [ ] **Step 1: 定义 `package x arch x format` 矩阵**
+- [x] **Step 1: 定义 `package x arch x format` 矩阵**
 
 不把发行版塞进主构建矩阵。
 
-- [ ] **Step 2: 定义 Release 上传骨架**
+- [x] **Step 2: 定义 Release 上传骨架**
 
 以 GitHub Release 作为正式交付入口。
 

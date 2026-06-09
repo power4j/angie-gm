@@ -16,20 +16,22 @@
 - `angie-gm-basic` / `angie-gm-all` 的 profile 字段模型已建立
 - `deb` / `rpm` 的打包模板骨架与冲突策略已建立
 - 共享构建脚本骨架与阶段日志模型已建立
+- GitHub Actions 的构建矩阵与 Release workflow 骨架已建立
 
 ## 进行中
 
-- Task 5 GitHub Actions 构建骨架设计
+- Task 5 提交收尾
 
 ## 下一步
 
-1. 建立 GitHub Actions 构建骨架
+1. 提交 GitHub Actions 构建骨架
 2. 建立验证与诊断跟踪骨架
-3. 在线下 Linux 或 WSL 环境做 Shell 语法与执行验证
+3. 用 `gh` 做只读认证与仓库访问检查
 
 ## 阻塞项
 
 - 当前 Windows 环境没有可用的 Bash / WSL 运行时，无法在本机完成 `builder/common/*.sh` 的语法检查与执行验证
+- 当前 `gh auth status` 显示默认 GitHub token 无效，且访问 GitHub API 还遇到本机网络权限错误，暂时无法在本机直接验证 GitHub Actions 远端状态
 
 ## 最近提交
 

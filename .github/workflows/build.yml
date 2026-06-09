@@ -1,0 +1,63 @@
+name: Build Packages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - kickoff
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build-${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - angie-gm-basic
+          - angie-gm-all
+        arch:
+          - x86_64
+          - aarch64
+        format:
+          - deb
+          - rpm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show matrix context
+        run: |
+          echo "package=${{ matrix.package }}"
+          echo "arch=${{ matrix.arch }}"
+          echo "format=${{ matrix.format }}"
+
+      - name: Validate source metadata presence
+        run: |
+          test -f source/manifests/angie.json
+          test -f source/manifests/tongsuo.json
+          test -f source/checksums/upstream.sha256
+
+      - name: Validate profile presence
+        run: |
+          test -f builder/profiles/${{ matrix.package }}/profile.env
+          test -f builder/profiles/${{ matrix.package }}/modules.dynamic
+          test -f builder/profiles/${{ matrix.package }}/install.assets
+
+      - name: Prepare output layout
+        run: |
+          mkdir -p output/artifacts/${{ matrix.package }}/${{ matrix.arch }}/${{ matrix.format }}
+          printf 'placeholder for %s %s %s\n' "${{ matrix.package }}" "${{ matrix.arch }}" "${{ matrix.format }}" \
+            > output/artifacts/${{ matrix.package }}/${{ matrix.arch }}/${{ matrix.format }}/README.txt
+
+      - name: Upload placeholder artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
+          path: output/artifacts/${{ matrix.package }}/${{ matrix.arch }}/${{ matrix.format }}/
