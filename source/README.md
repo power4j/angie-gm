@@ -21,6 +21,13 @@
 4. 正式文档与 manifest 优先记录公开可访问的上游来源。
 5. 补丁属于上游组件，不属于安装包 edition。
 
+## 版本约束
+
+- Angie 与 TongSuo 的上游版本只从 `source/manifests/*.json` 读取。
+- 不在构建脚本中硬编码上游版本。
+- 不在正式发布 workflow 中临时手工覆盖上游版本。
+- 版本升级必须同步修改 manifest 与 `source/checksums/upstream.sha256`。
+
 ## 构建时推荐顺序
 
 1. 读取 `source/manifests/*.json`
