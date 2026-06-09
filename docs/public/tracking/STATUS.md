@@ -19,20 +19,21 @@
 
 ## 进行中
 
-- Task 3 提交收尾
+- Task 5 GitHub Actions 构建骨架设计
 
 ## 下一步
 
-1. 提交共享构建脚本骨架
-2. 建立 GitHub Actions 构建骨架
-3. 建立验证与诊断跟踪骨架
+1. 建立 GitHub Actions 构建骨架
+2. 建立验证与诊断跟踪骨架
+3. 在线下 Linux 或 WSL 环境做 Shell 语法与执行验证
 
 ## 阻塞项
 
-- 暂无
+- 当前 Windows 环境没有可用的 Bash / WSL 运行时，无法在本机完成 `builder/common/*.sh` 的语法检查与执行验证
 
 ## 最近提交
 
+- `1bee7ce` `feat: scaffold build helper scripts`
 - `3c9e34e` `docs: define packaging template skeleton`
 - `287939b` `docs: define build profile model`
 - `86dab56` `docs: define source manifest model`
