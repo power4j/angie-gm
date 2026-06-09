@@ -80,9 +80,11 @@ jobs:
             make \
             patch \
             perl \
+            pcre2-devel \
             python3 \
             sed \
             tar \
+            zlib-devel \
             xz
 
       - name: Verify shell syntax

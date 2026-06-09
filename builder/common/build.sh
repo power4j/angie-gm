@@ -121,14 +121,15 @@ main() {
 
     prepare_component_source "angie" "${profile_name}"
     prepare_component_source "tongsuo" "${profile_name}"
+    prepare_staging_tree "${staging_root}"
     prepare_tongsuo_build "${tongsuo_source_dir}" "${tongsuo_build_root}" "${tongsuo_install_root}" "${tongsuo_config_args_file}"
     build_tongsuo "${tongsuo_source_dir}" "${tongsuo_build_root}" "${tongsuo_install_root}" "${tongsuo_config_args_file}"
     write_angie_configure_args "${angie_config_args_file}" "${tongsuo_source_dir}"
     prepare_angie_build "${angie_source_dir}" "${angie_build_root}" "${angie_config_args_file}"
-    prepare_staging_tree "${staging_root}"
+    build_angie "${angie_source_dir}" "${angie_build_root}" "${angie_config_args_file}" "${staging_root}"
     print_staging_summary "${staging_root}"
 
-    log_warn "angie compile and package execution are not implemented yet"
+    log_warn "package execution is not implemented yet"
     print_self_check_hints
 }
 
