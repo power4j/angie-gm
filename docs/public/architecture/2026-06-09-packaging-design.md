@@ -65,6 +65,25 @@
 - `TongSuo` 与其他可控私有库尽量随包进入 `/opt/angie/lib`
 - 不把全静态或 `musl` 替代 `glibc` 作为首发前提
 
+当前确认的构建 ABI 基线：
+
+- `Build Baseline`: `glibc 2.28`
+- 适用目的：优先覆盖银河麒麟服务器版 V10、统信服务器版与 Ubuntu 20 的共同最低基线
+- 当前状态：已由目标机器线下核实，作为当前正式结论
+
+约束：
+
+- GitHub Actions 不得直接依赖 hosted runner 宿主机自带 `glibc` 版本产出最终二进制
+- 构建环境必须显式控制到 `glibc 2.28` 附近的容器、sysroot 或等效工具链
+- 兼容性判断不能只看“能否编译通过”，还必须结合目标产物的 `GLIBC_*` 符号需求和线下实机验证结果
+
+当前构建环境落地方向：
+
+- GitHub Actions 使用固定 runner 标签，不使用 `ubuntu-latest`
+- `x86_64` 优先使用 `ubuntu-24.04`
+- `aarch64` 优先使用 `ubuntu-24.04-arm`
+- 具体编译步骤在 `glibc 2.28` 基线容器内执行，当前首选 `almalinux:8`
+
 降级顺序如下：
 
 1. 保留单包交付

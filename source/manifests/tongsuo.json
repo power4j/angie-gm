@@ -1,0 +1,18 @@
+{
+  "name": "tongsuo",
+  "version": "8.4.0",
+  "tag": "8.4.0",
+  "homepage": "https://github.com/Tongsuo-Project/Tongsuo",
+  "upstream_url": "https://github.com/Tongsuo-Project/Tongsuo/archive/refs/tags/8.4.0.tar.gz",
+  "filename": "Tongsuo-8.4.0.tar.gz",
+  "checksum_file": "source/checksums/upstream.sha256",
+  "patches": [],
+  "used_by": [
+    "angie-gm-basic",
+    "angie-gm-all"
+  ],
+  "notes": [
+    "Source package is published through the public GitHub release/tag flow documented by Tongsuo.",
+    "SHA256 value must be populated in source/checksums/upstream.sha256 before automated builds are enabled."
+  ]
+}

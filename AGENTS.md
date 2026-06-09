@@ -6,7 +6,7 @@
 
 本仓库是 `angie` 离线安装包的构建与发布工程，不是 `Angie` 或 `TongSuo` 的上游开发仓库。
 
-目标是在公司构建环境中生成可重复构建的 Linux 安装包，并通过 GitHub Actions 发布到 GitHub Release，面向以下系统与架构：
+目标是通过 GitHub Actions 生成可重复构建的 Linux 安装包，并发布到 GitHub Release，面向以下系统与架构：
 
 - 银河麒麟服务器版 V10
 - 统信服务器版 V10
@@ -80,6 +80,7 @@
 - `docs/public/release/`：GitHub Actions、Release、版本发布流程
 - `docs/public/validation/`：验证矩阵、验证记录、已验证平台
 - `docs/public/reference/`：上游来源、版本基线、补丁、checksums
+- `docs/public/tracking/`：实施计划、当前进度、下一步动作
 
 强制规则：
 
@@ -87,6 +88,7 @@
 2. `public` 文档禁止写未确认结论、临时猜测或“进行中”内容。
 3. `local` 文档每次结束必须补“当前停点 / 下一步”。
 4. 新增、移动、归档文档后，必须同步更新对应 `README.md` 索引。
+5. 每次完成一个明确任务后，必须同步更新进度跟踪文档，至少说明：已完成、进行中、下一步。
 
 ## 5. 目录规范
 
@@ -156,6 +158,13 @@ tests/               安装包与构建链路级验证
 - `Expected Compatible`
 
 禁止把“理论兼容”写成“已验证支持”。
+
+进度跟踪文档必须明确区分：
+
+- 已完成
+- 进行中
+- 下一步
+- 阻塞项
 
 最低验证项：
 

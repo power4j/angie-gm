@@ -1,0 +1,39 @@
+name: Release Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare release payload
+        run: |
+          mkdir -p output/release
+          printf 'Release workflow scaffold for power4j/angie-gm\n' > output/release/README.txt
+          printf 'Wire build outputs and checksums here.\n' >> output/release/README.txt
+
+      - name: Upload release payload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-payload
+          path: output/release/
+
+      - name: Create or update release draft
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: |
+            output/release/*

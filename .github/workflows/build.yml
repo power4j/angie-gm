@@ -1,0 +1,117 @@
+name: Build Packages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - kickoff
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build-${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
+    runs-on: ${{ matrix.runner }}
+    container:
+      image: almalinux:8
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - angie-gm-basic
+          - angie-gm-all
+        arch:
+          - x86_64
+          - aarch64
+        format:
+          - deb
+          - rpm
+        include:
+          - arch: x86_64
+            runner: ubuntu-24.04
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show matrix context
+        run: |
+          cat /etc/os-release
+          getconf GNU_LIBC_VERSION
+          echo "package=${{ matrix.package }}"
+          echo "arch=${{ matrix.arch }}"
+          echo "format=${{ matrix.format }}"
+          echo "runner=${{ matrix.runner }}"
+
+      - name: Validate source metadata presence
+        run: |
+          test -f source/manifests/angie.json
+          test -f source/manifests/tongsuo.json
+          test -f source/checksums/upstream.sha256
+
+      - name: Validate profile presence
+        run: |
+          test -f builder/profiles/${{ matrix.package }}/profile.env
+          test -f builder/profiles/${{ matrix.package }}/modules.dynamic
+          test -f builder/profiles/${{ matrix.package }}/install.assets
+
+      - name: Prepare shell runtime
+        run: |
+          chmod +x builder/common/*.sh
+
+      - name: Install build dependencies
+        run: |
+          dnf install -y \
+            bash \
+            ca-certificates \
+            coreutils \
+            curl \
+            diffutils \
+            findutils \
+            gcc \
+            gcc-c++ \
+            gawk \
+            git \
+            gzip \
+            make \
+            patch \
+            perl \
+            sed \
+            tar \
+            xz
+
+      - name: Verify shell syntax
+        run: |
+          bash -n builder/common/diagnostics.sh \
+            builder/common/load-profile.sh \
+            builder/common/read-manifest.sh \
+            builder/common/fetch-sources.sh \
+            builder/common/verify-checksums.sh \
+            builder/common/stage-runtime.sh \
+            builder/common/build-tongsuo.sh \
+            builder/common/configure-angie.sh \
+            builder/common/build-angie.sh \
+            builder/common/build.sh
+
+      - name: Run build pipeline
+        run: |
+          bash builder/common/build.sh "${{ matrix.package }}"
+
+      - name: Upload work directory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-work
+          path: output/work/${{ matrix.package }}/
+
+      - name: Upload staging directory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-staging
+          path: output/staging/${{ matrix.package }}/

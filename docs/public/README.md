@@ -14,8 +14,16 @@
   - 验证矩阵、验证记录、平台兼容性口径
 - `reference/`
   - 上游来源、版本基线、补丁、checksums
+- `tracking/`
+  - 实施计划、进度跟踪、下一步动作
 
 ## 当前文档
 
 - [architecture/2026-06-09-packaging-design.md](/D:/git-repo/power4j/angie-gm/docs/public/architecture/2026-06-09-packaging-design.md)
 - [architecture/2026-06-09-repo-bootstrap-plan.md](/D:/git-repo/power4j/angie-gm/docs/public/architecture/2026-06-09-repo-bootstrap-plan.md)
+- [release/versioning-policy.md](/D:/git-repo/power4j/angie-gm/docs/public/release/versioning-policy.md)
+- [validation/validation-matrix.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-matrix.md)
+- [validation/validation-record-template.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-record-template.md)
+- [validation/validation-record-2026-06-09-wsl-source-prep.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-record-2026-06-09-wsl-source-prep.md)
+- [tracking/2026-06-09-build-implementation-plan.md](/D:/git-repo/power4j/angie-gm/docs/public/tracking/2026-06-09-build-implementation-plan.md)
+- [tracking/STATUS.md](/D:/git-repo/power4j/angie-gm/docs/public/tracking/STATUS.md)

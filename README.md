@@ -7,8 +7,9 @@
 
 项目目标：
 
-- 在公司构建环境中稳定产出可重复的 `deb` / `rpm`
+- 通过 GitHub Actions 稳定产出可重复的 `deb` / `rpm`
 - 除 `glibc` 外尽量自带运行时依赖
+- 当前构建 ABI 基线固定为 `glibc 2.28`
 - 统一安装前缀为 `/opt/angie`
 - 配置、日志、缓存、状态与程序分离
 - 通过 GitHub Actions 构建，并发布到 GitHub Release

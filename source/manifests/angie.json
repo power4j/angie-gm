@@ -1,0 +1,18 @@
+{
+  "name": "angie",
+  "version": "1.11.6",
+  "tag": "Angie-1.11.6",
+  "homepage": "https://github.com/webserver-llc/angie",
+  "upstream_url": "https://download.angie.software/files/angie-1.11.6.tar.gz",
+  "filename": "angie-1.11.6.tar.gz",
+  "checksum_file": "source/checksums/upstream.sha256",
+  "patches": [],
+  "used_by": [
+    "angie-gm-basic",
+    "angie-gm-all"
+  ],
+  "notes": [
+    "Official source archive URL follows Angie source build documentation.",
+    "SHA256 value must be populated in source/checksums/upstream.sha256 before automated builds are enabled."
+  ]
+}

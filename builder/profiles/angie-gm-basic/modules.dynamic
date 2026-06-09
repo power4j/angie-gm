@@ -1,0 +1,2 @@
+# Keep the basic package as small and stable as possible.
+# Add entries only when a module must be delivered as a dynamic module.
