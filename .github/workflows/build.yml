@@ -69,8 +69,8 @@ jobs:
           dnf install -y \
             bash \
             ca-certificates \
+            binutils \
             curl \
-            dpkg \
             diffutils \
             findutils \
             gcc \

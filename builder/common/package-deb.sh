@@ -25,6 +25,11 @@ map_arch_to_deb() {
     esac
 }
 
+require_deb_tools() {
+    command -v ar >/dev/null 2>&1 || die "ar is required to build deb packages"
+    command -v tar >/dev/null 2>&1 || die "tar is required to build deb packages"
+}
+
 write_deb_script() {
     local script_path="${1:?script_path is required}"
     local phase="${2:?phase is required}"
@@ -53,6 +58,10 @@ package_deb() {
     local deb_root="${output_dir}/debroot"
     local control_dir="${deb_root}/DEBIAN"
     local release_dir="${output_dir}/release"
+    local payload_root="${output_dir}/payload"
+    local debian_binary_file="${output_dir}/debian-binary"
+    local control_tar_file="${output_dir}/control.tar.gz"
+    local data_tar_file="${output_dir}/data.tar.gz"
     local package_file
 
     log_stage "package deb"
@@ -63,13 +72,13 @@ package_deb() {
     log_info "package_release=${package_release}"
     log_info "target_arch=${target_arch}"
 
-    command -v dpkg-deb >/dev/null 2>&1 || die "dpkg-deb is required to build deb packages"
+    require_deb_tools
 
     deb_arch="$(map_arch_to_deb "${target_arch}")"
 
-    rm -rf "${deb_root}" "${release_dir}"
-    mkdir -p "${control_dir}" "${release_dir}"
-    cp -a "${staging_root}/." "${deb_root}/"
+    rm -rf "${deb_root}" "${payload_root}" "${release_dir}" "${control_tar_file}" "${data_tar_file}" "${debian_binary_file}"
+    mkdir -p "${control_dir}" "${payload_root}" "${release_dir}"
+    cp -a "${staging_root}/." "${payload_root}/"
 
     cat > "${control_dir}/control" <<EOF
 Package: ${PACKAGE_NAME}
@@ -99,6 +108,25 @@ EOF
     write_deb_script "${control_dir}/postrm" "postrm"
 
     package_file="${release_dir}/${PACKAGE_NAME}_${package_version}-${package_release}_${deb_arch}.deb"
-    dpkg-deb --build "${deb_root}" "${package_file}"
+    printf '2.0\n' > "${debian_binary_file}"
+
+    (
+        cd "${control_dir}"
+        tar -czf "${control_tar_file}" .
+    )
+
+    (
+        cd "${payload_root}"
+        tar -czf "${data_tar_file}" .
+    )
+
+    (
+        cd "${output_dir}"
+        ar r "${package_file}" \
+            "$(basename "${debian_binary_file}")" \
+            "$(basename "${control_tar_file}")" \
+            "$(basename "${data_tar_file}")"
+    )
+
     log_info "built_deb=${package_file}"
 }

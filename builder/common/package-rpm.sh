@@ -91,14 +91,7 @@ echo "[postun] package=${PACKAGE_NAME}"
 
 %files
 %dir /etc/angie
-%config(noreplace) /etc/angie/angie.conf
-%config(noreplace) /etc/angie/fastcgi.conf
-%config(noreplace) /etc/angie/fastcgi_params
-%config(noreplace) /etc/angie/mime.types
-%config(noreplace) /etc/angie/prometheus_all.conf
-%config(noreplace) /etc/angie/scgi_params
-%config(noreplace) /etc/angie/uwsgi_params
-/etc/angie/*
+%config(noreplace) /etc/angie/*
 /opt/angie
 /usr/lib/systemd/system/angie.service
 /usr/lib/tmpfiles.d/angie.conf

@@ -36,6 +36,7 @@
 - Angie 真实 `configure` / `make` / `install` 已接入本地构建脚本，等待下一轮 GitHub Actions 验证真实编译结果
 - 已定位 Angie 真实编译的首个错误：`--builddir` 与 `make` 执行目录不一致，导致 `No rule to make target 'src/core/ngx_build.c'`
 - 真实源码编译已在 GitHub Actions 全矩阵跑通，当前进入 `staging` 运行树装配与真产包阶段
+- `assemble-runtime` 已在 GitHub Actions 全矩阵通过，当前首个真产包阻塞点已定位为 `almalinux:8` 仓库不提供 `dpkg`
 
 ## 进行中
 
