@@ -4,7 +4,7 @@
 
 当前正式口径：
 
-- `Build Baseline` 暂定为 `glibc 2.28`
+- `Build Baseline` 确认为 `glibc 2.28`
 - `Verified On` 以目标机器实际执行 `getconf GNU_LIBC_VERSION`、`ldd --version | head -n 1` 为准
 - `Expected Compatible` 不能代替已验证结论
 
