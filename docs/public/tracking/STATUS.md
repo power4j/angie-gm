@@ -45,16 +45,18 @@
 - `Release Packages` 已完成一次真实 `workflow_dispatch prerelease` 验证，确认可创建 `draft + prerelease` release，并正确生成 `Review 0.1.0~rc1` 与 tag `v0.1.0-rc1`
 - `Release Packages` 已完成 `package_version` 与 `release_tag` 解耦，手工 prerelease 的 tag 不再从版本字符串派生
 - `Release Packages` 已完成一次解耦后实测，确认 `package_version=0.1.0~rc2` 与 `release_tag=v0.1.0-rc2` 可独立输入并成功生成 `draft + prerelease`
+- `Release Packages` 已完成对外展示优化：review release title 与附件文件名不再使用 `~`
+- `Release Packages` 已完成一次对外展示优化实测，确认 `Review 0.1.0 RC4` 与 `angie-gm-basic_0.1.0-rc4-1_amd64.deb` 等附件命名可稳定生成
 
 ## 进行中
 
-- GitHub Release 资产文件名中的 `~` 被平台规范化为 `.`，原因与应对策略待评估
+- 增加包内内容与安装后行为的线下验证记录
 
 ## 下一步
 
-1. 评估是否接受 GitHub Release 资产文件名对 `~` 的规范化，或调整 review 版本展示策略
-2. 增加包内内容与安装后行为的线下验证记录
-3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
+1. 增加包内内容与安装后行为的线下验证记录
+2. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
+3. 评估 release draft URL 仍显示 `untagged-*` 是否需要进一步处理
 
 ## 阻塞项
 

@@ -293,3 +293,30 @@
 - `prerelease` 状态继续只由 `workflow_dispatch` 决定
 - `package_version` 不再参与 `release_tag` 推导
 - `release_tag` 已可作为独立输入控制 review release 的 GitHub 标识
+
+## Release workflow 对外展示优化验证
+
+### `Release Packages`
+
+- 触发方式：`workflow_dispatch`
+- workflow run：`27214353178`
+- 输入：
+  - `package_version=0.1.0~rc4`
+  - `release_tag=v0.1.0-rc4`
+  - `package_release=1`
+- 结果：通过
+- 输出摘要：
+  - 8 个 `release-build-*` 矩阵任务全部完成
+  - `assemble-release` 成功执行
+  - GitHub Release 已创建为 `draft + prerelease`
+  - Release 名称：`Review 0.1.0 RC4`
+  - Release tag：`v0.1.0-rc4`
+  - Release 资产包含 8 个包文件、`sha256sum.txt` 与 `BUILD-INFO.txt`
+
+### 观察项
+
+- Release 对外标题已不包含 `~`
+- Release 对外附件文件名已不包含 `~`
+- 包内部版本语义仍保留在构建元数据中：
+  - `BUILD-INFO.txt` 中的 `Package-Version` 仍为 `0.1.0~rc4`
+  - 实际打包阶段使用的内部版本未改动
