@@ -241,8 +241,9 @@ jobs:
         shell: bash
         run: |
           mkdir -p output/release
-          shopt -s nullglob
-          for file in output/artifacts/*.rpm output/artifacts/*.deb; do
+          found_packages=0
+          while IFS= read -r -d '' file; do
+            found_packages=1
             base_name="$(basename "${file}")"
             if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
               renamed="${base_name//${PACKAGE_VERSION}/${ASSET_VERSION}}"
@@ -250,7 +251,11 @@ jobs:
               renamed="${base_name}"
             fi
             cp -a "${file}" "output/release/${renamed}"
-          done
+          done < <(find output/artifacts -type f \( -name '*.rpm' -o -name '*.deb' \) -print0)
+          if [ "${found_packages}" -ne 1 ]; then
+            echo "no package files found under output/artifacts" >&2
+            exit 1
+          fi
           cd output/release
           sha256sum *.rpm *.deb > sha256sum.txt
           {
