@@ -48,6 +48,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Define release display metadata
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            display_version="${{ github.event.inputs.release_tag }}"
+            display_version="${display_version#v}"
+            display_version="${display_version//-rc/ RC}"
+          else
+            display_version="${GITHUB_REF_NAME#v}"
+          fi
+          echo "DISPLAY_VERSION=${display_version}" >> "${GITHUB_ENV}"
+
       - name: Resolve release version
         run: |
           event_name="${{ github.event_name }}"
@@ -66,7 +78,7 @@ jobs:
               echo "release_tag is empty" >&2
               exit 1
             fi
-            release_name="Review ${package_version}"
+            release_name="Review ${DISPLAY_VERSION}"
             is_prerelease="true"
           else
             release_tag="${GITHUB_REF_NAME}"
@@ -171,6 +183,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Define release display metadata
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            display_version="${{ github.event.inputs.release_tag }}"
+            display_version="${display_version#v}"
+            display_version="${display_version//-rc/ RC}"
+            asset_version="${{ github.event.inputs.release_tag }}"
+            asset_version="${asset_version#v}"
+          else
+            display_version="${GITHUB_REF_NAME#v}"
+            asset_version="${GITHUB_REF_NAME#v}"
+          fi
+          echo "DISPLAY_VERSION=${display_version}" >> "${GITHUB_ENV}"
+          echo "ASSET_VERSION=${asset_version}" >> "${GITHUB_ENV}"
+
       - name: Resolve release version
         run: |
           event_name="${{ github.event_name }}"
@@ -189,7 +217,7 @@ jobs:
               echo "release_tag is empty" >&2
               exit 1
             fi
-            release_name="Review ${package_version}"
+            release_name="Review ${DISPLAY_VERSION}"
             is_prerelease="true"
           else
             release_tag="${GITHUB_REF_NAME}"
@@ -210,9 +238,19 @@ jobs:
           merge-multiple: true
 
       - name: Prepare release payload
+        shell: bash
         run: |
           mkdir -p output/release
-          find output/artifacts -type f \( -name '*.rpm' -o -name '*.deb' \) -exec cp -a {} output/release/ \;
+          shopt -s nullglob
+          for file in output/artifacts/*.rpm output/artifacts/*.deb; do
+            base_name="$(basename "${file}")"
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              renamed="${base_name//${PACKAGE_VERSION}/${ASSET_VERSION}}"
+            else
+              renamed="${base_name}"
+            fi
+            cp -a "${file}" "output/release/${renamed}"
+          done
           cd output/release
           sha256sum *.rpm *.deb > sha256sum.txt
           {

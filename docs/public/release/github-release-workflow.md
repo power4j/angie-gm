@@ -54,6 +54,7 @@
 
 - review 版本使用 `0.1.0~rc1`、`0.1.0~rc2`
 - review tag 使用 `v0.1.0-rc1`、`v0.1.0-rc2`
+- 对外 Release 标题与附件文件名使用不含 `~` 的展示形式，例如 `0.1.0 RC1`、`0.1.0-rc1`
 
 ## 3. 版本来源
 
@@ -68,6 +69,12 @@ Release workflow 使用以下规则：
 - `package_release`
   - 默认值：`1`
   - 手工触发时可覆盖
+
+对外展示规则：
+
+- review release title 使用 `release_tag` 派生展示名，例如 `Review 0.1.0 RC1`
+- review release asset filename 使用 `release_tag` 派生展示版本，例如 `0.1.0-rc1`
+- 包内部版本与 `BUILD-INFO.txt` 仍保留 `package_version` 原值，例如 `0.1.0~rc1`
 
 当前发布状态约定：
 
@@ -126,6 +133,13 @@ Release workflow 在矩阵构建完成后汇总以下内容：
 - `angie-gm-all-<version>-<release>.<arch>.rpm`
 - `angie-gm-basic_<version>-<release>_<arch>.deb`
 - `angie-gm-all_<version>-<release>_<arch>.deb`
+
+review 发布时的展示示例：
+
+- Release title：`Review 0.1.0 RC1`
+- Release asset filename：
+  - `angie-gm-basic-0.1.0-rc1-1.x86_64.rpm`
+  - `angie-gm-basic_0.1.0-rc1-1_amd64.deb`
 
 ## 6. 当前限制
 

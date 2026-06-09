@@ -67,6 +67,11 @@
 - `package_version=0.1.0` -> `release_tag=v0.1.0`
 - `package_version=0.1.0~rc1` -> `release_tag=v0.1.0-rc1`
 
+补充说明：
+
+- `release_tag` 可用于派生 GitHub Release 的对外展示标题与附件文件名。
+- 对外展示可使用 `0.1.0-rc1` 或 `0.1.0 RC1`，不要求暴露 `package_version` 中的 `~`。
+
 ## 3. 打包修订号
 
 打包修订号用于表达在同一包版本下的重新打包次数。
@@ -141,8 +146,9 @@
   - `angie-gm-basic-0.1.0-1.x86_64.rpm`
   - `angie-gm-basic_0.1.0-1_amd64.deb`
 - review 版：
-  - `angie-gm-basic-0.1.0~rc1-1.x86_64.rpm`
-  - `angie-gm-basic_0.1.0~rc1-1_amd64.deb`
+  - 包内部版本：`0.1.0~rc1`
+  - Release 展示文件名：`angie-gm-basic-0.1.0-rc1-1.x86_64.rpm`
+  - Release 展示文件名：`angie-gm-basic_0.1.0-rc1-1_amd64.deb`
 
 上游版本应放入以下位置，而不是文件名：
 
