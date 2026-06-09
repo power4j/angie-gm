@@ -131,7 +131,7 @@ git commit -m "docs: define packaging template skeleton"
 
 以 GitHub Release 作为正式交付入口。
 
-- [ ] **Step 3: 提交**
+- [x] **Step 3: 提交**
 
 ```bash
 git add .github/workflows

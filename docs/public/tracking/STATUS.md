@@ -23,13 +23,13 @@
 
 ## 进行中
 
-- Task 6 提交收尾
+- 首轮工程骨架已完成，等待进入下一批实现任务
 
 ## 下一步
 
-1. 提交验证与诊断跟踪骨架
-2. 在线下 Linux 或 WSL 环境做 Shell 语法与执行验证
-3. 修复本机 `gh` 认证或网络访问后再验证 GitHub Actions 远端状态
+1. 在线下 Linux 或 WSL 环境做 `builder/common/*.sh` 的语法与执行验证
+2. 把 workflow 从占位 artifact 接到真实源码下载、checksum 校验与 staging 流程
+3. 开始补 `deb` / `rpm` 具体模板文件与维护脚本
 
 ## 阻塞项
 
@@ -38,6 +38,7 @@
 
 ## 最近提交
 
+- `9d96f31` `docs: add validation tracking skeleton`
 - `d327246` `ci: scaffold build and release workflows`
 - `1bee7ce` `feat: scaffold build helper scripts`
 - `3c9e34e` `docs: define packaging template skeleton`
