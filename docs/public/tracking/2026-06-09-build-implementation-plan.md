@@ -102,11 +102,11 @@ git commit -m "feat: scaffold build helper scripts"
 - Create: `packaging/deb/`
 - Create: `packaging/rpm/`
 
-- [ ] **Step 1: 定义单包交付与互斥规则**
+- [x] **Step 1: 定义单包交付与互斥规则**
 
 明确 `angie-gm-basic`、`angie-gm-all` 与官方 `angie` 的冲突关系。
 
-- [ ] **Step 2: 为 `deb` / `rpm` 分别确定模板结构**
+- [x] **Step 2: 为 `deb` / `rpm` 分别确定模板结构**
 
 只建骨架，不先写完整 spec/control 细节。
 
