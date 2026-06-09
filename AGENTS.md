@@ -6,7 +6,7 @@
 
 本仓库是 `angie` 离线安装包的构建与发布工程，不是 `Angie` 或 `TongSuo` 的上游开发仓库。
 
-目标是在公司构建环境中生成可重复构建的 Linux 安装包，并通过 GitHub Actions 发布到 GitHub Release，面向以下系统与架构：
+目标是通过 GitHub Actions 生成可重复构建的 Linux 安装包，并发布到 GitHub Release，面向以下系统与架构：
 
 - 银河麒麟服务器版 V10
 - 统信服务器版 V10
