@@ -145,11 +145,11 @@ git commit -m "ci: scaffold build and release workflows"
 - Create: `docs/public/validation/validation-record-template.md`
 - Modify: `docs/public/tracking/STATUS.md`
 
-- [ ] **Step 1: 定义验证矩阵字段**
+- [x] **Step 1: 定义验证矩阵字段**
 
 包括包名、架构、发行版、安装结果、启动结果、协议冒烟结果、备注。
 
-- [ ] **Step 2: 定义验证记录模板**
+- [x] **Step 2: 定义验证记录模板**
 
 明确命令、结果、问题、定位线索。
 
