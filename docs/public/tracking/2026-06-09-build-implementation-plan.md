@@ -33,7 +33,7 @@
 
 采用标准 `sha256sum` 兼容格式。
 
-- [ ] **Step 4: 提交**
+- [x] **Step 4: 提交**
 
 ```bash
 git add source docs/public/README.md AGENTS.md
