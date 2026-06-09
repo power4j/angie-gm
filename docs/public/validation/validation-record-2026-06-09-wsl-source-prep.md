@@ -1,4 +1,4 @@
-# 验证记录：WSL 源码准备链路
+# 验证记录：WSL 源码准备与编译骨架链路
 
 ## 基本信息
 
@@ -19,7 +19,7 @@
 - CPU：未记录
 - systemd 版本：未记录
 - 网络条件：可访问 Angie 与 GitHub 公开源码下载地址
-- 备注：验证重点为源码准备链路，不包含编译、打包、安装、服务启动
+- 备注：验证重点为源码准备链路与编译骨架接入，不包含真实编译、打包、安装、服务启动
 
 ## 验证前检查
 
@@ -124,8 +124,32 @@
 - `journalctl -u angie -n 100 --no-pager` 摘要：不适用
 - 建议补充项：后续编译阶段需要输出 configure 参数摘要和上游源码目录位置
 
+## 编译骨架链路验证
+
+### `angie-gm-basic`
+
+- 执行命令：`bash builder/common/build.sh angie-gm-basic`
+- 结果：通过到编译占位阶段
+- 输出摘要：
+  - TongSuo 构建目录与安装目录准备通过
+  - Angie configure 参数文件生成通过
+  - Angie 构建目录准备通过
+  - staging 目录准备通过
+  - 终点为 `compile and package execution are not implemented yet`
+
+### `angie-gm-all`
+
+- 执行命令：`bash builder/common/build.sh angie-gm-all`
+- 结果：通过到编译占位阶段
+- 输出摘要：
+  - TongSuo 构建目录与安装目录准备通过
+  - Angie configure 参数文件生成通过
+  - Angie 构建目录准备通过
+  - staging 目录准备通过
+  - 终点为 `compile and package execution are not implemented yet`
+
 ## 结论
 
-- 总体结果：通过源码准备链路验证
+- 总体结果：通过源码准备链路与编译骨架链路验证
 - 是否可进入下一阶段：可以
 - 剩余问题：尚未进入真实编译、打包、安装与服务验证

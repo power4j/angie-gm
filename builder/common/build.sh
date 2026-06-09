@@ -16,6 +16,12 @@ source "${SCRIPT_DIR}/fetch-sources.sh"
 source "${SCRIPT_DIR}/verify-checksums.sh"
 # shellcheck source=builder/common/stage-runtime.sh
 source "${SCRIPT_DIR}/stage-runtime.sh"
+# shellcheck source=builder/common/build-tongsuo.sh
+source "${SCRIPT_DIR}/build-tongsuo.sh"
+# shellcheck source=builder/common/configure-angie.sh
+source "${SCRIPT_DIR}/configure-angie.sh"
+# shellcheck source=builder/common/build-angie.sh
+source "${SCRIPT_DIR}/build-angie.sh"
 
 WORK_ROOT="${REPO_ROOT}/output/work"
 
@@ -96,6 +102,14 @@ main() {
     local profile_name="${1:?profile name is required}"
     local profile_dir="${REPO_ROOT}/builder/profiles/${profile_name}"
     local staging_root="${REPO_ROOT}/output/staging/${profile_name}"
+    local work_profile_root="${WORK_ROOT}/${profile_name}"
+    local angie_source_dir="${work_profile_root}/sources/angie"
+    local tongsuo_source_dir="${work_profile_root}/sources/tongsuo"
+    local tongsuo_build_root="${work_profile_root}/build/tongsuo"
+    local tongsuo_install_root="${work_profile_root}/artifacts/tongsuo"
+    local tongsuo_config_args_file="${tongsuo_build_root}/config-args.txt"
+    local angie_build_root="${work_profile_root}/build/angie"
+    local angie_config_args_file="${angie_build_root}/configure-args.txt"
 
     load_profile "${profile_dir}"
     print_key_paths
@@ -107,10 +121,13 @@ main() {
 
     prepare_component_source "angie" "${profile_name}"
     prepare_component_source "tongsuo" "${profile_name}"
+    prepare_tongsuo_build "${tongsuo_source_dir}" "${tongsuo_build_root}" "${tongsuo_install_root}" "${tongsuo_config_args_file}"
+    write_angie_configure_args "${angie_config_args_file}" "${tongsuo_source_dir}"
+    prepare_angie_build "${angie_source_dir}" "${angie_build_root}" "${angie_config_args_file}"
     prepare_staging_tree "${staging_root}"
     print_staging_summary "${staging_root}"
 
-    log_warn "compile and package steps are not implemented yet"
+    log_warn "compile and package execution are not implemented yet"
     print_self_check_hints
 }
 

@@ -24,16 +24,18 @@
 - 已定位真实源码准备链路中的日志污染问题，原因是命令替换返回值混入了标准输出日志
 - Angie 与 TongSuo 公开源码包的真实 SHA256 已补齐
 - WSL Ubuntu 24 已验证 Angie 与 TongSuo 的真实源码下载、checksum、解包与 staging 准备链路通过
+- TongSuo 构建骨架与 Angie configure 参数骨架已接入本地构建脚本
+- WSL Ubuntu 24 已验证 `angie-gm-basic` 与 `angie-gm-all` 可稳定跑通到编译占位阶段，`build/angie` 目录创建问题已修复
 
 ## 进行中
 
-- 把 workflow 从占位 artifact 接到真实源码准备与 staging 流程
+- 真实编译与打包执行接入中
 
 ## 下一步
 
-1. 让 GitHub Actions 运行真实源码准备与 staging 流程
-2. 开始补 `deb` / `rpm` 具体模板文件与维护脚本
-3. 继续推进到真实编译与私有依赖闭包处理
+1. 开始接入 TongSuo 真实编译与安装产物输出
+2. 继续推进 Angie 真实 configure / compile / install 流程
+3. 补 `deb` / `rpm` 具体模板文件与维护脚本
 
 ## 阻塞项
 
