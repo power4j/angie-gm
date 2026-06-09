@@ -173,3 +173,21 @@
   - TongSuo 真实编译阶段已接入
   - 编译耗时较长，人工浏览终端输出未见明确失败信号
   - 尚未补充 `configure.log`、`make.log`、`install.log` 的逐项复核结果
+
+## GitHub Actions 构建骨架验证
+
+### `package x arch x format` 矩阵
+
+- 执行环境：
+  - runner：`ubuntu-24.04`、`ubuntu-24.04-arm`
+  - container：`almalinux:8`
+  - `glibc`：`2.28`
+- 执行入口：GitHub Actions `Build Packages`
+- 结果：通过
+- 输出摘要：
+  - `x86_64` / `aarch64` 的 8 个矩阵任务均完成
+  - `Install build dependencies` 通过
+  - `Verify shell syntax` 通过
+  - `Run build pipeline` 通过
+  - `output/work/<package>/` 与 `output/staging/<package>/` 可上传为 artifact
+  - 当前告警仅剩 GitHub 官方 JavaScript actions 的 Node 20 弃用提示

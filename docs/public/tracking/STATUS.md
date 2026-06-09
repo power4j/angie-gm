@@ -31,6 +31,8 @@
 - GitHub Actions 已切换为固定 runner + `glibc 2.28` 基线容器方案
 - 已确认 GitHub Actions 的 `ubuntu-24.04-arm` 与 `almalinux:8` 容器可启动，当前失败点定位为 `dnf` 依赖冲突
 - 已定位 GitHub Actions 构建脚本的下一处失败点：容器缺少 `python3`，导致 manifest 解析失败
+- GitHub Actions 最新一轮已通过 `Install build dependencies`、`Verify shell syntax` 与 `Run build pipeline` 阶段，说明当前 CI 构建骨架已在 `x86_64` / `aarch64` 上跑通
+- GitHub Actions `Build Packages` 已在 `x86_64` / `aarch64`、`deb` / `rpm` 全矩阵完成，当前剩余 CI 问题仅为 Node 20 actions 弃用告警
 
 ## 进行中
 
@@ -38,9 +40,9 @@
 
 ## 下一步
 
-1. 修复 GitHub Actions 中 `almalinux:8` 的依赖冲突并复跑
-2. 收敛 TongSuo 真实编译结果并补日志级验证记录
-3. 继续推进 Angie 真实 configure / compile / install 流程
+1. 收敛 TongSuo 真实编译结果并补日志级验证记录
+2. 继续推进 Angie 真实 configure / compile / install 流程
+3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
 
 ## 阻塞项
 

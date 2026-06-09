@@ -41,6 +41,8 @@
 | angie-gm-all | TBD | TBD | aarch64 | 银河麒麟服务器版 V10 | TBD | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | TBD | 首行模板 |
 | angie-gm-basic | TBD | TBD | x86_64 | Ubuntu 24 (WSL) | `6.6.87.2-microsoft-standard-WSL2` | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | 已验证 `bash -n` 通过，Angie 与 TongSuo 源码下载 / checksum / 解包 / staging 准备通过 |
 | angie-gm-all | TBD | TBD | x86_64 | Ubuntu 24 (WSL) | `6.6.87.2-microsoft-standard-WSL2` | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | 已验证 `bash -n` 通过，Angie 与 TongSuo 源码缓存命中 / checksum / 解包 / staging 准备通过 |
+| angie-gm-basic | TBD | TBD | x86_64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 已通过 `Install build dependencies`、`Verify shell syntax`、`Run build pipeline`，产物以 artifact 形式保留 |
+| angie-gm-all | TBD | TBD | aarch64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 已通过 `Install build dependencies`、`Verify shell syntax`、`Run build pipeline`，产物以 artifact 形式保留 |
 
 ## 协议冒烟最低要求
 
