@@ -1,0 +1,42 @@
+# Build outputs
+/output/
+/build/
+/dist/
+/tmp/
+/temp/
+
+# Local docs and notes
+/docs/local/decisions/
+/docs/local/notes/
+/docs/local/sessions/
+
+# Source caches and archives
+/source/cache/
+/source/downloads/
+
+# Logs
+*.log
+/logs/
+
+# Local environment files
+*.local
+*.env
+*.env.local
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Packaging leftovers
+*.rpm
+*.deb
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+# Keep local docs index files
+!/docs/local/
+!/docs/local/README.md

@@ -1,0 +1,36 @@
+# Text files
+* text=auto
+
+# Force LF for cross-platform project files
+*.md text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.sh text eol=lf
+*.service text eol=lf
+*.conf text eol=lf
+*.rules text eol=lf
+*.spec text eol=lf
+*.repo text eol=lf
+*.tmpfiles text eol=lf
+.editorconfig text eol=lf
+.gitignore text eol=lf
+debian/** text eol=lf
+
+# Windows command files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files tracked by LFS when needed
+*.tar filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
+*.tgz filter=lfs diff=lfs merge=lfs -text
+*.xz filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.rpm filter=lfs diff=lfs merge=lfs -text
+*.deb filter=lfs diff=lfs merge=lfs -text
+*.img filter=lfs diff=lfs merge=lfs -text
+*.qcow2 filter=lfs diff=lfs merge=lfs -text
