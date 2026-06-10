@@ -58,20 +58,8 @@ write_angie_configure_args() {
                 [[ "${dynamic_module}" != \#* ]] || continue
 
                 case "${dynamic_module}" in
-                    http_realip)
-                        printf '%s\n' "--with-http_realip_module=dynamic"
-                        ;;
-                    http_auth_request)
-                        printf '%s\n' "--with-http_auth_request_module=dynamic"
-                        ;;
-                    http_slice)
-                        printf '%s\n' "--with-http_slice_module=dynamic"
-                        ;;
                     stream)
                         printf '%s\n' "--with-stream=dynamic"
-                        ;;
-                    stream_ssl_preread)
-                        printf '%s\n' "--with-stream_ssl_preread_module"
                         ;;
                     mail)
                         printf '%s\n' "--with-mail=dynamic"

@@ -1,6 +1,2 @@
-http_realip
-http_auth_request
-http_slice
 stream
-stream_ssl_preread
 mail
