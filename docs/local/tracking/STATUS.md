@@ -66,16 +66,19 @@
 - 已在 Rocky Linux 10.2 上定位官方 `rc7` `rpm` 的首个运行时缺口：二进制依赖 `libcrypt.so.1`，而系统仅提供 `libcrypt.so.2`
 - 已定位 Rocky Linux 10.2 上 `rpm` 包的第二个启动缺口：`/run/angie` 同时由 `tmpfiles.d` 与 `systemd RuntimeDirectory` 管理，导致 `status=233/RUNTIME_DIRECTORY`
 - 已确认仅保留 `RuntimeDirectory` 不可接受：会破坏安装后直接执行 `angie -t`，因为 `pid` 路径 `/run/angie/angie.pid` 不存在
+- 已完成 `/run/angie` 管理机制收敛：保留 `tmpfiles.d`，移除 `systemd RuntimeDirectory`
+- 已完成 Rocky Linux 10.2 上 `basic` / `all` `rpm` 回归验证，确认安装、自检、启动、欢迎页链路通过
+- 已完成 Debian 12 上 `basic` / `all` `deb` 回归验证，确认 `/run/angie` 修复未引入退化
 
 ## 进行中
 
-- 收敛 `/run/angie` 的唯一管理机制，并同时保持 `systemctl start angie` 与安装后 `angie -t` 可执行
+- 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块专项验证
 
 ## 下一步
 
-1. 复测 Rocky Linux 10.2 上的 `basic` / `all` `rpm` 安装、自检、启动与欢迎页链路
-2. 回归验证 Debian 12 上的 `basic` / `all` `deb`，确认本次 `/run/angie` 修复未引入退化
-3. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
+1. 设计并落地 `angie-gm-all` 的 HTTP/3、stream、动态模块验证脚本
+2. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
+3. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
 
 ## 阻塞项
 
