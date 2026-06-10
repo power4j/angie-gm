@@ -69,14 +69,16 @@
 - 已完成 `/run/angie` 管理机制收敛：保留 `tmpfiles.d`，移除 `systemd RuntimeDirectory`
 - 已完成 Rocky Linux 10.2 上 `basic` / `all` `rpm` 回归验证，确认安装、自检、启动、欢迎页链路通过
 - 已完成 Debian 12 上 `basic` / `all` `deb` 回归验证，确认 `/run/angie` 修复未引入退化
+- 已补 `angie-gm-all` 的专项验证脚本骨架：动态模块、stream、HTTP/3
+- 已更新线下执行说明，纳入 `angie-gm-all` 专项冒烟入口与当前边界
 
 ## 进行中
 
-- 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块专项验证
+- 在线下测试机执行 `angie-gm-all` 的动态模块、stream、HTTP/3 专项验证
 
 ## 下一步
 
-1. 设计并落地 `angie-gm-all` 的 HTTP/3、stream、动态模块验证脚本
+1. 在 Linux 测试机执行 `modules.sh`、`stream.sh`、`http3.sh`
 2. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
 3. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
 

@@ -26,11 +26,16 @@
   - [tests/package/validate-package.sh](/D:/git-repo/power4j/angie-gm/tests/package/validate-package.sh)
 - 基础 HTTP 冒烟：
   - [tests/smoke/basic-http.sh](/D:/git-repo/power4j/angie-gm/tests/smoke/basic-http.sh)
+- `angie-gm-all` 专项冒烟：
+  - [tests/smoke/http3.sh](/D:/git-repo/power4j/angie-gm/tests/smoke/http3.sh)
+  - [tests/smoke/stream.sh](/D:/git-repo/power4j/angie-gm/tests/smoke/stream.sh)
+  - [tests/smoke/modules.sh](/D:/git-repo/power4j/angie-gm/tests/smoke/modules.sh)
 
 说明：
 
 - 当前脚本以最小验证路径为目标。
-- 后续可在此基础上继续补充 HTTPS、NTLS、HTTP/3、stream 与动态模块验证。
+- HTTP/3、stream、动态模块脚本当前属于能力级冒烟，优先证明编译开关、配置语法、最小代理链路与最小模块加载链路可用。
+- 当前不把 HTTP/3 客户端互通、复杂 upstream、模块业务行为深测放入第一轮脚本。
 
 ## 3. 验证前准备
 
@@ -143,20 +148,77 @@ bash tests/smoke/basic-http.sh http://127.0.0.1:8080/
 - [validation-record-template.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-template.md)
 - [validation-matrix.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-matrix.md)
 
-## 8. 当前边界
+## 8. `angie-gm-all` 专项冒烟验证
+
+当前建议按以下顺序执行：
+
+1. 动态模块加载
+2. stream
+3. HTTP/3
+
+### 动态模块加载
+
+执行命令：
+
+```bash
+bash tests/smoke/modules.sh
+```
+
+验证目标：
+
+- `/opt/angie/modules` 目录存在
+- 目录下至少存在一个动态模块文件
+- 生成最小 `load_module` 配置后，`angie -t` 可通过
+
+### stream
+
+执行命令：
+
+```bash
+bash tests/smoke/stream.sh
+```
+
+验证目标：
+
+- `angie -V` 包含：
+  - `--with-stream`
+  - `--with-stream_ssl_module`
+  - `--with-stream_ssl_preread_module`
+- 最小 `stream {}` 配置可通过 `angie -t`
+- 本地临时 backend 可经 stream 监听端口转发访问
+
+### HTTP/3
+
+执行命令：
+
+```bash
+bash tests/smoke/http3.sh
+```
+
+验证目标：
+
+- `angie -V` 包含 `--with-http_v3_module`
+- 最小 `listen ... quic reuseport;` 配置可通过 `angie -t`
+
+说明：
+
+- 当前脚本先验证 HTTP/3 编译能力和配置能力。
+- 如现场具备 `curl --http3` 或其他 QUIC 客户端，再追加真实请求验证记录。
+
+## 9. 当前边界
 
 当前脚本与说明尚未覆盖：
 
 - HTTPS 冒烟
 - NTLS / 国密冒烟
-- HTTP/3
-- stream
-- 动态模块加载
+- HTTP/3 真实客户端互通
+- 复杂 stream upstream 场景
+- 动态模块业务行为深测
 - 配置变更后的升级保留验证
 
 上述内容应在后续线下验证中逐步补齐。
 
-## 9. 当前停点 / 下一步
+## 10. 当前停点 / 下一步
 
-- 当前停点：已在 Debian 12 测试机对 GitHub Release 官方 `deb` 包完成首轮安装验证，安装成功，但 `angie -t` 因默认回退到 `nobody` 用户组而失败。
-- 下一步：使用专用运行账户 `angie:angie` 重新产包，并在 Linux 测试机复测安装、自检、启动与卸载结果。
+- 当前停点：Rocky Linux 10.2 与 Debian 12 已完成安装、自检、启动与欢迎页回归验证，当前进入 `angie-gm-all` 特性专项验证阶段。
+- 下一步：在线下测试机执行 `modules.sh`、`stream.sh`、`http3.sh`，并补对应验证记录。
