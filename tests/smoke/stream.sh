@@ -55,6 +55,9 @@ sleep 1
 kill -0 "${backend_pid}" >/dev/null 2>&1 || die "backend server failed to start"
 
 cat > "${stream_conf}" <<EOF
+user angie angie;
+include /etc/angie/modules.d/*.conf;
+
 pid ${temp_root}/angie.pid;
 error_log stderr notice;
 

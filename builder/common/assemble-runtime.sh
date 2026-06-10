@@ -98,7 +98,45 @@ create_runtime_directories() {
         "${staging_root}${INSTALL_PREFIX}/modules" \
         "${staging_root}${INSTALL_PREFIX}/share/html" \
         "${staging_root}${INSTALL_PREFIX}/share/examples" \
-        "${staging_root}${CONF_PREFIX}/conf.d"
+        "${staging_root}${CONF_PREFIX}/conf.d" \
+        "${staging_root}${CONF_PREFIX}/modules.d"
+}
+
+stage_dynamic_module_loaders() {
+    local profile_dir="${1:?profile_dir is required}"
+    local staging_root="${2:?staging_root is required}"
+    local dynamic_module_list="${profile_dir}/modules.dynamic"
+    local modules_dir="${staging_root}${CONF_PREFIX}/modules.d"
+    local dynamic_module
+    local conf_name
+    local module_path
+
+    mkdir -p "${modules_dir}"
+    find "${modules_dir}" -maxdepth 1 -type f -name '*.conf' -delete
+
+    [[ -f "${dynamic_module_list}" ]] || return
+
+    while IFS= read -r dynamic_module; do
+        dynamic_module="${dynamic_module%$'\r'}"
+        [[ -n "${dynamic_module}" ]] || continue
+        [[ "${dynamic_module}" != \#* ]] || continue
+
+        case "${dynamic_module}" in
+            stream)
+                conf_name="10-stream.conf"
+                module_path="${INSTALL_PREFIX}/modules/ngx_stream_module.so"
+                ;;
+            mail)
+                conf_name="20-mail.conf"
+                module_path="${INSTALL_PREFIX}/modules/ngx_mail_module.so"
+                ;;
+            *)
+                die "unsupported runtime dynamic module entry: ${dynamic_module}"
+                ;;
+        esac
+
+        printf 'load_module %s;\n' "${module_path}" > "${modules_dir}/${conf_name}"
+    done < "${dynamic_module_list}"
 }
 
 finalize_permissions() {
@@ -126,6 +164,7 @@ assemble_runtime() {
     create_runtime_directories "${staging_root}"
     stage_runtime_libraries "${tongsuo_install_root}" "${staging_root}"
     stage_profile_assets "${profile_dir}" "${staging_root}"
+    stage_dynamic_module_loaders "${profile_dir}" "${staging_root}"
     create_runtime_links "${staging_root}"
     finalize_permissions "${staging_root}"
 }

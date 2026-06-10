@@ -76,6 +76,9 @@
   - `modules` 在 Rocky Linux 10.2 与 Debian 12 上失败，当前包内没有动态模块文件
   - `http3` 在 Rocky Linux 10.2 与 Debian 12 上失败，原脚本最小配置缺少 TLS 证书上下文
 - 已定位 `angie-gm-all` 最新 GitHub 构建失败根因：Angie 1.11.6 不支持 `http_realip`、`http_auth_request`、`http_slice` 的 `=dynamic` 形式；当前应仅保留 `stream` 与 `mail` 作为动态模块入口
+- 已定位 `angie-gm-all` 第二轮线下专项验证问题：
+  - Debian 12 上 `modules.sh` 的失败根因是临时测试配置未声明 `user angie angie`，触发默认 `nobody` 账户解析错误
+  - Rocky Linux 10.2 上 `stream.sh` 的失败根因是 `all` 包默认运行树未自动加载 `ngx_stream_module.so`
 
 ## 进行中
 

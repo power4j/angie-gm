@@ -29,6 +29,7 @@ temp_conf="$(mktemp)"
 trap 'rm -f "${temp_conf}"' EXIT
 
 {
+    printf 'user angie angie;\n'
     printf 'pid /tmp/angie-modules.pid;\n'
     printf 'error_log stderr notice;\n'
 
