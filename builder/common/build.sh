@@ -75,6 +75,7 @@ apply_manifest_patches() {
     local patch_file
 
     while IFS= read -r patch_file; do
+        patch_file="${patch_file%$'\r'}"
         [[ -n "${patch_file}" ]] || continue
         log_stage "apply patch"
         log_info "patch_file=${patch_file}"

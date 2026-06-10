@@ -25,6 +25,7 @@ stage_profile_assets() {
     local target_dir
 
     while IFS= read -r asset_entry; do
+        asset_entry="${asset_entry%$'\r'}"
         [[ -n "${asset_entry}" ]] || continue
         [[ "${asset_entry}" != \#* ]] || continue
 
