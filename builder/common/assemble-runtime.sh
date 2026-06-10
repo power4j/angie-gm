@@ -45,6 +45,9 @@ stage_profile_assets() {
             assets/diagnostics/*|assets/diagnostics/)
                 target_dir="${staging_root}${INSTALL_PREFIX}/bin"
                 ;;
+            assets/www/*)
+                target_dir="${staging_root}${INSTALL_PREFIX}/share/html"
+                ;;
             assets/examples/*)
                 target_dir="${staging_root}${INSTALL_PREFIX}/share/examples/${asset_name}"
                 ;;
@@ -85,6 +88,7 @@ create_runtime_directories() {
         "${staging_root}${INSTALL_PREFIX}/bin" \
         "${staging_root}${INSTALL_PREFIX}/lib" \
         "${staging_root}${INSTALL_PREFIX}/modules" \
+        "${staging_root}${INSTALL_PREFIX}/share/html" \
         "${staging_root}${INSTALL_PREFIX}/share/examples" \
         "${staging_root}${CONF_PREFIX}/conf.d"
 }

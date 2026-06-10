@@ -28,6 +28,13 @@
 
 安装包差异只通过包名、Release 名、构建元数据和 `angie -V` 暴露。
 
+默认站点策略：
+
+- `angie-gm-basic` 默认提供 `conf.d/welcome.conf`
+- 默认静态页位于 `/opt/angie/share/html/index.html`
+- 页面主标题使用 `Welcome to Angie`
+- 页面仅作为安装验证页，不应视为业务默认站点
+
 冲突策略：
 
 - `angie-gm-basic` 与 `angie-gm-all` 不允许同时安装。

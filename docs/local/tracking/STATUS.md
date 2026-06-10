@@ -59,14 +59,15 @@
 - 已完成官方 `rc6` `deb` 在 Debian 12 上的冷安装、自检、启动与卸载验证
 - 已确认 `angie:angie` 运行账户与 `systemd daemon-reload` 修复已在 GitHub 官方产包中生效
 - 已定位线下验证脚本当前缺口：`install` 模式未先清理同名已安装包，可能误把升级场景当作冷安装验证
+- 已确定 `angie-gm-basic` 默认欢迎站点口径：`/etc/angie/conf.d/welcome.conf` + `/opt/angie/share/html/index.html`
 
 ## 进行中
 
-- 收紧线下验证脚本的冷安装语义，并整理首批过程验证记录
+- 为 `angie-gm-basic` 补默认欢迎站点与正文校验型 HTTP 冒烟
 
 ## 下一步
 
-1. 补基础 HTTP 冒烟，并把结果写入过程验证记录
+1. 验证默认欢迎站点随官方包正确安装并可通过 `curl` 校验
 2. 在目标发行版继续执行 `deb` / `rpm` 安装、替换与卸载验证
 3. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
 
