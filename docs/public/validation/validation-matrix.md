@@ -60,3 +60,14 @@
 - HTTP/3
 - stream
 - 至少一个动态模块加载
+
+## 线下验证入口
+
+当前仓库已提供最小线下验证脚本：
+
+- 包级验证脚本：
+  - [tests/package/validate-package.sh](/D:/git-repo/power4j/angie-gm/tests/package/validate-package.sh)
+- 基础 HTTP 冒烟脚本：
+  - [tests/smoke/basic-http.sh](/D:/git-repo/power4j/angie-gm/tests/smoke/basic-http.sh)
+
+执行说明、过程记录与记录模板属于过程资料，应放在 `docs/local/` 维护。

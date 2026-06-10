@@ -11,7 +11,7 @@
 - `release/`
   - GitHub Actions、GitHub Release、版本发布规则
 - `validation/`
-  - 验证矩阵、验证记录、平台兼容性口径
+  - 验证矩阵、平台兼容性口径
 - `reference/`
   - 上游来源、版本基线、补丁、checksums
 
@@ -22,5 +22,3 @@
 - [release/versioning-policy.md](/D:/git-repo/power4j/angie-gm/docs/public/release/versioning-policy.md)
 - [release/github-release-workflow.md](/D:/git-repo/power4j/angie-gm/docs/public/release/github-release-workflow.md)
 - [validation/validation-matrix.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-matrix.md)
-- [validation/validation-record-template.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-record-template.md)
-- [validation/validation-record-2026-06-09-wsl-source-prep.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-record-2026-06-09-wsl-source-prep.md)

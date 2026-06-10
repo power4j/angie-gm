@@ -1,6 +1,6 @@
 # 项目进度状态
 
-最后更新：`2026-06-09`
+最后更新：`2026-06-10`
 当前分支：`kickoff`
 
 ## 已完成
@@ -47,16 +47,20 @@
 - `Release Packages` 已完成一次解耦后实测，确认 `package_version=0.1.0~rc2` 与 `release_tag=v0.1.0-rc2` 可独立输入并成功生成 `draft + prerelease`
 - `Release Packages` 已完成对外展示优化：review release title 与附件文件名不再使用 `~`
 - `Release Packages` 已完成一次对外展示优化实测，确认 `Review 0.1.0 RC4` 与 `angie-gm-basic_0.1.0-rc4-1_amd64.deb` 等附件命名可稳定生成
+- 已补充线下验证最小执行框架，包括包级验证脚本、基础 HTTP 冒烟脚本与线下执行说明
+- 验证矩阵与验证记录模板已补充线下执行入口、`glibc` 检查项与升级保留结果字段
+- 已完成验证资料分层收缩：正式文档仅保留稳定验证口径，线下执行说明与记录模板已迁入 `docs/local/validation/`
+- 已完成 WSL / GitHub Actions 验证记录迁移，`docs/public/validation/` 不再存放过程性验证记录
 
 ## 进行中
 
-- 增加包内内容与安装后行为的线下验证记录
+- 准备首轮 Linux 测试机安装 / 升级 / 替换验证
 
 ## 下一步
 
-1. 增加包内内容与安装后行为的线下验证记录
-2. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
-3. 评估 release draft URL 仍显示 `untagged-*` 是否需要进一步处理
+1. 在 Linux 测试机执行首轮 `deb` 安装、替换与基础 HTTP 验证
+2. 补第一批过程验证记录，并提炼需要进入正式矩阵的结果
+3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
 
 ## 阻塞项
 
