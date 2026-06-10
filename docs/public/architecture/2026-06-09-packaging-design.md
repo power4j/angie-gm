@@ -30,7 +30,7 @@
 
 默认站点策略：
 
-- `angie-gm-basic` 默认提供 `conf.d/welcome.conf`
+- `angie-gm-basic` 与 `angie-gm-all` 默认都提供 `conf.d/welcome.conf`
 - 默认静态页位于 `/opt/angie/share/html/index.html`
 - 页面主标题使用 `Welcome to Angie`
 - 页面仅作为安装验证页，不应视为业务默认站点

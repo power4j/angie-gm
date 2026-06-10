@@ -60,14 +60,15 @@
 - 已确认 `angie:angie` 运行账户与 `systemd daemon-reload` 修复已在 GitHub 官方产包中生效
 - 已定位线下验证脚本当前缺口：`install` 模式未先清理同名已安装包，可能误把升级场景当作冷安装验证
 - 已确定 `angie-gm-basic` 默认欢迎站点口径：`/etc/angie/conf.d/welcome.conf` + `/opt/angie/share/html/index.html`
+- 已确认 `angie-gm-all` 也应复用同一套默认欢迎站点资源
 
 ## 进行中
 
-- 为 `angie-gm-basic` 补默认欢迎站点与正文校验型 HTTP 冒烟
+- 为两种安装包统一默认欢迎站点交付口径
 
 ## 下一步
 
-1. 验证默认欢迎站点随官方包正确安装并可通过 `curl` 校验
+1. 验证默认欢迎站点随 `basic` / `all` 官方包正确安装并可通过 `curl` 校验
 2. 在目标发行版继续执行 `deb` / `rpm` 安装、替换与卸载验证
 3. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
 
