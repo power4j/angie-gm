@@ -84,6 +84,7 @@
   - `stream.sh` 通过
   - `http3.sh` 通过
 - 已确认 `http3.sh` 的真实问题不是 HTTP/3 功能缺失，而是临时测试配置未对齐实际运行树；补齐 `user angie angie`、`modules.d` 引入与临时证书生成后已恢复
+- 已收敛验证输入口径：`Build Packages` 的 workflow artifact 仅用于 CI 调试；线下验证、替换验证与交付验证统一改为使用 GitHub Release asset
 
 ## 进行中
 
@@ -91,10 +92,10 @@
 
 ## 下一步
 
-1. 刷新或绕过当前私有仓库 artifact 下载认证问题，拿到最新 `angie-gm-all` x86_64 `rpm`
+1. 触发或复用对应版本的 GitHub Release，并以 release asset 作为 Rocky Linux 10.2 的验证输入
 2. 在 Rocky Linux 10.2 上复测 `modules.sh`、`stream.sh`、`http3.sh`
-2. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
-3. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
+3. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
+4. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
 
 ## 阻塞项
 

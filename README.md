@@ -47,6 +47,13 @@
 - 输出 `deb` 与 `rpm`
 - 通过 GitHub Release 发布产物
 
+当前验证输入口径：
+
+- `Build Packages` 的 workflow artifact 仅用于持续集成调试与问题定位
+- 线下安装验证、替换验证与交付验证统一使用 GitHub Release asset
+- review / rc 验证使用 `draft + prerelease` release asset
+- 稳定版验证使用 draft stable release asset
+
 当前交付策略为：
 
 - 单包交付

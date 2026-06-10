@@ -47,6 +47,7 @@
 4. 目标机器已具备基础安装命令：
    - `dpkg` 或 `dnf` / `yum` / `rpm`
 5. 如需执行基础 HTTP 冒烟，目标机器已具备 `curl`
+6. 当前验证包应来自 GitHub Release asset，而不是 `Build Packages` 的 workflow artifact
 
 建议额外记录：
 
@@ -54,6 +55,16 @@
 - `ldd --version | head -n 1`
 - `uname -r`
 - `systemctl --version | head -n 1`
+
+包来源要求：
+
+- review / rc 验证：
+  - 从 `Release Packages` 生成的 `draft + prerelease` 下载 release asset
+- 稳定版验证：
+  - 从 draft stable release 下载 release asset
+- `Build Packages` 的 workflow artifact：
+  - 只用于 CI 调试、构建问题定位、运行树排错
+  - 不作为正式线下验证输入
 
 ## 4. 首次安装验证
 
@@ -221,4 +232,4 @@ bash tests/smoke/http3.sh
 ## 10. 当前停点 / 下一步
 
 - 当前停点：Rocky Linux 10.2 与 Debian 12 已完成安装、自检、启动与欢迎页回归验证，当前进入 `angie-gm-all` 特性专项验证阶段。
-- 下一步：在线下测试机执行 `modules.sh`、`stream.sh`、`http3.sh`，并补对应验证记录。
+- 下一步：基于 GitHub Release asset 在 Rocky Linux 10.2 与后续目标发行版执行 `modules.sh`、`stream.sh`、`http3.sh`，并补对应验证记录。

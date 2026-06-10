@@ -9,6 +9,8 @@
 - `Build Packages` 用于持续集成与日常产包验证
 - `Release Packages` 用于正式发布或发布前 dry-run
 - Release 阶段不依赖前一个 workflow 的临时 artifact，而是基于当前 tag 或手工输入重新构建
+- `Build Packages` 的 workflow artifact 只作为 CI 调试产物，不作为正式线下验证输入
+- 线下验证、交付验证与回归验证统一使用 GitHub Release asset
 - 所有 Release 均先创建 `draft`
 - 手工触发的 Release 固定为 `prerelease`
 - 正式 tag 触发的 Release 固定为稳定版候选，不标记 `prerelease`
@@ -148,6 +150,7 @@ review 发布时的展示示例：
 - dry-run 构建
 - draft release 构建
 - package asset 上传
+- 线下验证输入统一固化为 release asset
 
 当前仍未覆盖：
 
@@ -167,8 +170,10 @@ review 发布建议顺序：
 4. 填写 `release_tag`，例如 `v0.1.0-rc1`
 5. 按需调整 `package_release`
 6. 等待 workflow 完成
-7. 人工检查 draft prerelease
-8. 人工发布 prerelease
+7. 从 draft prerelease 下载 release asset
+8. 基于 release asset 执行线下验证
+9. 人工检查 draft prerelease
+10. 人工发布 prerelease
 
 正式发布建议顺序：
 
@@ -176,5 +181,25 @@ review 发布建议顺序：
 2. 线下验证记录更新
 3. 打 `v<package-version>` tag
 4. 等待 `Release Packages` 完成
-5. 人工检查 draft stable release
-6. 人工发布 stable release
+5. 从 draft stable release 下载 release asset
+6. 基于 release asset 执行最终交付验证
+7. 人工检查 draft stable release
+8. 人工发布 stable release
+
+## 8. 验证输入边界
+
+当前必须区分两类下载来源：
+
+- workflow artifact
+  - 来源：`Build Packages`
+  - 用途：CI 调试、构建问题定位、运行树排错
+  - 特点：生命周期短，不作为正式交付口径
+- release asset
+  - 来源：`Release Packages`
+  - 用途：线下安装验证、替换验证、回归验证、最终交付
+  - 特点：与版本、tag、release notes 绑定，可作为正式验证输入
+
+禁止做法：
+
+- 不得把某次 `Build Packages` 的 workflow artifact 直接当作正式交付包
+- 不得在线下验证记录中把 workflow artifact 写成正式发布产物

@@ -7,6 +7,8 @@
 - `Build Baseline` 确认为 `glibc 2.28`
 - `Verified On` 以目标机器实际执行 `getconf GNU_LIBC_VERSION`、`ldd --version | head -n 1` 为准
 - `Expected Compatible` 不能代替已验证结论
+- GitHub Actions workflow artifact 仅作为 CI 调试输入
+- 正式线下验证与交付验证统一以 GitHub Release asset 为输入
 
 ## 字段说明
 
@@ -41,8 +43,8 @@
 | angie-gm-all | TBD | TBD | aarch64 | 银河麒麟服务器版 V10 | TBD | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | TBD | 首行模板 |
 | angie-gm-basic | TBD | TBD | x86_64 | Ubuntu 24 (WSL) | `6.6.87.2-microsoft-standard-WSL2` | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | 已验证 `bash -n` 通过，Angie 与 TongSuo 源码下载 / checksum / 解包 / staging 准备通过 |
 | angie-gm-all | TBD | TBD | x86_64 | Ubuntu 24 (WSL) | `6.6.87.2-microsoft-standard-WSL2` | TBD | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | 已验证 `bash -n` 通过，Angie 与 TongSuo 源码缓存命中 / checksum / 解包 / staging 准备通过 |
-| angie-gm-basic | TBD | TBD | x86_64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 已通过 `Install build dependencies`、`Verify shell syntax`、`Run build pipeline`，产物以 artifact 形式保留 |
-| angie-gm-all | TBD | TBD | aarch64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 已通过 `Install build dependencies`、`Verify shell syntax`、`Run build pipeline`，产物以 artifact 形式保留 |
+| angie-gm-basic | TBD | TBD | x86_64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 仅验证 CI 构建链路；其 workflow artifact 只用于调试，不作为正式线下验证输入 |
+| angie-gm-all | TBD | TBD | aarch64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 仅验证 CI 构建链路；其 workflow artifact 只用于调试，不作为正式线下验证输入 |
 
 ## 协议冒烟最低要求
 
@@ -69,5 +71,11 @@
   - [tests/package/validate-package.sh](/D:/git-repo/power4j/angie-gm/tests/package/validate-package.sh)
 - 基础 HTTP 冒烟脚本：
   - [tests/smoke/basic-http.sh](/D:/git-repo/power4j/angie-gm/tests/smoke/basic-http.sh)
+
+正式要求：
+
+- 执行线下验证前，应先从 GitHub Release 下载对应版本的 release asset
+- review / rc 验证应使用 `draft + prerelease` 的 release asset
+- 稳定版验证应使用 draft stable release 的 release asset
 
 执行说明、过程记录与记录模板属于过程资料，应放在 `docs/local/` 维护。
