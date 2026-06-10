@@ -66,12 +66,20 @@ stage_runtime_libraries() {
     local staging_root="${2:?staging_root is required}"
     local lib_source="${tongsuo_install_root}/lib"
     local lib_target="${staging_root}${INSTALL_PREFIX}/lib"
+    local libcrypt_source
 
     [[ -d "${lib_source}" ]] || die "tongsuo lib directory not found: ${lib_source}"
 
     mkdir -p "${lib_target}"
     cp -a "${lib_source}/libcrypto.so"* "${lib_target}/"
     cp -a "${lib_source}/libssl.so"* "${lib_target}/"
+
+    if libcrypt_source="$(find /usr/lib64 /lib64 -maxdepth 1 -type f -name 'libcrypt.so.1*' | head -n 1)"; then
+        if [[ -n "${libcrypt_source}" ]]; then
+            cp -a "${libcrypt_source}" "${lib_target}/"
+            ln -sfn "$(basename "${libcrypt_source}")" "${lib_target}/libcrypt.so.1"
+        fi
+    fi
 }
 
 create_runtime_links() {

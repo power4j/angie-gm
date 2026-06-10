@@ -63,14 +63,15 @@
 - 已确认 `angie-gm-all` 也应复用同一套默认欢迎站点资源
 - 已完成官方 `rc7` `deb` 在 Debian 12 上的 `basic` / `all` 默认欢迎站点验证
 - 已确认 `basic` / `all` 官方包均可通过基础 HTTP 欢迎页正文校验
+- 已在 Rocky Linux 10.2 上定位官方 `rc7` `rpm` 的首个运行时缺口：二进制依赖 `libcrypt.so.1`，而系统仅提供 `libcrypt.so.2`
 
 ## 进行中
 
-- 整理首批 Debian 12 过程验证结果，并准备切换到目标发行版验证
+- 修复 `rpm` 包在 Rocky Linux 10.2 上的 `libcrypt.so.1` 运行时依赖问题
 
 ## 下一步
 
-1. 在目标发行版继续执行 `deb` / `rpm` 安装、替换与卸载验证
+1. 复测 Rocky Linux 10.2 上的 `basic` / `all` `rpm` 安装与欢迎页链路
 2. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
 3. 评估并明确 purge 后 `/opt/angie` 残留是否接受
 

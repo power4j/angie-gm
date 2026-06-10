@@ -29,6 +29,7 @@ write_angie_configure_args() {
         printf '%s\n' "--modules-path=${INSTALL_PREFIX}/modules"
         printf '%s\n' "--with-compat"
         printf '%s\n' "--with-pcre-jit"
+        printf '%s\n' "--with-ld-opt=-Wl,-rpath,${INSTALL_PREFIX}/lib"
         printf '%s\n' "--with-openssl=${tongsuo_source_dir}"
         printf '%s\n' "--with-openssl-opt=enable-ntls"
 
