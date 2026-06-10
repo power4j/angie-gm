@@ -141,7 +141,7 @@ remove_installed_package() {
     case "${PACKAGE_FORMAT}" in
         deb)
             if dpkg -s "${package_name}" >/dev/null 2>&1; then
-                dpkg -r "${package_name}" || true
+                dpkg -P "${package_name}" || dpkg -r "${package_name}" || true
             fi
             ;;
         rpm)
@@ -159,6 +159,20 @@ remove_installed_package() {
             die "unsupported package format: ${PACKAGE_FORMAT}"
             ;;
     esac
+}
+
+reset_service_state() {
+    systemctl daemon-reload >/dev/null 2>&1 || true
+    systemctl reset-failed >/dev/null 2>&1 || true
+}
+
+prepare_clean_install_state() {
+    local package_name="$1"
+
+    log "prepare-step: ensure clean install state for ${package_name}"
+    systemctl stop "${SERVICE_NAME}" >/dev/null 2>&1 || true
+    remove_installed_package "${package_name}"
+    reset_service_state
 }
 
 run_summary_checks() {
@@ -191,6 +205,7 @@ cleanup() {
         log "cleanup: removing package ${PACKAGE_NAME}"
         systemctl stop "${SERVICE_NAME}" >/dev/null 2>&1 || true
         remove_installed_package "${PACKAGE_NAME}"
+        reset_service_state
     fi
 }
 
@@ -212,6 +227,10 @@ log "package_name=${PACKAGE_NAME}"
 log "package_file=${PACKAGE_FILE}"
 log "package_format=${PACKAGE_FORMAT}"
 log "mode=${MODE}"
+
+if [[ "${MODE}" == "install" ]]; then
+    prepare_clean_install_state "${PACKAGE_NAME}"
+fi
 
 if [[ "${MODE}" == "replace" ]]; then
     log "replace-step: install old package ${OLD_PACKAGE_FILE}"

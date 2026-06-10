@@ -56,16 +56,19 @@
 - 已收敛修复方案：统一改为创建并使用专用运行账户 `angie:angie`
 - 已完成官方 `rc5` `deb` 复测，确认 `angie -t` 已恢复通过
 - 已定位官方 `rc5` 当前新的启动失败根因：安装脚本未执行 `systemctl daemon-reload`，导致 `systemd` 继续使用旧 unit 缓存
+- 已完成官方 `rc6` `deb` 在 Debian 12 上的冷安装、自检、启动与卸载验证
+- 已确认 `angie:angie` 运行账户与 `systemd daemon-reload` 修复已在 GitHub 官方产包中生效
+- 已定位线下验证脚本当前缺口：`install` 模式未先清理同名已安装包，可能误把升级场景当作冷安装验证
 
 ## 进行中
 
-- 修复官方安装包的 `systemd daemon-reload` 缺失问题，并准备下一轮 GitHub 产包复测
+- 收紧线下验证脚本的冷安装语义，并整理首批过程验证记录
 
 ## 下一步
 
-1. 推送 `systemd daemon-reload` 修复，并触发新一轮 GitHub 产包
-2. 在 Linux 测试机复测官方 `deb` 安装、自检、启动与卸载
-3. 补第一批过程验证记录，并提炼需要进入正式矩阵的结果
+1. 补基础 HTTP 冒烟，并把结果写入过程验证记录
+2. 在目标发行版继续执行 `deb` / `rpm` 安装、替换与卸载验证
+3. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
 
 ## 阻塞项
 
