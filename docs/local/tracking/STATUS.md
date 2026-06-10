@@ -79,14 +79,20 @@
 - 已定位 `angie-gm-all` 第二轮线下专项验证问题：
   - Debian 12 上 `modules.sh` 的失败根因是临时测试配置未声明 `user angie angie`，触发默认 `nobody` 账户解析错误
   - Rocky Linux 10.2 上 `stream.sh` 的失败根因是 `all` 包默认运行树未自动加载 `ngx_stream_module.so`
+- 已完成 Debian 12 上 `angie-gm-all` 第三轮专项复测：
+  - `modules.sh` 通过
+  - `stream.sh` 通过
+  - `http3.sh` 通过
+- 已确认 `http3.sh` 的真实问题不是 HTTP/3 功能缺失，而是临时测试配置未对齐实际运行树；补齐 `user angie angie`、`modules.d` 引入与临时证书生成后已恢复
 
 ## 进行中
 
-- 修复 `angie-gm-all` 的动态模块产出链路，并校正 HTTP/3 验证脚本
+- 完成 `angie-gm-all` 在 Rocky Linux 10.2 上的新 RPM 专项复测
 
 ## 下一步
 
-1. 重新产出 `angie-gm-all` 包并复测 `modules.sh`、`stream.sh`、`http3.sh`
+1. 刷新或绕过当前私有仓库 artifact 下载认证问题，拿到最新 `angie-gm-all` x86_64 `rpm`
+2. 在 Rocky Linux 10.2 上复测 `modules.sh`、`stream.sh`、`http3.sh`
 2. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
 3. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
 
