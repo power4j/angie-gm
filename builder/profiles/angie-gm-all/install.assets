@@ -1,4 +1,5 @@
 assets/config/
+assets/diagnostics/
 assets/systemd/
 assets/tmpfiles/
 assets/examples/basic/
