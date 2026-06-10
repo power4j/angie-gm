@@ -61,16 +61,18 @@
 - 已定位线下验证脚本当前缺口：`install` 模式未先清理同名已安装包，可能误把升级场景当作冷安装验证
 - 已确定 `angie-gm-basic` 默认欢迎站点口径：`/etc/angie/conf.d/welcome.conf` + `/opt/angie/share/html/index.html`
 - 已确认 `angie-gm-all` 也应复用同一套默认欢迎站点资源
+- 已完成官方 `rc7` `deb` 在 Debian 12 上的 `basic` / `all` 默认欢迎站点验证
+- 已确认 `basic` / `all` 官方包均可通过基础 HTTP 欢迎页正文校验
 
 ## 进行中
 
-- 为两种安装包统一默认欢迎站点交付口径
+- 整理首批 Debian 12 过程验证结果，并准备切换到目标发行版验证
 
 ## 下一步
 
-1. 验证默认欢迎站点随 `basic` / `all` 官方包正确安装并可通过 `curl` 校验
-2. 在目标发行版继续执行 `deb` / `rpm` 安装、替换与卸载验证
-3. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
+1. 在目标发行版继续执行 `deb` / `rpm` 安装、替换与卸载验证
+2. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
+3. 评估并明确 purge 后 `/opt/angie` 残留是否接受
 
 ## 阻塞项
 
