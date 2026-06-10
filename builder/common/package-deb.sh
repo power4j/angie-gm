@@ -39,6 +39,13 @@ write_deb_script() {
 set -eu
 echo "[${phase}] package=${PACKAGE_NAME}"
 if [ "${phase}" = "postinst" ]; then
+    if ! getent group angie >/dev/null 2>&1; then
+        groupadd --system angie >/dev/null 2>&1 || addgroup --system angie >/dev/null 2>&1 || true
+    fi
+    if ! getent passwd angie >/dev/null 2>&1; then
+        useradd --system --no-create-home --home-dir /nonexistent --shell /usr/sbin/nologin --gid angie angie >/dev/null 2>&1 || \
+        adduser --system --no-create-home --home /nonexistent --shell /usr/sbin/nologin --ingroup angie angie >/dev/null 2>&1 || true
+    fi
     systemd-tmpfiles --create /usr/lib/tmpfiles.d/angie.conf >/dev/null 2>&1 || true
     echo "[${phase}] self-check hints: angie -V ; angie -t ; systemctl status angie ; journalctl -u angie -n 100 --no-pager"
 fi
@@ -91,6 +98,7 @@ Conflicts: ${CONFLICTS}
 Replaces: ${REPLACES}
 Description: Offline Angie package (${PACKAGE_FLAVOR})
  Offline Angie package for ${PACKAGE_FLAVOR} runtime.
+Pre-Depends: adduser
 EOF
 
     cat > "${control_dir}/conffiles" <<EOF

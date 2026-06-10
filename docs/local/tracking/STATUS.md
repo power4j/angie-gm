@@ -51,16 +51,19 @@
 - 验证矩阵与验证记录模板已补充线下执行入口、`glibc` 检查项与升级保留结果字段
 - 已完成验证资料分层收缩：正式文档仅保留稳定验证口径，线下执行说明与记录模板已迁入 `docs/local/validation/`
 - 已完成 WSL / GitHub Actions 验证记录迁移，`docs/public/validation/` 不再存放过程性验证记录
+- 已在 Debian 12 测试机完成一次 GitHub Release 官方 `deb` 包安装验证，确认安装成功且 `angie -V` 输出来自 GitHub Actions 产物
+- 已定位官方 `deb` 包当前首个运行时兼容问题：默认用户组回退到 `nobody`，在 Debian 12 上因缺少 `nobody` 组导致 `angie -t` 失败
+- 已收敛修复方案：统一改为创建并使用专用运行账户 `angie:angie`
 
 ## 进行中
 
-- 准备首轮 Linux 测试机安装 / 升级 / 替换验证
+- 修复官方安装包的默认运行账户兼容性问题，并准备下一轮 GitHub 产包复测
 
 ## 下一步
 
-1. 在 Linux 测试机执行首轮 `deb` 安装、替换与基础 HTTP 验证
-2. 补第一批过程验证记录，并提炼需要进入正式矩阵的结果
-3. 评估并处理 GitHub Actions JavaScript actions 的 Node 20 弃用告警
+1. 推送专用运行账户修复，并触发新一轮 GitHub 产包
+2. 在 Linux 测试机复测官方 `deb` 安装、自检、启动与卸载
+3. 补第一批过程验证记录，并提炼需要进入正式矩阵的结果
 
 ## 阻塞项
 

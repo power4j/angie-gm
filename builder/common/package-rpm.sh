@@ -79,6 +79,12 @@ cp -a ${staging_root}/. %{buildroot}/
 
 %post
 echo "[post] package=${PACKAGE_NAME}"
+if ! getent group angie >/dev/null 2>&1; then
+    groupadd -r angie >/dev/null 2>&1 || true
+fi
+if ! getent passwd angie >/dev/null 2>&1; then
+    useradd -r -g angie -d /nonexistent -s /sbin/nologin -M angie >/dev/null 2>&1 || true
+fi
 echo "[post] enabling tmpfiles for angie"
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/angie.conf >/dev/null 2>&1 || true
 echo "[post] self-check hints: angie -V ; angie -t ; systemctl status angie ; journalctl -u angie -n 100 --no-pager"
