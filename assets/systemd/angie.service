@@ -12,8 +12,6 @@ ExecStart=/usr/sbin/angie -c /etc/angie/angie.conf
 ExecReload=/usr/sbin/angie -s reload
 ExecStop=/usr/sbin/angie -s quit
 PrivateTmp=true
-RuntimeDirectory=angie
-RuntimeDirectoryMode=0755
 LimitNOFILE=65535
 
 [Install]

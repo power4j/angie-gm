@@ -65,16 +65,17 @@
 - 已确认 `basic` / `all` 官方包均可通过基础 HTTP 欢迎页正文校验
 - 已在 Rocky Linux 10.2 上定位官方 `rc7` `rpm` 的首个运行时缺口：二进制依赖 `libcrypt.so.1`，而系统仅提供 `libcrypt.so.2`
 - 已定位 Rocky Linux 10.2 上 `rpm` 包的第二个启动缺口：`/run/angie` 同时由 `tmpfiles.d` 与 `systemd RuntimeDirectory` 管理，导致 `status=233/RUNTIME_DIRECTORY`
+- 已确认仅保留 `RuntimeDirectory` 不可接受：会破坏安装后直接执行 `angie -t`，因为 `pid` 路径 `/run/angie/angie.pid` 不存在
 
 ## 进行中
 
-- 修复 `rpm` 包在 Rocky Linux 10.2 上的 `/run/angie` 运行时目录冲突问题
+- 收敛 `/run/angie` 的唯一管理机制，并同时保持 `systemctl start angie` 与安装后 `angie -t` 可执行
 
 ## 下一步
 
 1. 复测 Rocky Linux 10.2 上的 `basic` / `all` `rpm` 安装、自检、启动与欢迎页链路
-2. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
-3. 评估并明确 purge 后 `/opt/angie` 残留是否接受
+2. 回归验证 Debian 12 上的 `basic` / `all` `deb`，确认本次 `/run/angie` 修复未引入退化
+3. 开始补 `angie-gm-all` 的 HTTP/3、stream 与动态模块验证
 
 ## 阻塞项
 
