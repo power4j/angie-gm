@@ -1,41 +1,63 @@
 # angie-gm
 
-`angie-gm` 是一个面向离线 Linux 部署场景的打包与发布工程，用于构建 `angie` 的两类安装包：
+`angie-gm` 是一个面向离线 Linux 部署场景的打包与发布工程，用于构建并发布基于 `angie` 的安装包。
 
-- `angie-gm-basic`：基础能力 + 国密 / NTLS
-- `angie-gm-all`：尽量完整，包含 HTTP/3、stream、常用动态模块、国密 / NTLS
+当前对外交付的安装包为：
 
-项目目标：
+- `angie-gm-basic`
+  - 基础能力 + 国密 / NTLS
+- `angie-gm-all`
+  - 尽量完整，包含 HTTP/3、stream、常用动态模块、国密 / NTLS
 
-- 通过 GitHub Actions 稳定产出可重复的 `deb` / `rpm`
+## 支持范围
+
+当前面向以下目标平台与架构：
+
+- 银河麒麟服务器版 V10
+- 统信服务器版 V10
+- Ubuntu 20
+- `x86_64`
+- `aarch64`
+
+当前构建 ABI 基线：
+
+- `glibc 2.28`
+
+## 安装布局
+
+运行时统一使用中性名称：
+
+- 可执行文件：`angie`
+- 服务名：`angie.service`
+
+固定安装布局如下：
+
+- 程序与私有库：`/opt/angie`
+- 主配置：`/etc/angie`
+- 日志：`/var/log/angie`
+- 缓存：`/var/cache/angie`
+- 持久状态：`/var/lib/angie`
+- 运行时目录：`/run/angie`
+
+## 构建与发布
+
+当前仓库的正式构建与发布链路为：
+
+- 通过 GitHub Actions 进行构建
+- 输出 `deb` 与 `rpm`
+- 通过 GitHub Release 发布产物
+
+当前交付策略为：
+
+- 单包交付
 - 除 `glibc` 外尽量自带运行时依赖
-- 当前构建 ABI 基线固定为 `glibc 2.28`
-- 统一安装前缀为 `/opt/angie`
 - 配置、日志、缓存、状态与程序分离
-- 通过 GitHub Actions 构建，并发布到 GitHub Release
-
-## 目录概览
-
-- `AGENTS.md`：项目规范
-- `docs/`：正式文档与本地过程文档索引
-- `source/`：上游源码清单、checksums、patches
-- `builder/`：构建脚本、profile、构建容器
-- `packaging/`：`deb` / `rpm` 打包模板
-- `assets/`：默认配置、systemd、tmpfiles 等资源
-- `tests/`：安装包级验证
-- `output/`：本地构建产物与中间文件
-
-## 当前状态
-
-当前仓库已完成基础初始化，后续工作将围绕以下方向展开：
-
-1. 固化构建 profile 与打包模板
-2. 引入 Angie / TongSuo 来源清单与版本基线
-3. 建立 GitHub Actions 构建与 Release 流程
-4. 建立线下验证矩阵与诊断规范
 
 ## 文档入口
 
 - [docs/README.md](/D:/git-repo/power4j/angie-gm/docs/README.md)
 - [docs/public/README.md](/D:/git-repo/power4j/angie-gm/docs/public/README.md)
-- [docs/local/README.md](/D:/git-repo/power4j/angie-gm/docs/local/README.md)
+
+## 相关说明
+
+- 当前仓库是 `angie` 离线安装包的构建与发布工程，不是 `Angie` 或 `TongSuo` 的上游开发仓库。
