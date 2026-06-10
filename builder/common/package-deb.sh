@@ -46,8 +46,12 @@ if [ "${phase}" = "postinst" ]; then
         useradd --system --no-create-home --home-dir /nonexistent --shell /usr/sbin/nologin --gid angie angie >/dev/null 2>&1 || \
         adduser --system --no-create-home --home /nonexistent --shell /usr/sbin/nologin --ingroup angie angie >/dev/null 2>&1 || true
     fi
+    systemctl daemon-reload >/dev/null 2>&1 || true
     systemd-tmpfiles --create /usr/lib/tmpfiles.d/angie.conf >/dev/null 2>&1 || true
     echo "[${phase}] self-check hints: angie -V ; angie -t ; systemctl status angie ; journalctl -u angie -n 100 --no-pager"
+fi
+if [ "${phase}" = "postrm" ]; then
+    systemctl daemon-reload >/dev/null 2>&1 || true
 fi
 exit 0
 EOF

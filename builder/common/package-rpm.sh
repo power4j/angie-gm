@@ -85,6 +85,7 @@ fi
 if ! getent passwd angie >/dev/null 2>&1; then
     useradd -r -g angie -d /nonexistent -s /sbin/nologin -M angie >/dev/null 2>&1 || true
 fi
+systemctl daemon-reload >/dev/null 2>&1 || true
 echo "[post] enabling tmpfiles for angie"
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/angie.conf >/dev/null 2>&1 || true
 echo "[post] self-check hints: angie -V ; angie -t ; systemctl status angie ; journalctl -u angie -n 100 --no-pager"
@@ -94,6 +95,7 @@ echo "[preun] package=${PACKAGE_NAME}"
 
 %postun
 echo "[postun] package=${PACKAGE_NAME}"
+systemctl daemon-reload >/dev/null 2>&1 || true
 
 %files
 %dir /etc/angie

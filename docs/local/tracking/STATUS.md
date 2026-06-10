@@ -54,14 +54,16 @@
 - 已在 Debian 12 测试机完成一次 GitHub Release 官方 `deb` 包安装验证，确认安装成功且 `angie -V` 输出来自 GitHub Actions 产物
 - 已定位官方 `deb` 包当前首个运行时兼容问题：默认用户组回退到 `nobody`，在 Debian 12 上因缺少 `nobody` 组导致 `angie -t` 失败
 - 已收敛修复方案：统一改为创建并使用专用运行账户 `angie:angie`
+- 已完成官方 `rc5` `deb` 复测，确认 `angie -t` 已恢复通过
+- 已定位官方 `rc5` 当前新的启动失败根因：安装脚本未执行 `systemctl daemon-reload`，导致 `systemd` 继续使用旧 unit 缓存
 
 ## 进行中
 
-- 修复官方安装包的默认运行账户兼容性问题，并准备下一轮 GitHub 产包复测
+- 修复官方安装包的 `systemd daemon-reload` 缺失问题，并准备下一轮 GitHub 产包复测
 
 ## 下一步
 
-1. 推送专用运行账户修复，并触发新一轮 GitHub 产包
+1. 推送 `systemd daemon-reload` 修复，并触发新一轮 GitHub 产包
 2. 在 Linux 测试机复测官方 `deb` 安装、自检、启动与卸载
 3. 补第一批过程验证记录，并提炼需要进入正式矩阵的结果
 
