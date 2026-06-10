@@ -13,8 +13,12 @@ die() {
 
 ANGIE_BIN="${ANGIE_BIN:-/usr/sbin/angie}"
 HTTP3_PORT="${1:-8443}"
+TLS_CERT="${TLS_CERT:-/etc/ssl/certs/ssl-cert-snakeoil.pem}"
+TLS_KEY="${TLS_KEY:-/etc/ssl/private/ssl-cert-snakeoil.key}"
 
 command -v "${ANGIE_BIN}" >/dev/null 2>&1 || die "missing command: ${ANGIE_BIN}"
+[[ -f "${TLS_CERT}" ]] || die "TLS certificate file not found: ${TLS_CERT}"
+[[ -f "${TLS_KEY}" ]] || die "TLS key file not found: ${TLS_KEY}"
 
 log "check=configure-args-http3"
 if ! "${ANGIE_BIN}" -V 2>&1 | grep -F -- '--with-http_v3_module' >/dev/null 2>&1; then
@@ -32,8 +36,11 @@ events {}
 
 http {
     server {
+        listen ${HTTP3_PORT} ssl;
         listen ${HTTP3_PORT} quic reuseport;
         server_name _;
+        ssl_certificate ${TLS_CERT};
+        ssl_certificate_key ${TLS_KEY};
         return 200 "http3-check\n";
     }
 }

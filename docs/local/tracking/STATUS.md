@@ -71,14 +71,18 @@
 - 已完成 Debian 12 上 `basic` / `all` `deb` 回归验证，确认 `/run/angie` 修复未引入退化
 - 已补 `angie-gm-all` 的专项验证脚本骨架：动态模块、stream、HTTP/3
 - 已更新线下执行说明，纳入 `angie-gm-all` 专项冒烟入口与当前边界
+- 已完成 `angie-gm-all` 第一轮专项验证：
+  - `stream` 在 Rocky Linux 10.2 与 Debian 12 上通过
+  - `modules` 在 Rocky Linux 10.2 与 Debian 12 上失败，当前包内没有动态模块文件
+  - `http3` 在 Rocky Linux 10.2 与 Debian 12 上失败，原脚本最小配置缺少 TLS 证书上下文
 
 ## 进行中
 
-- 在线下测试机执行 `angie-gm-all` 的动态模块、stream、HTTP/3 专项验证
+- 修复 `angie-gm-all` 的动态模块产出链路，并校正 HTTP/3 验证脚本
 
 ## 下一步
 
-1. 在 Linux 测试机执行 `modules.sh`、`stream.sh`、`http3.sh`
+1. 重新产出 `angie-gm-all` 包并复测 `modules.sh`、`stream.sh`、`http3.sh`
 2. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
 3. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
 

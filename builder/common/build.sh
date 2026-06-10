@@ -137,7 +137,7 @@ main() {
     prepare_staging_tree "${staging_root}"
     prepare_tongsuo_build "${tongsuo_source_dir}" "${tongsuo_build_root}" "${tongsuo_install_root}" "${tongsuo_config_args_file}"
     build_tongsuo "${tongsuo_source_dir}" "${tongsuo_build_root}" "${tongsuo_install_root}" "${tongsuo_config_args_file}"
-    write_angie_configure_args "${angie_config_args_file}" "${tongsuo_source_dir}"
+    write_angie_configure_args "${angie_config_args_file}" "${tongsuo_source_dir}" "${profile_dir}"
     prepare_angie_build "${angie_source_dir}" "${angie_build_root}" "${angie_config_args_file}"
     build_angie "${angie_source_dir}" "${angie_build_root}" "${angie_config_args_file}" "${staging_root}"
     assemble_runtime "${profile_dir}" "${staging_root}" "${tongsuo_install_root}"

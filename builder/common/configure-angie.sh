@@ -9,13 +9,17 @@ source "${SCRIPT_DIR}/diagnostics.sh"
 write_angie_configure_args() {
     local output_file="${1:?output_file is required}"
     local tongsuo_source_dir="${2:?tongsuo_source_dir is required}"
+    local profile_dir="${3:?profile_dir is required}"
     local output_dir
+    local dynamic_module_list="${profile_dir}/modules.dynamic"
+    local dynamic_module
 
     output_dir="$(dirname "${output_file}")"
 
     log_stage "write angie configure args"
     log_info "output_file=${output_file}"
     log_info "tongsuo_source_dir=${tongsuo_source_dir}"
+    log_info "profile_dir=${profile_dir}"
 
     mkdir -p "${output_dir}"
 
@@ -45,6 +49,38 @@ write_angie_configure_args() {
 
         if [[ "${ENABLE_NTLS}" == "true" ]]; then
             printf '%s\n' "--with-http_ssl_module"
+        fi
+
+        if [[ -f "${dynamic_module_list}" ]]; then
+            while IFS= read -r dynamic_module; do
+                dynamic_module="${dynamic_module%$'\r'}"
+                [[ -n "${dynamic_module}" ]] || continue
+                [[ "${dynamic_module}" != \#* ]] || continue
+
+                case "${dynamic_module}" in
+                    http_realip)
+                        printf '%s\n' "--with-http_realip_module=dynamic"
+                        ;;
+                    http_auth_request)
+                        printf '%s\n' "--with-http_auth_request_module=dynamic"
+                        ;;
+                    http_slice)
+                        printf '%s\n' "--with-http_slice_module=dynamic"
+                        ;;
+                    stream)
+                        printf '%s\n' "--with-stream=dynamic"
+                        ;;
+                    stream_ssl_preread)
+                        printf '%s\n' "--with-stream_ssl_preread_module"
+                        ;;
+                    mail)
+                        printf '%s\n' "--with-mail=dynamic"
+                        ;;
+                    *)
+                        die "unsupported dynamic module entry: ${dynamic_module}"
+                        ;;
+                esac
+            done < "${dynamic_module_list}"
         fi
 
         if [[ "${WITH_DEBUG}" == "true" ]]; then
