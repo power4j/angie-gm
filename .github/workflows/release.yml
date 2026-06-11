@@ -5,23 +5,265 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      package_version:
+        description: Package version, for example 0.1.0~rc1
+        required: true
+      release_tag:
+        description: GitHub release tag, for example v0.1.0-rc1
+        required: true
+      package_release:
+        description: Packaging release number, default 1
+        required: false
+        default: '1'
 
 permissions:
   contents: write
 
 jobs:
-  release:
-    runs-on: ubuntu-24.04
+  build:
+    name: release-build-${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
+    runs-on: ${{ matrix.runner }}
+    container:
+      image: almalinux:8
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - angie-gm-basic
+          - angie-gm-all
+        arch:
+          - x86_64
+          - aarch64
+        format:
+          - deb
+          - rpm
+        include:
+          - arch: x86_64
+            runner: ubuntu-24.04
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Define release display metadata
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            display_version="${{ github.event.inputs.release_tag }}"
+            display_version="${display_version#v}"
+            display_version="${display_version//-rc/ RC}"
+          else
+            display_version="${GITHUB_REF_NAME#v}"
+          fi
+          echo "DISPLAY_VERSION=${display_version}" >> "${GITHUB_ENV}"
+
+      - name: Resolve release version
+        run: |
+          event_name="${{ github.event_name }}"
+          if [ -n "${{ github.event.inputs.package_version }}" ]; then
+            package_version="${{ github.event.inputs.package_version }}"
+          else
+            package_version="${GITHUB_REF_NAME#v}"
+          fi
+          if [ -z "${package_version}" ]; then
+            echo "package_version is empty" >&2
+            exit 1
+          fi
+          if [ "${event_name}" = "workflow_dispatch" ]; then
+            release_tag="${{ github.event.inputs.release_tag }}"
+            if [ -z "${release_tag}" ]; then
+              echo "release_tag is empty" >&2
+              exit 1
+            fi
+            release_name="Review ${DISPLAY_VERSION}"
+            is_prerelease="true"
+          else
+            release_tag="${GITHUB_REF_NAME}"
+            release_name="${GITHUB_REF_NAME}"
+            is_prerelease="false"
+          fi
+          echo "PACKAGE_VERSION=${package_version}" >> "${GITHUB_ENV}"
+          echo "PACKAGE_RELEASE=${{ github.event.inputs.package_release || '1' }}" >> "${GITHUB_ENV}"
+          echo "RELEASE_TAG=${release_tag}" >> "${GITHUB_ENV}"
+          echo "RELEASE_NAME=${release_name}" >> "${GITHUB_ENV}"
+          echo "IS_PRERELEASE=${is_prerelease}" >> "${GITHUB_ENV}"
+
+      - name: Show matrix context
+        run: |
+          cat /etc/os-release
+          getconf GNU_LIBC_VERSION
+          echo "package=${{ matrix.package }}"
+          echo "arch=${{ matrix.arch }}"
+          echo "format=${{ matrix.format }}"
+          echo "version=${PACKAGE_VERSION}"
+          echo "release=${PACKAGE_RELEASE}"
+          echo "release_tag=${RELEASE_TAG}"
+          echo "is_prerelease=${IS_PRERELEASE}"
+
+      - name: Validate source metadata presence
+        run: |
+          test -f source/manifests/angie.json
+          test -f source/manifests/tongsuo.json
+          test -f source/checksums/upstream.sha256
+
+      - name: Validate profile presence
+        run: |
+          test -f builder/profiles/${{ matrix.package }}/profile.env
+          test -f builder/profiles/${{ matrix.package }}/modules.dynamic
+          test -f builder/profiles/${{ matrix.package }}/install.assets
+
+      - name: Prepare shell runtime
+        run: |
+          chmod +x builder/common/*.sh
+
+      - name: Install build dependencies
+        run: |
+          dnf install -y \
+            bash \
+            ca-certificates \
+            binutils \
+            curl \
+            diffutils \
+            findutils \
+            gcc \
+            gcc-c++ \
+            gawk \
+            git \
+            gzip \
+            make \
+            patch \
+            perl \
+            pcre2-devel \
+            python3 \
+            rpm-build \
+            sed \
+            tar \
+            zlib-devel \
+            xz
+
+      - name: Verify shell syntax
+        run: |
+          bash -n builder/common/diagnostics.sh \
+            builder/common/load-profile.sh \
+            builder/common/read-manifest.sh \
+            builder/common/fetch-sources.sh \
+            builder/common/verify-checksums.sh \
+            builder/common/stage-runtime.sh \
+            builder/common/build-tongsuo.sh \
+            builder/common/configure-angie.sh \
+            builder/common/build-angie.sh \
+            builder/common/assemble-runtime.sh \
+            builder/common/package-rpm.sh \
+            builder/common/package-deb.sh \
+            builder/common/build.sh
+
+      - name: Run release build pipeline
+        run: |
+          export PACKAGE_FORMAT="${{ matrix.format }}"
+          export BUILD_ARCH="${{ matrix.arch }}"
+          export PACKAGE_VERSION="${PACKAGE_VERSION}"
+          export PACKAGE_RELEASE="${PACKAGE_RELEASE}"
+          bash builder/common/build.sh "${{ matrix.package }}"
+
+      - name: Upload release package artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
+          path: output/packages/${{ matrix.package }}/
+          if-no-files-found: error
+
+  assemble-release:
+    runs-on: ubuntu-24.04
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Define release display metadata
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            display_version="${{ github.event.inputs.release_tag }}"
+            display_version="${display_version#v}"
+            display_version="${display_version//-rc/ RC}"
+            asset_version="${{ github.event.inputs.release_tag }}"
+            asset_version="${asset_version#v}"
+          else
+            display_version="${GITHUB_REF_NAME#v}"
+            asset_version="${GITHUB_REF_NAME#v}"
+          fi
+          echo "DISPLAY_VERSION=${display_version}" >> "${GITHUB_ENV}"
+          echo "ASSET_VERSION=${asset_version}" >> "${GITHUB_ENV}"
+
+      - name: Resolve release version
+        run: |
+          event_name="${{ github.event_name }}"
+          if [ -n "${{ github.event.inputs.package_version }}" ]; then
+            package_version="${{ github.event.inputs.package_version }}"
+          else
+            package_version="${GITHUB_REF_NAME#v}"
+          fi
+          if [ -z "${package_version}" ]; then
+            echo "package_version is empty" >&2
+            exit 1
+          fi
+          if [ "${event_name}" = "workflow_dispatch" ]; then
+            release_tag="${{ github.event.inputs.release_tag }}"
+            if [ -z "${release_tag}" ]; then
+              echo "release_tag is empty" >&2
+              exit 1
+            fi
+            release_name="Review ${DISPLAY_VERSION}"
+            is_prerelease="true"
+          else
+            release_tag="${GITHUB_REF_NAME}"
+            release_name="${GITHUB_REF_NAME}"
+            is_prerelease="false"
+          fi
+          echo "PACKAGE_VERSION=${package_version}" >> "${GITHUB_ENV}"
+          echo "PACKAGE_RELEASE=${{ github.event.inputs.package_release || '1' }}" >> "${GITHUB_ENV}"
+          echo "RELEASE_TAG=${release_tag}" >> "${GITHUB_ENV}"
+          echo "RELEASE_NAME=${release_name}" >> "${GITHUB_ENV}"
+          echo "IS_PRERELEASE=${is_prerelease}" >> "${GITHUB_ENV}"
+
+      - name: Download built package artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: output/artifacts
+          pattern: release-*
+          merge-multiple: true
+
       - name: Prepare release payload
+        shell: bash
         run: |
           mkdir -p output/release
-          printf 'Release workflow scaffold for power4j/angie-gm\n' > output/release/README.txt
-          printf 'Wire build outputs and checksums here.\n' >> output/release/README.txt
+          found_packages=0
+          while IFS= read -r -d '' file; do
+            found_packages=1
+            base_name="$(basename "${file}")"
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              renamed="${base_name//${PACKAGE_VERSION}/${ASSET_VERSION}}"
+            else
+              renamed="${base_name}"
+            fi
+            cp -a "${file}" "output/release/${renamed}"
+          done < <(find output/artifacts -type f \( -name '*.rpm' -o -name '*.deb' \) -print0)
+          if [ "${found_packages}" -ne 1 ]; then
+            echo "no package files found under output/artifacts" >&2
+            exit 1
+          fi
+          cd output/release
+          sha256sum *.rpm *.deb > sha256sum.txt
+          {
+            printf 'Package-Version: %s\n' "${PACKAGE_VERSION}"
+            printf 'Package-Release: %s\n' "${PACKAGE_RELEASE}"
+            printf 'Build-Baseline: glibc 2.28\n'
+            printf 'Generated-By: GitHub Actions Release Packages\n'
+          } > BUILD-INFO.txt
 
       - name: Upload release payload artifact
         uses: actions/upload-artifact@v4
@@ -30,10 +272,14 @@ jobs:
           path: output/release/
 
       - name: Create or update release draft
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           draft: true
+          prerelease: ${{ env.IS_PRERELEASE }}
+          tag_name: ${{ env.RELEASE_TAG }}
+          target_commitish: ${{ github.sha }}
+          name: ${{ env.RELEASE_NAME }}
+          make_latest: false
           generate_release_notes: true
           files: |
             output/release/*

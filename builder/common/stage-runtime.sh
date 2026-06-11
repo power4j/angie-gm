@@ -11,6 +11,7 @@ prepare_staging_tree() {
 
     log_stage "prepare staging tree"
 
+    rm -rf "${staging_root}"
     mkdir -p \
         "${staging_root}${INSTALL_PREFIX}" \
         "${staging_root}${CONF_PREFIX}" \

@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+MODE="${1:-summary}"
+ANGIE_BIN="${ANGIE_BIN:-/usr/sbin/angie}"
+CONF_FILE="${CONF_FILE:-/etc/angie/angie.conf}"
+
+log() {
+    printf '[diag] %s\n' "$@"
+}
+
+show_paths() {
+    for path in /opt/angie /etc/angie /var/log/angie /var/cache/angie /var/lib/angie /run/angie; do
+        if [[ -e "${path}" ]]; then
+            log "path=${path} present"
+        else
+            log "path=${path} missing"
+        fi
+    done
+}
+
+run_summary() {
+    show_paths
+    log "binary=${ANGIE_BIN}"
+    log "config=${CONF_FILE}"
+    "${ANGIE_BIN}" -V
+    "${ANGIE_BIN}" -t -c "${CONF_FILE}"
+}
+
+run_preflight() {
+    show_paths
+    test -x "${ANGIE_BIN}"
+    test -f "${CONF_FILE}"
+    log "preflight=ok"
+}
+
+run_service() {
+    systemctl status angie --no-pager || true
+    journalctl -u angie -n 100 --no-pager || true
+}
+
+case "${MODE}" in
+    summary)
+        run_summary
+        ;;
+    preflight)
+        run_preflight
+        ;;
+    service)
+        run_service
+        ;;
+    *)
+        printf 'usage: %s [summary|preflight|service]\n' "$0" >&2
+        exit 1
+        ;;
+esac

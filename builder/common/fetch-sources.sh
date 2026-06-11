@@ -40,15 +40,23 @@ fetch_source_from_upstream() {
     log_info "filename=${filename}"
 
     ensure_source_cache_dir
+    rm -f "${temp_path}"
 
     if command -v curl >/dev/null 2>&1; then
-        curl --fail --location --retry 3 --output "${temp_path}" "${upstream_url}"
+        if ! curl --fail --location --retry 3 --output "${temp_path}" "${upstream_url}"; then
+            rm -f "${temp_path}"
+            die "failed to download source archive: ${upstream_url}"
+        fi
     elif command -v wget >/dev/null 2>&1; then
-        wget --output-document="${temp_path}" "${upstream_url}"
+        if ! wget --output-document="${temp_path}" "${upstream_url}"; then
+            rm -f "${temp_path}"
+            die "failed to download source archive: ${upstream_url}"
+        fi
     else
         die "curl or wget is required to download source archives"
     fi
 
+    [[ -f "${temp_path}" ]] || die "download did not produce archive: ${temp_path}"
     mv "${temp_path}" "${archive_path}"
     log_info "downloaded source archive: ${archive_path}"
     printf '%s\n' "${archive_path}"

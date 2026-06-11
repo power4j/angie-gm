@@ -1,0 +1,18 @@
+[Unit]
+Description=Angie web server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+PIDFile=/run/angie/angie.pid
+ExecStartPre=/opt/angie/bin/angie-diagnose preflight
+ExecStartPre=/usr/sbin/angie -t -c /etc/angie/angie.conf
+ExecStart=/usr/sbin/angie -c /etc/angie/angie.conf
+ExecReload=/usr/sbin/angie -s reload
+ExecStop=/usr/sbin/angie -s quit
+PrivateTmp=true
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

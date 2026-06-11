@@ -28,6 +28,13 @@
 
 安装包差异只通过包名、Release 名、构建元数据和 `angie -V` 暴露。
 
+默认站点策略：
+
+- `angie-gm-basic` 与 `angie-gm-all` 默认都提供 `conf.d/welcome.conf`
+- 默认静态页位于 `/opt/angie/share/html/index.html`
+- 页面主标题使用 `Welcome to Angie`
+- 页面仅作为安装验证页，不应视为业务默认站点
+
 冲突策略：
 
 - `angie-gm-basic` 与 `angie-gm-all` 不允许同时安装。
@@ -50,6 +57,17 @@
 - 程序与私有运行库集中在 `/opt/angie`
 - 配置与可变数据不随升级覆盖
 - 两种包不能共存，但应允许标准升级替换
+
+当前卸载策略：
+
+- 删除包本体、systemd unit、tmpfiles 配置与命令入口
+- 删除空的运行期目录与临时目录，例如：
+  - `/opt/angie` 下的 `*_temp`
+  - `/var/cache/angie`
+  - `/var/lib/angie`
+  - `/run/angie`
+- 保留日志目录与日志文件
+- 不得为了追求“卸载绝对干净”而误删现场日志或用户数据
 
 ## 4. 构建策略
 
