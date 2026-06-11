@@ -169,7 +169,7 @@ jobs:
           bash builder/common/build.sh "${{ matrix.package }}"
 
       - name: Upload release package artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}
           path: output/packages/${{ matrix.package }}/
@@ -266,7 +266,7 @@ jobs:
           } > BUILD-INFO.txt
 
       - name: Upload release payload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-payload
           path: output/release/

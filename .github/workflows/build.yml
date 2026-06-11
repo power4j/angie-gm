@@ -115,7 +115,7 @@ jobs:
 
       - name: Upload work directory
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-work
           path: output/work/${{ matrix.package }}/
@@ -123,7 +123,7 @@ jobs:
 
       - name: Upload staging directory
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-staging
           path: output/staging/${{ matrix.package }}/
@@ -131,7 +131,7 @@ jobs:
 
       - name: Upload package artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}-${{ matrix.format }}-packages
           path: output/packages/${{ matrix.package }}/
