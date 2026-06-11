@@ -46,6 +46,7 @@
 | angie-gm-basic | TBD | TBD | x86_64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 仅验证 CI 构建链路；其 workflow artifact 只用于调试，不作为正式线下验证输入 |
 | angie-gm-all | TBD | TBD | aarch64 | GitHub Actions + AlmaLinux 8 | hosted runner | `2.28` | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN | PARTIAL | PASS | 2026-06-09 | `Build Packages` 仅验证 CI 构建链路；其 workflow artifact 只用于调试，不作为正式线下验证输入 |
 | angie-gm-all | `0.1.0~rc8` | `1` | x86_64 | Rocky Linux 10.2 | `6.12.0-124.21.1.el10_1.x86_64` | `2.39` | PASS | NOT_RUN | PASS | PASS | PASS | PASS | 2026-06-11 | 输入为 GitHub Release `v0.1.0-rc8` asset；已通过安装、自检、动态模块、`stream` 与 HTTP/3 最小能力验证 |
+| angie-gm-all | `0.1.0~rc8` | `1` | amd64 | Debian 12 | 以现场为准 | `2.36` | PASS | NOT_RUN | PASS | PASS | PASS | PASS | 2026-06-11 | 输入为 GitHub Release `v0.1.0-rc8` asset；已通过安装、自检、动态模块、`stream` 与 HTTP/3 最小能力验证 |
 
 ## 协议冒烟最低要求
 

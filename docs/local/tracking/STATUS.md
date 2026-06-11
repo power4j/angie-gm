@@ -87,16 +87,17 @@
 - 已收敛验证输入口径：`Build Packages` 的 workflow artifact 仅用于 CI 调试；线下验证、替换验证与交付验证统一改为使用 GitHub Release asset
 - 已完成 `Release Packages` `workflow_dispatch` `rc8` 实测，确认 `v0.1.0-rc8` 可生成 `draft + prerelease`，并包含 `x86_64` / `aarch64`、`rpm` / `deb` 全部 release asset
 - 已在 Rocky Linux 10.2 上基于 `v0.1.0-rc8` release asset 完成 `angie-gm-all` 专项复测，确认安装、自检、动态模块、`stream` 与 HTTP/3 通过
+- 已在 Debian 12 上基于 `v0.1.0-rc8` release asset 完成 `angie-gm-all` 专项复测，确认安装、自检、动态模块、`stream` 与 HTTP/3 通过
 
 ## 进行中
 
-- 收敛 release asset 口径下的剩余线下专项验证与残留策略
+- 收敛卸载残留策略，并准备国产发行版验证批次
 
 ## 下一步
 
-1. 在 Debian 12 上以 release asset 口径补 `angie-gm-all` 的 `modules.sh`、`stream.sh`、`http3.sh`
-2. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
-3. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
+1. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
+2. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
+3. 评估是否需要把当前 `rc8` release notes 补充为人工验证摘要
 
 ## 阻塞项
 
