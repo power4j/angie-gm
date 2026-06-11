@@ -92,10 +92,25 @@ echo "[post] self-check hints: angie -V ; angie -t ; systemctl status angie ; jo
 
 %preun
 echo "[preun] package=${PACKAGE_NAME}"
+if [ \$1 -eq 0 ]; then
+    systemctl stop angie >/dev/null 2>&1 || true
+fi
 
 %postun
 echo "[postun] package=${PACKAGE_NAME}"
 systemctl daemon-reload >/dev/null 2>&1 || true
+if [ \$1 -eq 0 ]; then
+    echo "[postun] cleanup empty runtime directories"
+    rmdir /run/angie 2>/dev/null || true
+    rmdir /var/cache/angie 2>/dev/null || true
+    rmdir /var/lib/angie 2>/dev/null || true
+    rmdir /opt/angie/client_body_temp 2>/dev/null || true
+    rmdir /opt/angie/fastcgi_temp 2>/dev/null || true
+    rmdir /opt/angie/proxy_temp 2>/dev/null || true
+    rmdir /opt/angie/scgi_temp 2>/dev/null || true
+    rmdir /opt/angie/uwsgi_temp 2>/dev/null || true
+    rmdir /opt/angie 2>/dev/null || true
+fi
 
 %files
 %dir /etc/angie

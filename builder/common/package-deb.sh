@@ -37,6 +37,19 @@ write_deb_script() {
     cat > "${script_path}" <<EOF
 #!/bin/sh
 set -eu
+
+cleanup_empty_runtime_dirs() {
+    rmdir /run/angie 2>/dev/null || true
+    rmdir /var/cache/angie 2>/dev/null || true
+    rmdir /var/lib/angie 2>/dev/null || true
+    rmdir /opt/angie/client_body_temp 2>/dev/null || true
+    rmdir /opt/angie/fastcgi_temp 2>/dev/null || true
+    rmdir /opt/angie/proxy_temp 2>/dev/null || true
+    rmdir /opt/angie/scgi_temp 2>/dev/null || true
+    rmdir /opt/angie/uwsgi_temp 2>/dev/null || true
+    rmdir /opt/angie 2>/dev/null || true
+}
+
 echo "[${phase}] package=${PACKAGE_NAME}"
 if [ "${phase}" = "postinst" ]; then
     if ! getent group angie >/dev/null 2>&1; then
@@ -52,6 +65,10 @@ if [ "${phase}" = "postinst" ]; then
 fi
 if [ "${phase}" = "postrm" ]; then
     systemctl daemon-reload >/dev/null 2>&1 || true
+    if [ "\${1:-}" = "purge" ]; then
+        echo "[${phase}] cleanup empty runtime directories"
+        cleanup_empty_runtime_dirs
+    fi
 fi
 exit 0
 EOF
