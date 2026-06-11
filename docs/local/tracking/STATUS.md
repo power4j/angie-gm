@@ -88,16 +88,19 @@
 - 已完成 `Release Packages` `workflow_dispatch` `rc8` 实测，确认 `v0.1.0-rc8` 可生成 `draft + prerelease`，并包含 `x86_64` / `aarch64`、`rpm` / `deb` 全部 release asset
 - 已在 Rocky Linux 10.2 上基于 `v0.1.0-rc8` release asset 完成 `angie-gm-all` 专项复测，确认安装、自检、动态模块、`stream` 与 HTTP/3 通过
 - 已在 Debian 12 上基于 `v0.1.0-rc8` release asset 完成 `angie-gm-all` 专项复测，确认安装、自检、动态模块、`stream` 与 HTTP/3 通过
+- 已将 3 个新增提交推送到 `power4j/angie-gm` 的 `kickoff` 分支，并切换到正式仓库继续 release 验证
+- 已在 `power4j/angie-gm` 上完成首个正式 review release：`v0.1.0-rc1`
+- 已在 Debian 12 与 Rocky Linux 10.2 上基于 `power4j/angie-gm` `v0.1.0-rc1` release asset 完成卸载残留清理回归，确认 `/opt/angie`、`/var/cache/angie`、`/var/lib/angie`、`/run/angie` 的空目录可清理，`/var/log/angie` 保留
 
 ## 进行中
 
-- 收敛卸载残留策略，并准备国产发行版验证批次
+- 规划国产发行版验证批次，并收敛 review release 对外说明
 
 ## 下一步
 
-1. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
-2. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
-3. 评估是否需要把当前 `rc8` release notes 补充为人工验证摘要
+1. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
+2. 评估是否需要把 `power4j/angie-gm` 当前 review release 补充为人工验证摘要
+3. 评估是否现在开始处理 GitHub Actions Node 20 弃用告警
 
 ## 阻塞项
 

@@ -25,6 +25,7 @@
 - [validation/validation-record-2026-06-09-wsl-source-prep.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-09-wsl-source-prep.md)
 - [validation/validation-record-2026-06-11-rocky10-rc8-all-release-asset.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-rocky10-rc8-all-release-asset.md)
 - [validation/validation-record-2026-06-11-debian12-rc8-all-release-asset.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-debian12-rc8-all-release-asset.md)
+- [validation/validation-record-2026-06-11-origin-rc1-uninstall-cleanup.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-origin-rc1-uninstall-cleanup.md)
 
 ## 使用规则
 
