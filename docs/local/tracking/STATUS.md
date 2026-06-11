@@ -1,6 +1,6 @@
 # 项目进度状态
 
-最后更新：`2026-06-10`
+最后更新：`2026-06-11`
 当前分支：`kickoff`
 
 ## 已完成
@@ -85,22 +85,22 @@
   - `http3.sh` 通过
 - 已确认 `http3.sh` 的真实问题不是 HTTP/3 功能缺失，而是临时测试配置未对齐实际运行树；补齐 `user angie angie`、`modules.d` 引入与临时证书生成后已恢复
 - 已收敛验证输入口径：`Build Packages` 的 workflow artifact 仅用于 CI 调试；线下验证、替换验证与交付验证统一改为使用 GitHub Release asset
+- 已完成 `Release Packages` `workflow_dispatch` `rc8` 实测，确认 `v0.1.0-rc8` 可生成 `draft + prerelease`，并包含 `x86_64` / `aarch64`、`rpm` / `deb` 全部 release asset
+- 已在 Rocky Linux 10.2 上基于 `v0.1.0-rc8` release asset 完成 `angie-gm-all` 专项复测，确认安装、自检、动态模块、`stream` 与 HTTP/3 通过
 
 ## 进行中
 
-- 完成 `angie-gm-all` 在 Rocky Linux 10.2 上的新 RPM 专项复测
+- 收敛 release asset 口径下的剩余线下专项验证与残留策略
 
 ## 下一步
 
-1. 触发或复用对应版本的 GitHub Release，并以 release asset 作为 Rocky Linux 10.2 的验证输入
-2. 在 Rocky Linux 10.2 上复测 `modules.sh`、`stream.sh`、`http3.sh`
-3. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
-4. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
+1. 在 Debian 12 上以 release asset 口径补 `angie-gm-all` 的 `modules.sh`、`stream.sh`、`http3.sh`
+2. 明确 `dpkg -P` / `rpm -e` 后 `/opt/angie`、`/var/log/angie` 残留是否接受
+3. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
 
 ## 阻塞项
 
 - 当前 Windows 环境没有可用的 Bash / WSL 运行时，无法在本机完成 `builder/common/*.sh` 的语法检查与执行验证
-- Codex 当前 shell 环境下执行 `gh` 校验失败；该现象与用户本机终端结果不一致，应按环境差异处理，不应视为仓库或账号本身异常
 
 ## 最近提交
 

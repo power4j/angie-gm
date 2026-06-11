@@ -23,6 +23,7 @@
 - [validation/offline-validation-playbook.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/offline-validation-playbook.md)
 - [validation/validation-record-template.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-template.md)
 - [validation/validation-record-2026-06-09-wsl-source-prep.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-09-wsl-source-prep.md)
+- [validation/validation-record-2026-06-11-rocky10-rc8-all-release-asset.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-rocky10-rc8-all-release-asset.md)
 
 ## 使用规则
 
