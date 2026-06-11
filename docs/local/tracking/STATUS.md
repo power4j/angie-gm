@@ -1,7 +1,7 @@
 # 项目进度状态
 
 最后更新：`2026-06-11`
-当前分支：`kickoff`
+当前分支：`dev`
 
 ## 已完成
 
@@ -17,7 +17,7 @@
 - `deb` / `rpm` 的打包模板骨架与冲突策略已建立
 - 共享构建脚本骨架与阶段日志模型已建立
 - GitHub Actions 的构建矩阵与 Release workflow 骨架已建立
-- 已完成一次 `gh` 只读检查尝试，并确认当前本机 GitHub CLI 环境不可用
+- 当前本机 `gh` 可正常访问 `power4j/angie-gm`，可用于 workflow、run、release 与 PR 检查
 - 包版本、打包修订号、上游源码版本的分层策略已建立
 - 验证矩阵与验证记录模板已建立
 - WSL Ubuntu 24 已验证 `builder/common/*.sh` 可通过 `bash -n`，且两个 profile 可跑到 staging 准备阶段
@@ -32,7 +32,7 @@
 - 已确认 GitHub Actions 的 `ubuntu-24.04-arm` 与 `almalinux:8` 容器可启动，当前失败点定位为 `dnf` 依赖冲突
 - 已定位 GitHub Actions 构建脚本的下一处失败点：容器缺少 `python3`，导致 manifest 解析失败
 - GitHub Actions 最新一轮已通过 `Install build dependencies`、`Verify shell syntax` 与 `Run build pipeline` 阶段，说明当前 CI 构建骨架已在 `x86_64` / `aarch64` 上跑通
-- GitHub Actions `Build Packages` 已在 `x86_64` / `aarch64`、`deb` / `rpm` 全矩阵完成，当前剩余 CI 问题仅为 Node 20 actions 弃用告警
+- GitHub Actions `Build Packages` 已在 `x86_64` / `aarch64`、`deb` / `rpm` 全矩阵完成
 - Angie 真实 `configure` / `make` / `install` 已接入本地构建脚本，等待下一轮 GitHub Actions 验证真实编译结果
 - 已定位 Angie 真实编译的首个错误：`--builddir` 与 `make` 执行目录不一致，导致 `No rule to make target 'src/core/ngx_build.c'`
 - 真实源码编译已在 GitHub Actions 全矩阵跑通，当前进入 `staging` 运行树装配与真产包阶段
@@ -91,33 +91,31 @@
 - 已将 3 个新增提交推送到 `power4j/angie-gm` 的 `kickoff` 分支，并切换到正式仓库继续 release 验证
 - 已在 `power4j/angie-gm` 上完成首个正式 review release：`v0.1.0-rc1`
 - 已在 Debian 12 与 Rocky Linux 10.2 上基于 `power4j/angie-gm` `v0.1.0-rc1` release asset 完成卸载残留清理回归，确认 `/opt/angie`、`/var/cache/angie`、`/var/lib/angie`、`/run/angie` 的空目录可清理，`/var/log/angie` 保留
+- 已完成仓库基线收口：当前本地开发与正式远端统一切换到 `origin + dev`
+- 已完成 GitHub Actions Node 20 弃用告警处理，`Build Packages` 主线最新 run 已不再出现该 annotation
+- 已完成升级后 `Release Packages` dry-run：`v0.1.0-rc3` 可重新生成 `draft + prerelease` 与全量 release asset
 
 ## 进行中
 
-- 规划国产发行版验证批次，并收敛 review release 对外说明
+- 规划银河麒麟服务器版 V10 / 统信服务器版 V10 的线下验证批次
 
 ## 下一步
 
-1. 规划银河麒麟 V10 / 统信 V10 的线下验证批次
-2. 评估是否需要把 `power4j/angie-gm` 当前 review release 补充为人工验证摘要
-3. 评估是否现在开始处理 GitHub Actions Node 20 弃用告警
+1. 执行银河麒麟服务器版 V10 / 统信服务器版 V10 `x86_64` 首轮 Batch 1 验证
+2. 评估是否需要把当前 review release 补充为人工验证摘要
+3. 视 Batch 1 结果决定是否推进 `aarch64` 批次
 
 ## 阻塞项
 
-- 当前 Windows 环境没有可用的 Bash / WSL 运行时，无法在本机完成 `builder/common/*.sh` 的语法检查与执行验证
+- 暂无代码级阻塞；国产发行版验证仍依赖线下可访问测试机
 
 ## 最近提交
 
-- `336300e` `feat: wire source preparation checks`
-- `96856c3` `feat: prepare real source fetch pipeline`
-- `9d96f31` `docs: add validation tracking skeleton`
-- `d327246` `ci: scaffold build and release workflows`
-- `1bee7ce` `feat: scaffold build helper scripts`
-- `3c9e34e` `docs: define packaging template skeleton`
-- `287939b` `docs: define build profile model`
-- `86dab56` `docs: define source manifest model`
-- `908e238` `docs: clarify build environment`
-- `a7121bb` `docs: align package naming baseline`
+- `dc71e40` `chore(deps): bump softprops/action-gh-release from 2 to 3 (#2)`
+- `decb886` `chore(deps): bump actions/upload-artifact from 4 to 7 (#3)`
+- `f541d0f` `chore(deps): bump actions/download-artifact from 4 to 8 (#4)`
+- `1939fc2` `chore(deps): bump actions/checkout from 4 to 6 (#5)`
+- `9ce7267` `feat: bootstrap angie-gm packaging pipeline (#1)`
 - `71acf14` `chore: initialize packaging repository`
 
 ## 维护规则
