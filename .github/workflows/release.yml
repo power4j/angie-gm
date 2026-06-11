@@ -231,7 +231,7 @@ jobs:
           echo "IS_PRERELEASE=${is_prerelease}" >> "${GITHUB_ENV}"
 
       - name: Download built package artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: output/artifacts
           pattern: release-*
