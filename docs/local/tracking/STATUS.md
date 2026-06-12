@@ -1,6 +1,6 @@
 # 项目进度状态
 
-最后更新：`2026-06-11`
+最后更新：`2026-06-12`
 当前分支：`dev`
 
 ## 已完成
@@ -95,6 +95,7 @@
 - 已完成 GitHub Actions Node 20 弃用告警处理，`Build Packages` 主线最新 run 已不再出现该 annotation
 - 已完成升级后 `Release Packages` dry-run：`v0.1.0-rc3` 可重新生成 `draft + prerelease` 与全量 release asset
 - 已完成国产发行版 `Batch 1` 验证记录骨架，可直接用于银河麒麟服务器版 V10 / 统信服务器版 V10 `x86_64` 首轮执行
+- 已完成 `README.md` 面向用户的安装与运维说明收敛，补充安装要求、安装 / 卸载命令、版本检查、服务控制与路径说明
 
 ## 进行中
 
