@@ -1,70 +1,139 @@
 # angie-gm
 
-`angie-gm` 是一个面向离线 Linux 部署场景的打包与发布工程，用于构建并发布基于 `angie` 的安装包。
+`angie-gm` 提供基于 `Angie` 的离线安装包，面向具备 Linux 基础的部署与运维场景。
 
-当前对外交付的安装包为：
+当前提供两个包：
 
 - `angie-gm-basic`
-  - 基础能力 + 国密 / NTLS
+  - 基础 HTTP / HTTPS + 国密 / NTLS
 - `angie-gm-all`
-  - 尽量完整，包含 HTTP/3、stream、常用动态模块、国密 / NTLS
+  - 在 `basic` 基础上增加 HTTP/3、`stream`、动态模块
 
-## 支持范围
+约束：
 
-当前面向以下目标平台与架构：
+- `angie-gm-basic` 与 `angie-gm-all` 不允许同时安装
+- 运行时命令统一为 `angie`
+- 服务名统一为 `angie.service`
 
-- 银河麒麟服务器版 V10
-- 统信服务器版 V10
-- Ubuntu 20
-- `x86_64`
-- `aarch64`
+## 安装要求
 
-当前构建 ABI 基线：
+- CPU 架构：
+  - `x86_64`
+  - `aarch64`
+- 已验证或面向的平台：
+  - 银河麒麟服务器版 V10
+  - 统信服务器版 V10
+  - Ubuntu 20
+- 运行时要求：
+  - `glibc >= 2.28`
+  - `systemd`
+  - `root` 权限
 
-- `glibc 2.28`
+建议在安装前检查：
 
-## 安装布局
+```bash
+getconf GNU_LIBC_VERSION
+systemctl --version | head -n 1
+uname -m
+```
 
-运行时统一使用中性名称：
+## 获取安装包
 
-- 可执行文件：`angie`
-- 服务名：`angie.service`
+正式安装、回归验证与交付验证统一使用 GitHub Release asset。
 
-固定安装布局如下：
+- review / rc 版本：使用 `draft + prerelease`
+- 稳定版：使用 draft stable release
+
+## 安装
+
+`deb`：
+
+```bash
+dpkg -i ./angie-gm-basic_<version>-<release>_<arch>.deb
+```
+
+`rpm`：
+
+```bash
+dnf install -y ./angie-gm-basic-<version>-<release>.<arch>.rpm
+```
+
+如需安装全功能版本，将包名替换为 `angie-gm-all`。
+
+## 卸载
+
+`deb`：
+
+```bash
+dpkg -P angie-gm-basic
+```
+
+`rpm`：
+
+```bash
+dnf remove -y angie-gm-basic
+```
+
+如已安装的是全功能版本，将包名替换为 `angie-gm-all`。
+
+## 常用命令
+
+检查已安装版本：
+
+```bash
+angie -V
+```
+
+查看包管理器中的已安装版本：
+
+```bash
+dpkg -s angie-gm-basic
+rpm -q angie-gm-basic
+```
+
+配置检查：
+
+```bash
+angie -t
+```
+
+服务启停：
+
+```bash
+systemctl start angie
+systemctl stop angie
+systemctl restart angie
+systemctl status angie --no-pager
+```
+
+开机自启：
+
+```bash
+systemctl enable angie
+```
+
+查看近期服务日志：
+
+```bash
+journalctl -u angie -n 100 --no-pager
+```
+
+## 路径说明
 
 - 程序与私有库：`/opt/angie`
 - 主配置：`/etc/angie`
-- 日志：`/var/log/angie`
-- 缓存：`/var/cache/angie`
-- 持久状态：`/var/lib/angie`
+- 主配置文件：`/etc/angie/angie.conf`
+- 额外配置目录：`/etc/angie/conf.d`
+- 日志目录：`/var/log/angie`
+- 缓存目录：`/var/cache/angie`
+- 持久状态目录：`/var/lib/angie`
 - 运行时目录：`/run/angie`
 
-## 构建与发布
-
-当前仓库的正式构建与发布链路为：
-
-- 通过 GitHub Actions 进行构建
-- 输出 `deb` 与 `rpm`
-- 通过 GitHub Release 发布产物
-
-当前验证输入口径：
-
-- `Build Packages` 的 workflow artifact 仅用于持续集成调试与问题定位
-- 线下安装验证、替换验证与交付验证统一使用 GitHub Release asset
-- review / rc 验证使用 `draft + prerelease` release asset
-- 稳定版验证使用 draft stable release asset
-
-当前交付策略为：
-
-- 单包交付
-- 除 `glibc` 外尽量自带运行时依赖
-- 配置、日志、缓存、状态与程序分离
-
-## 文档入口
+## 文档
 
 - [docs/README.md](/D:/git-repo/power4j/angie-gm/docs/README.md)
 - [docs/public/README.md](/D:/git-repo/power4j/angie-gm/docs/public/README.md)
 
-## 相关说明
+## 说明
 
-- 当前仓库是 `angie` 离线安装包的构建与发布工程，不是 `Angie` 或 `TongSuo` 的上游开发仓库。
+本仓库用于构建与发布 `angie-gm` 安装包，不是 `Angie` 或 `TongSuo` 的上游开发仓库。

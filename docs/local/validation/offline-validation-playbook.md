@@ -233,3 +233,26 @@ bash tests/smoke/http3.sh
 
 - 当前停点：Rocky Linux 10.2 与 Debian 12 已完成安装、自检、启动与欢迎页回归验证，当前进入 `angie-gm-all` 特性专项验证阶段。
 - 下一步：基于 GitHub Release asset 在 Rocky Linux 10.2 与后续目标发行版执行 `modules.sh`、`stream.sh`、`http3.sh`，并补对应验证记录。
+
+## 11. 国产发行版 `Batch 1` 建议顺序
+
+当前建议按以下顺序执行首轮国产发行版验证：
+
+1. 银河麒麟服务器版 V10 `x86_64` `angie-gm-basic`
+2. 银河麒麟服务器版 V10 `x86_64` `angie-gm-all`
+3. 统信服务器版 V10 `x86_64` `angie-gm-basic`
+4. 统信服务器版 V10 `x86_64` `angie-gm-all`
+
+执行要求：
+
+- 输入包统一来自 GitHub Release asset
+- 每台机器至少保留一份完整验证记录
+- `angie-gm-all` 必须额外执行：
+  - `tests/smoke/modules.sh`
+  - `tests/smoke/stream.sh`
+  - `tests/smoke/http3.sh`
+
+记录建议：
+
+- 直接复制并填写：
+  - [validation-record-2026-06-11-domestic-batch1-template.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-domestic-batch1-template.md)

@@ -20,12 +20,15 @@
 - [tracking/STATUS.md](/D:/git-repo/power4j/angie-gm/docs/local/tracking/STATUS.md)
 - [tracking/2026-06-09-build-implementation-plan.md](/D:/git-repo/power4j/angie-gm/docs/local/tracking/2026-06-09-build-implementation-plan.md)
 - [tracking/2026-06-09-packaging-implementation-plan.md](/D:/git-repo/power4j/angie-gm/docs/local/tracking/2026-06-09-packaging-implementation-plan.md)
+- [tracking/2026-06-11-domestic-validation-batches.md](/D:/git-repo/power4j/angie-gm/docs/local/tracking/2026-06-11-domestic-validation-batches.md)
 - [validation/offline-validation-playbook.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/offline-validation-playbook.md)
 - [validation/validation-record-template.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-template.md)
 - [validation/validation-record-2026-06-09-wsl-source-prep.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-09-wsl-source-prep.md)
 - [validation/validation-record-2026-06-11-rocky10-rc8-all-release-asset.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-rocky10-rc8-all-release-asset.md)
 - [validation/validation-record-2026-06-11-debian12-rc8-all-release-asset.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-debian12-rc8-all-release-asset.md)
+- [validation/validation-record-2026-06-11-domestic-batch1-template.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-domestic-batch1-template.md)
 - [validation/validation-record-2026-06-11-origin-rc1-uninstall-cleanup.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-origin-rc1-uninstall-cleanup.md)
+- [validation/validation-record-2026-06-11-release-workflow-node24-baseline.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-release-workflow-node24-baseline.md)
 
 ## 使用规则
 
