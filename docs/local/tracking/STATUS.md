@@ -1,6 +1,6 @@
 # 项目进度状态
 
-最后更新：`2026-06-12`
+最后更新：`2026-06-16`
 当前分支：`dev`
 
 ## 已完成
@@ -96,6 +96,9 @@
 - 已完成升级后 `Release Packages` dry-run：`v0.1.0-rc3` 可重新生成 `draft + prerelease` 与全量 release asset
 - 已完成国产发行版 `Batch 1` 验证记录骨架，可直接用于银河麒麟服务器版 V10 / 统信服务器版 V10 `x86_64` 首轮执行
 - 已完成 `README.md` 面向用户的安装与运维说明收敛，补充安装要求、安装 / 卸载命令、版本检查、服务控制与路径说明
+- 已定位 `angie-gm-all` 当前 NTLS 指令问题根因：构建脚本仅传 `--with-openssl-opt=enable-ntls`，未传 Angie 自身的 `--with-ntls`
+- 已补 `--with-ntls` 构建参数，并新增 `tests/smoke/ntls.sh` 用于最小 `ssl_ntls on;` 指令级验证
+- 已在 Debian 12 上复现 `v0.1.0-rc3` `angie-gm-all_0.1.0-rc3-1_amd64.deb` 的 NTLS 指令缺口，确认旧包 `angie -V` 不含 `--with-ntls`，且 `ssl_ntls on;` 报 `unknown directive`
 
 ## 进行中
 
@@ -103,9 +106,9 @@
 
 ## 下一步
 
-1. 执行银河麒麟服务器版 V10 / 统信服务器版 V10 `x86_64` 首轮 Batch 1 验证
-2. 评估是否需要把当前 review release 补充为人工验证摘要
-3. 视 Batch 1 结果决定是否推进 `aarch64` 批次
+1. 重新产出包含 `--with-ntls` 的安装包，并在 Linux 环境确认 `ssl_ntls on;` 可通过 `angie -t`
+2. 执行银河麒麟服务器版 V10 / 统信服务器版 V10 `x86_64` 首轮 Batch 1 验证
+3. 评估是否需要把当前 review release 补充为人工验证摘要
 
 ## 阻塞项
 

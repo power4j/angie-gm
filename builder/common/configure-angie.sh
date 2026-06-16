@@ -49,6 +49,7 @@ write_angie_configure_args() {
 
         if [[ "${ENABLE_NTLS}" == "true" ]]; then
             printf '%s\n' "--with-http_ssl_module"
+            printf '%s\n' "--with-ntls"
         fi
 
         if [[ -f "${dynamic_module_list}" ]]; then

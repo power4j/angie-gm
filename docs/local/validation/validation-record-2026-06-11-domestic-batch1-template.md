@@ -120,12 +120,19 @@ bash tests/smoke/basic-http.sh
 - 结果：
 - 输出摘要：
 
+### `angie-gm-all` NTLS / 国密
+
+- 执行命令：
+- 结果：
+- 输出摘要：
+
 建议命令：
 
 ```bash
 bash tests/smoke/modules.sh
 bash tests/smoke/stream.sh
 bash tests/smoke/http3.sh
+bash tests/smoke/ntls.sh
 ```
 
 ## 诊断线索
