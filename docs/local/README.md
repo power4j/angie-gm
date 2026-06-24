@@ -29,6 +29,7 @@
 - [validation/validation-record-2026-06-11-domestic-batch1-template.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-domestic-batch1-template.md)
 - [validation/validation-record-2026-06-11-origin-rc1-uninstall-cleanup.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-origin-rc1-uninstall-cleanup.md)
 - [validation/validation-record-2026-06-11-release-workflow-node24-baseline.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-11-release-workflow-node24-baseline.md)
+- [validation/validation-record-2026-06-16-rc3-ntls-directive-gap.md](/D:/git-repo/power4j/angie-gm/docs/local/validation/validation-record-2026-06-16-rc3-ntls-directive-gap.md)
 
 ## 使用规则
 

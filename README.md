@@ -118,6 +118,50 @@ systemctl enable angie
 journalctl -u angie -n 100 --no-pager
 ```
 
+## 证书配置
+
+普通国际证书使用单值写法：
+
+```nginx
+ssl_certificate     rsa.crt;
+ssl_certificate_key rsa.key;
+```
+
+国密证书使用双值写法，但前提是同一个 `server` 已开启 `ssl_ntls on;`：
+
+```nginx
+ssl_ntls on;
+
+ssl_certificate     gm-sign.crt gm-enc.crt;
+ssl_certificate_key gm-sign.key gm-enc.key;
+```
+
+双值写法的顺序有固定语义：
+
+- 第 1 个证书 / 私钥：签名证书 / 签名私钥
+- 第 2 个证书 / 私钥：加密证书 / 加密私钥
+- 顺序不能写反
+
+同一个 `server` 可以同时配置国密证书和国际证书：
+
+- 普通 TLS 客户端握手时使用国际证书
+- NTLS / 国密客户端握手时使用国密证书
+- 证书选择依据握手类型和证书槽位语义，不依据文件名
+
+推荐写法：
+
+```nginx
+ssl_ntls on;
+
+# 国密：第 1 个是签名证书，第 2 个是加密证书
+ssl_certificate     gm-sign.crt gm-enc.crt;
+ssl_certificate_key gm-sign.key gm-enc.key;
+
+# 国际证书
+ssl_certificate     rsa.crt;
+ssl_certificate_key rsa.key;
+```
+
 ## 路径说明
 
 - 程序与私有库：`/opt/angie`

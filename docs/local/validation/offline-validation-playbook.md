@@ -166,6 +166,7 @@ bash tests/smoke/basic-http.sh http://127.0.0.1:8080/
 1. 动态模块加载
 2. stream
 3. HTTP/3
+4. NTLS / 国密
 
 ### 动态模块加载
 
@@ -216,13 +217,34 @@ bash tests/smoke/http3.sh
 - 当前脚本先验证 HTTP/3 编译能力和配置能力。
 - 如现场具备 `curl --http3` 或其他 QUIC 客户端，再追加真实请求验证记录。
 
+### NTLS / 国密
+
+执行命令：
+
+```bash
+bash tests/smoke/ntls.sh
+```
+
+验证目标：
+
+- `angie -V` 包含：
+  - `--with-http_ssl_module`
+  - `--with-ntls`
+- 最小 `ssl_ntls on;` 配置可通过 `angie -t`
+
+说明：
+
+- 当前脚本只验证 NTLS 指令级能力是否已进入二进制。
+- 当前不验证双证书语法，也不验证国密客户端真实握手互通。
+
 ## 9. 当前边界
 
 当前脚本与说明尚未覆盖：
 
 - HTTPS 冒烟
-- NTLS / 国密冒烟
 - HTTP/3 真实客户端互通
+- NTLS 双证书配置
+- 国密客户端真实握手互通
 - 复杂 stream upstream 场景
 - 动态模块业务行为深测
 - 配置变更后的升级保留验证
@@ -251,6 +273,7 @@ bash tests/smoke/http3.sh
   - `tests/smoke/modules.sh`
   - `tests/smoke/stream.sh`
   - `tests/smoke/http3.sh`
+  - `tests/smoke/ntls.sh`
 
 记录建议：
 
