@@ -106,10 +106,18 @@ systemctl restart angie
 systemctl status angie --no-pager
 ```
 
+安装后默认不会自动设置为开机自启。
+
 开机自启：
 
 ```bash
 systemctl enable angie
+```
+
+如需同时启动当前服务并设置开机自启：
+
+```bash
+systemctl enable --now angie
 ```
 
 查看近期服务日志：
