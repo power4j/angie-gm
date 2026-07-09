@@ -18,7 +18,6 @@
 ## 当前文档
 
 - [architecture/2026-06-09-packaging-design.md](/D:/git-repo/power4j/angie-gm/docs/public/architecture/2026-06-09-packaging-design.md)
-- [architecture/2026-06-09-repo-bootstrap-plan.md](/D:/git-repo/power4j/angie-gm/docs/public/architecture/2026-06-09-repo-bootstrap-plan.md)
 - [release/versioning-policy.md](/D:/git-repo/power4j/angie-gm/docs/public/release/versioning-policy.md)
 - [release/github-release-workflow.md](/D:/git-repo/power4j/angie-gm/docs/public/release/github-release-workflow.md)
 - [validation/validation-matrix.md](/D:/git-repo/power4j/angie-gm/docs/public/validation/validation-matrix.md)
