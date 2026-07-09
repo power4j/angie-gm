@@ -36,13 +36,9 @@ getconf GNU_LIBC_VERSION
 systemctl --version | head -n 1
 uname -m
 ```
+## 使用示例
 
-## 获取安装包
-
-正式安装、回归验证与交付验证统一使用 GitHub Release asset。
-
-- review / rc 版本：使用 `draft + prerelease`
-- 稳定版：使用 draft stable release
+参考 `docs\public\example`
 
 ## 安装
 
