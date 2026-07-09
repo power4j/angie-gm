@@ -80,4 +80,4 @@
 - review / rc 验证应使用 `draft + prerelease` 的 release asset
 - 稳定版验证应使用 draft stable release 的 release asset
 
-执行说明、过程记录与记录模板属于过程资料，应放在 `docs/local/` 维护。
+执行说明、过程记录与记录模板属于过程资料，应在本地 `docs/local/` 维护，不纳入 Git 跟踪。需要长期引用的验证结论，应整理后写入 `docs/public/validation/`。

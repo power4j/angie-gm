@@ -6,9 +6,7 @@
 /temp/
 
 # Local docs and notes
-/docs/local/decisions/
-/docs/local/notes/
-/docs/local/sessions/
+/docs/local/
 
 # Source caches and archives
 /source/cache/
@@ -37,7 +35,3 @@ Thumbs.db
 *.tar.gz
 *.tgz
 *.zip
-
-# Keep local docs index files
-!/docs/local/
-!/docs/local/README.md

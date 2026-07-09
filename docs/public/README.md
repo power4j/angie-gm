@@ -2,6 +2,8 @@
 
 `docs/public/` 存放最终交付、用户可见、可稳定复用的正式文档。
 
+本地过程记录统一放在 `docs/local/`，该目录不纳入 Git 跟踪。需要长期复用或对外引用的内容，应整理后迁入 `docs/public/`。
+
 ## 目录说明
 
 - `architecture/`
